@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Room" optimistic-lock="none" table="room">
+        <id name="roomId" type="java.lang.Integer">
+            <column name="roomId"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Hotel" fetch="select" name="hotel">
+            <column name="hotelId" not-null="true"/>
+        </many-to-one>
+        <property name="guest" type="int">
+            <column name="guest" not-null="true"/>
+        </property>
+        <property name="type" type="string">
+            <column length="7" name="type" not-null="true"/>
+        </property>
+        <property name="price" type="int">
+            <column name="price" not-null="true"/>
+        </property>
+        <property name="amountRoom" type="int">
+            <column name="amountRoom" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="reservations" table="reservation">
+            <key>
+                <column name="roomId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Reservation"/>
+        </set>
+    </class>
+</hibernate-mapping>

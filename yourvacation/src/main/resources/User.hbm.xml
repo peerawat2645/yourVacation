@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.User" optimistic-lock="none" table="user">
+        <id name="userId" type="java.lang.Integer">
+            <column name="userId"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string">
+            <column name="name" not-null="true"/>
+        </property>
+        <property name="lastname" type="string">
+            <column name="lastname" not-null="true"/>
+        </property>
+        <property name="email" type="string">
+            <column name="email" not-null="true"/>
+        </property>
+        <property name="username" type="string">
+            <column name="username" not-null="true"/>
+        </property>
+        <property name="password" type="string">
+            <column length="1000" name="password" not-null="true"/>
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" not-null="true"/>
+        </property>
+        <property name="money" type="int">
+            <column name="money" not-null="true"/>
+        </property>
+        <property name="address" type="string">
+            <column name="address" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="reservations" table="reservation">
+            <key>
+                <column name="userId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Reservation"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="roles" table="role">
+            <key>
+                <column name="userId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Role"/>
+        </set>
+    </class>
+</hibernate-mapping>

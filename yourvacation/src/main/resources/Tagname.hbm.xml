@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Tagname" optimistic-lock="none" table="tagname">
+        <id name="tagNameId" type="java.lang.Integer">
+            <column name="tagNameId"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string">
+            <column name="name" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="tags" table="tag">
+            <key>
+                <column name="tagNameId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Tag"/>
+        </set>
+    </class>
+</hibernate-mapping>

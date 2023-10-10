@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Imgvacation" optimistic-lock="none" table="imgvacation">
+        <id name="imgvacationId" type="java.lang.Integer">
+            <column name="imgvacationId"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Vacation" fetch="select" name="vacation">
+            <column name="vacationId" not-null="true"/>
+        </many-to-one>
+        <property name="filePath" type="string">
+            <column name="filePath" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Hotel" optimistic-lock="none" table="hotel">
+        <id name="hotelId" type="java.lang.Integer">
+            <column name="hotelId"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Subdistrict" fetch="select" name="subdistrict">
+            <column name="subdistrictId" not-null="true"/>
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" not-null="true"/>
+        </property>
+        <property name="address" type="string">
+            <column name="address" not-null="true"/>
+        </property>
+        <property name="openTime" type="timestamp">
+            <column length="19" name="openTime" not-null="true"/>
+        </property>
+        <property name="closeTime" type="timestamp">
+            <column length="19" name="closeTime" not-null="true"/>
+        </property>
+        <property name="status" type="string">
+            <column length="5" name="status" not-null="true"/>
+        </property>
+        <property name="checkinTime" type="timestamp">
+            <column length="19" name="checkinTime" not-null="true"/>
+        </property>
+        <property name="facilities" type="boolean">
+            <column name="Facilities" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="advertisements" table="advertisement">
+            <key>
+                <column name="hotelId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Advertisement"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="rooms" table="room">
+            <key>
+                <column name="hotelId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Room"/>
+        </set>
+        <bag fetch="select" inverse="true" lazy="true" name="imghotels" table="imghotel">
+            <key>
+                <column name="hotelId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Imghotel"/>
+        </bag>
+    </class>
+</hibernate-mapping>
