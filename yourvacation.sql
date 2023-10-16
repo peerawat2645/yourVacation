@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `yourvacation`
 --
 
+CREATE DATABASE IF NOT EXISTS `yourvacation` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `yourvacation`;
+
 -- --------------------------------------------------------
 
 --
