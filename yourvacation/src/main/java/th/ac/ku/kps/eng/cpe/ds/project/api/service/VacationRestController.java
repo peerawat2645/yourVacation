@@ -76,7 +76,7 @@ public class VacationRestController {
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<Response<List<Vacation>>> findByDistrict(@PathVariable int districtId) {
+	public ResponseEntity<Response<List<Vacation>>> findByDistrict(@PathVariable("id") int districtId) {
 		Response<List<Vacation>> res = new Response<>();
 		try {
 			List<Vacation> vacations = vacationService.findByDistrictId(districtId);

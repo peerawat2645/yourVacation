@@ -32,6 +32,7 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.HotelDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.services.AdvertisementService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.HotelService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.ReservationService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
 
 @CrossOrigin("http://localhost:8081/")
@@ -50,6 +51,9 @@ public class HotelRestController {
 	
 	@Autowired
 	private AdvertisementService advertisementService;
+	
+	@Autowired
+	private SubdistrictService subdistrictService;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -74,6 +78,7 @@ public class HotelRestController {
 	public ResponseEntity<Response<Hotel>> create(@Valid @RequestBody Hotel hotel) {
 		Response<Hotel> res = new Response<>();
 		try {
+			hotel.setSubdistrict(subdistrictService.findById(1));
 			Hotel h = hotelService.save(hotel);
 			res.setBody(h);
 			res.setHttpStatus(HttpStatus.OK);
@@ -87,7 +92,7 @@ public class HotelRestController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public ResponseEntity<Response<Hotel>> create(@PathVariable int hotelId) {
+	public ResponseEntity<Response<Hotel>> create(@PathVariable("id") int hotelId) {
 		Response<Hotel> res = new Response<>();
 		try {
 			Hotel h = hotelService.findById(hotelId);
@@ -103,7 +108,7 @@ public class HotelRestController {
 	}
 	
 	@PostMapping("/delete/{id}")
-	public ResponseEntity<Response<String>> delete(@PathVariable int hotelId) {
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") int hotelId) {
 		Response<String> res = new Response<>();
 		try {
 			hotelService.deleteById(hotelId);
@@ -140,7 +145,7 @@ public class HotelRestController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Response<Hotel>> room(@Param("hotelId") int hotelId) {
+	public ResponseEntity<Response<Hotel>> room(@PathVariable("id") int hotelId) {
 		Response<Hotel> res = new Response<>();
 		try {
 			Hotel hotel = hotelService.findById(hotelId);
@@ -148,6 +153,7 @@ public class HotelRestController {
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
+			res.setMessage(ex.getMessage());
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
