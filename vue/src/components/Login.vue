@@ -5,31 +5,91 @@
       <div class="loginlogin">
         <a>Login</a>
         <div class="logintextbox">
-        <p>username</p>
-        <input type="text" placeholder="username">
-        <p>password</p>
-        <input type="text" placeholder="password"></div>
+          <p>Username</p>
+          <input type="text" placeholder="Username" v-model="username">
+          <p>Password</p>
+          <input type="text" placeholder="Password" v-model="password">
+        </div>
         <div class="loginbottom">
           <a href="/"><button class="loginregister_btn">
-            back
-          </button></a>
-          <a href="/home">
-            <button class="loginlogin_btn">
-              Login
-            </button>
-          </a>
+              Back
+            </button></a>
+          <button class="loginlogin_btn" @click="handleLogin">
+            Login
+          </button>
         </div>
+        <div v-if="error" class="error-message">{{ errorMessage }}</div>
+        <div v-if="registrationSuccess" class="notification success">Registration Successful!</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import apiService from '@/services/apiService';
+import router from '@/router';
 export default {
   name: 'LoginPage',
   props: {
     msg: String
-  }
-}
+  },
+  data() {
+    return {
+      username: '',
+      password: '',
+      error: false,
+      errorMessage: '',
+      registrationSuccess: false,
+    };
+  },
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('registrationSuccess')) {
+      this.registrationSuccess = true;
+    }
+    const newURL = new URL(window.location.href);
+    newURL.searchParams.delete('registrationSuccess');
+    window.history.replaceState({}, '', newURL.href);
+    setTimeout(function () {
+      var notification = document.querySelector(".notification.success");
+      if (notification) {
+        notification.style.opacity = 0;
+        setTimeout(function () {
+          notification.style.display = "none";
+        }, 1000); 
+      }
+    }, 5000);
+  },
+  methods: {
+    handleLogin() {
+      if (!this.username && !this.password) {
+        this.error = true;
+        this.errorMessage = 'Username and password are required.';
+        return;
+      }
+      else if (!this.username) {
+        this.error = true;
+        this.errorMessage = 'Username is required.';
+        return;
+      }
+      else if (!this.password) {
+        this.error = true;
+        this.errorMessage = 'Password is required.';
+        return;
+      }
+      this.error = false;
+
+      apiService.login(this.username, this.password)
+        .then(() => {
+          router.push('/home');
+        })
+        .catch(error => {
+          console.error('Login error:', error);
+          this.error = true;
+          this.errorMessage = "Username or Password isn't correct";
+        });
+    },
+  },
+};
 </script>
 <style>
 .loginb {
@@ -59,11 +119,13 @@ export default {
   flex-direction: column;
   color: rgb(255, 255, 255);
 }
-.loginpic_background a{
+
+.loginpic_background a {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   font-size: 50px;
 }
+
 .loginlogin {
   margin-top: 50px;
   width: 350px;
@@ -119,6 +181,9 @@ export default {
   margin-bottom: 30px;
 }
 
+.loginbottom a {
+  text-decoration: none;
+}
 
 .loginlogin_btn {
   text-decoration: none;
@@ -134,7 +199,6 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   font-size: 30px;
-  display: inline-block;
   text-align: center;
   display: flex;
   align-items: center;
@@ -176,11 +240,49 @@ export default {
   /* Replace '2px' with your desired border width */
   color: rgb(255, 255, 255);
 }
+
 input[type="text"] {
-  border: 2px solid grey; /* Border color and width */
-  border-radius: 10px; /* Border radius */
+  border: 2px solid grey;
+  /* Border color and width */
+  border-radius: 10px;
+  /* Border radius */
   padding: 10px;
-  width: 90%; /* Padding inside the input */
+  width: 90%;
+  /* Padding inside the input */
 }
 
-</style>
+.error-message {
+  background-color: rgba(255, 0, 0, 0.7);
+  /* Red background with some transparency */
+  color: white;
+  /* White text color */
+  padding: 10px;
+  /* Padding around the error message */
+  border-radius: 5px;
+  /* Rounded corners */
+  display: flex;
+  flex-direction: column;
+  /* Place text above the close button */
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -30px;
+  /* Larger negative margin to move it closer to loginbottom */
+}
+
+.notification.success {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: green;
+  /* Change the background color as needed */
+  color: white;
+  /* Change the text color as needed */
+  padding: 10px;
+  text-align: center;
+  z-index: 1000;
+  /* Ensure it's on top of other elements */
+  opacity: 1;
+  transition: opacity 1s;
+  /* Set the duration of the fade (1s = 1 second) */
+}</style>

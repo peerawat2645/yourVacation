@@ -14,6 +14,7 @@
             Register
           </button></a>
         </div>
+        <a href="/registerHotel" ><button class="small-link">For Hotel</button></a>
       </div>
       <div class="textbox">
         <div class="textanimate">
@@ -199,6 +200,29 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   cursor: default;
+  color: rgb(255, 255, 255);
+}
+.small-link {
+  white-space: nowrap;
+  font-size: 20px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: rgb(0, 0, 0);
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border-color: rgb(0, 0, 0);
+  text-decoration: none;  
+}
+.small-link:hover {
+  background-color: rgb(76, 153, 163);
   color: rgb(255, 255, 255);
 }
 
