@@ -27,9 +27,6 @@
         <property name="checkinTime" type="timestamp">
             <column length="19" name="checkinTime" not-null="true"/>
         </property>
-        <property name="facilities" type="boolean">
-            <column name="Facilities" not-null="true"/>
-        </property>
         <property name="privateKey" type="string">
             <column length="5000" name="privateKey" not-null="true"/>
         </property>

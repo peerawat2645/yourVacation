@@ -22,7 +22,6 @@ public class Hotel implements java.io.Serializable {
 	private Date closeTime;
 	private String status;
 	private Date checkinTime;
-	private boolean facilities;
 	private String privateKey;
 	@JsonIgnore
 	private List<Advertisement> advertisements = new ArrayList<Advertisement>();
@@ -39,7 +38,7 @@ public class Hotel implements java.io.Serializable {
 	}
 
 	public Hotel(Subdistrict subdistrict, String name, String address, Date openTime, Date closeTime, String status,
-			Date checkinTime, boolean facilities, String privateKey) {
+			Date checkinTime, String privateKey) {
 		this.subdistrict = subdistrict;
 		this.name = name;
 		this.address = address;
@@ -47,12 +46,11 @@ public class Hotel implements java.io.Serializable {
 		this.closeTime = closeTime;
 		this.status = status;
 		this.checkinTime = checkinTime;
-		this.facilities = facilities;
 		this.privateKey = privateKey;
 	}
 
 	public Hotel(Subdistrict subdistrict, String name, String address, Date openTime, Date closeTime, String status,
-			Date checkinTime, boolean facilities, String privateKey, List<Advertisement> advertisements, List<Userhotel> userhotels, List<Room> rooms,
+			Date checkinTime, String privateKey, List<Advertisement> advertisements, List<Userhotel> userhotels, List<Room> rooms,
 			List<Facilities> facilitieses, List<Imghotel> imghotels) {
 		this.subdistrict = subdistrict;
 		this.name = name;
@@ -61,7 +59,6 @@ public class Hotel implements java.io.Serializable {
 		this.closeTime = closeTime;
 		this.status = status;
 		this.checkinTime = checkinTime;
-		this.facilities = facilities;
 		this.privateKey = privateKey;
 		this.advertisements = advertisements;
 		this.userhotels = userhotels;
@@ -132,14 +129,6 @@ public class Hotel implements java.io.Serializable {
 
 	public void setCheckinTime(Date checkinTime) {
 		this.checkinTime = checkinTime;
-	}
-
-	public boolean isFacilities() {
-		return this.facilities;
-	}
-
-	public void setFacilities(boolean facilities) {
-		this.facilities = facilities;
 	}
 
 	public String getPrivateKey() {
