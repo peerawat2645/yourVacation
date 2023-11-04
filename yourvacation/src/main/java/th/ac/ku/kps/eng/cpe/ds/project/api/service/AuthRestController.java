@@ -112,15 +112,15 @@ public class AuthRestController {
 		Response<String> res = new Response<>();
 		try {
 			if (!userService.existsByUsername(user.getUsername())) {
-				res.setBody("exist username");
+				res.setBody("Error : Username is already taken!");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
 			} else if (user.getPassword().length() < 6) {
-				res.setBody("password length less 6 character");
+				res.setBody("Error : Password must be at least 6 character");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
 			} else if (user.getPhone().length() != 10) {
-				res.setBody("phone number not equal 10 character");
+				res.setBody("Error : Phonenumber must be at least or more than 10 character");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
 			}
