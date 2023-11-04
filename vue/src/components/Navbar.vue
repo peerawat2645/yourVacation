@@ -3,11 +3,12 @@
     <div class="navbar rown">
       <p>YourVacation</p>
       <div class="rown navbarselect">
-        <button class="navbtn"  @click="toggleUnderline(1)" :class="{ 'underlined': isUnderlined1 }"><a href="#home">Home</a></button>
-        <button class="navbtn" @click="toggleUnderline(2)" :class="{ 'underlined': isUnderlined2 }"><a href="#foryou">For you</a></button>
-        <button class="navbtn" @click="toggleUnderline(3)" :class="{ 'underlined': isUnderlined3 }"><a href="#filter">Picture Filter</a></button>
-        <button class="navbtn" @click="toggleUnderline(4)" :class="{ 'underlined': isUnderlined4 }"><a href="#aboutus">About us</a></button>
-        <button class="navbtn" @click="toggleUnderline(5)" :class="{ 'underlined': isUnderlined5 }"><a href="#contact">Contact</a></button>
+        <button class="navbtn"  @click="toggleUnderline(1)" :class="{ 'underlined': isUnderlined1 }"><a href="/home#home">Home</a></button>
+        <button class="navbtn" @click="toggleUnderline(2)" :class="{ 'underlined': isUnderlined2 }"><a href="/home#foryou">For you</a></button>
+        <button class="navbtn" @click="toggleUnderline(3)" :class="{ 'underlined': isUnderlined3 }"><a href="/home#filter">Picture Filter</a></button>
+        <button class="navbtn" @click="toggleUnderline(4)" :class="{ 'underlined': isUnderlined4 }"><a href="/home#aboutus">About us</a></button>
+        <button class="navbtn" @click="toggleUnderline(5)" :class="{ 'underlined': isUnderlined5 }"><a href="/user">Profile</a></button>
+        <button class="nblack-button"><a href="/" style="color: white;">Sign out</a></button>
       </div>
     </div>
   </div>
@@ -74,7 +75,22 @@ export default {
   font-size: 30px;
   margin-top: -10px;
 }
+.nblack-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+}
 
+.nblack-button:hover {
+  background-color: #333;
+  /* Darker shade of black on hover */
+}
 .rown {
   display: flex;
   align-items: center;
@@ -128,6 +144,7 @@ export default {
 }
 
 .navbarselect {
-  width: 30%;
+  width: 40%;
   height: auto;
+  margin-top: -10px;
 }</style>

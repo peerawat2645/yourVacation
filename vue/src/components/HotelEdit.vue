@@ -1,51 +1,47 @@
 <template>
-  <div class="hrbody">
-    <a href="/home#foryou" class="hrblack-button">Back</a>
-    <div class="hrContact">
-      <a style="color: rgb(83, 176, 177);">Check Reservation Detail</a>
-      <p>If you have any questions or would like to contact us, please contact us through the channels below.</p>
-      <div class="hrContactNameRow">
-        <div class="hrContactNameRowdiv">
-          <a>Hotel Name</a>
-          <p>00000000000</p></div>
-      <div class="hrContactNameRowdiv">
-        <a>RoomType</a>
-        <p>00000000000</p></div>
-    </div>
-    <div class="hrContactNameRow">
-      <div class="hrContactNameRowdiv3">
-        <a>จำนวนห้อง</a>
-        <p>00000000000</p></div>
-    <div class="hrContactNameRowdiv3">
-      <a>จำนวนผู้เข้าพัก</a>
-        <p>3 คน</p></div>
-        <div class="hrContactNameRowdiv3">
-          <a>ราคา</a>
-            <p>00000000000 บาท</p></div>
-  </div>
-        <div class="hrContactNameRow">
-          <div class="hrContactNameRowdiv">
-          <a>Name</a>
-        <p>ssssssssss</p></div>
-        <div class="hrContactNameRowdiv">
-          <a>Surname</a>
-        <p>ssssssssss</p></div>
+  <div class="ahbody">
+    <a href="/hotel/home" class="ahblack-button">Back</a>
+    <div class="ahContact">
+      <a style="color: rgb(83, 176, 177);">Edit Hotel</a>
+      <div class="ahContactName">
+        <a>Name</a>
+        <input type="text" class="ahcustom-input" placeholder="Your Input">
       </div>
-      <div class="hrContactName">
-        <a>Phone</a>
-        <p>00000000000</p>
+      <div class="ahContactName">
+        <a>Description</a>
+        <input type="text" class="ahcustom-input" placeholder="Your Input">
       </div>
-      <div class="hrContactName">
-        <a>Email</a>
-        <p>DataSecurityCPEGroup3@gmail.com</p>
+      <div class="ahContactName">
+        <a>Location</a>
+        <input type="text" class="ahcustom-input" placeholder="Your Input">
       </div>
-      <div style="width: 100%; align-items:center; "><button class="hrblack-button" @click="openPopup">จอง</button></div>
-      <div class="popup-overlay" v-if="isPopupOpen">
-        <div class="popup">
-          <span @click="closePopup" class="close-button">X</span>
-          <h2>Pay</h2>
-          <img :src="imageUrl" alt="Image Description" :width="imageWidth" :height="imageHeight" />
-          <a href="/home#foryou" class="hrblack-button" style="color: white; font-size:18px">Success</a>
+      <div class="ahContactNameRow">
+        <div class="ahContactNameRowdiv3">
+          <a>เวลาเปิด</a>
+          <input type="text" class="ahcustom-input" placeholder="Your Input">
+        </div>
+        <div class="ahContactNameRowdiv3">
+          <a>เวลาปิด</a>
+          <input type="text" class="ahcustom-input" placeholder="Your Input">
+        </div>
+        <div class="ahContactNameRowdiv3">
+          <a>เวลา checkin</a>
+          <input type="text" class="ahcustom-input" placeholder="Your Input">
+        </div>
+      </div>
+      <div class="ahUpload">
+          <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
+          <button @click="uploadFile">Upload</button>
+          <div v-if="imageUrl">
+            <img :src="imageUrl" alt="Uploaded Image" />
+          </div>
+      </div>
+      <div style="width: 100%; align-items:center; "><button class="ahblack-button" @click="openPopup">แก้ไข</button></div>
+      <div class="ahpopup-overlay" v-if="isPopupOpen">
+        <div class="ahpopup">
+          <span @click="closePopup" class="ahclose-button">X</span>
+          <h2>ยืนยันการแก้ไข</h2>
+          <a href="/hotel/home" class="ahblack-button" style="color: white; font-size:18px">Success</a>
         </div>
       </div>
     </div>
@@ -53,14 +49,13 @@
 </template>
 <script>
 export default {
-  name: 'ReservationHotel',
+  name: 'HotelEdit',
   props: {
     msg: String
   },
   data() {
     return {
       isPopupOpen: false,
-      imageUrl: 'https://f.ptcdn.info/986/049/000/on5jobi79VITjvICQT0-o.png',
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
     };
@@ -76,7 +71,7 @@ export default {
 }
 </script>
 <style>
-.hrbody {
+.ahbody {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -84,7 +79,12 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.hrblack-button {
+.ahcustom-input {
+  border: 10px solid grey;
+  /* You can add more custom styles as needed */
+  height: 40px;
+}
+.ahblack-button {
   display: inline-block;
   padding: 10px 20px;
   background-color: #000;
@@ -97,11 +97,19 @@ export default {
   align-self: flex-start;
 }
 
-.hrblack-button:hover {
+.ahblack-button:hover {
   background-color: #333;
   /* Darker shade of black on hover */
 }
-.hrContact {
+.ahUpload {
+  width: 80%;
+  height: 15%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.ahContact {
   width: 45%;
   height: 85%;
   padding: 50px;
@@ -114,7 +122,7 @@ export default {
   border-radius: 20px;
 }
 
-.hrContact a {
+.ahContact a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 40px;
   font-weight: 600;
@@ -122,7 +130,7 @@ export default {
   color: rgb(83, 176, 177);
 }
 
-.hrContact p {
+.ahContact p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 400;
@@ -130,7 +138,7 @@ export default {
   color: rgb(64, 64, 64);
 }
 
-.hrContactName {
+.ahContactName {
   width: 80%;
   height: 20%;
   display: flex;
@@ -138,7 +146,17 @@ export default {
   justify-content: space-between;
   flex-direction: column;
 }
-.hrContactNameRow {
+.ahContactLabel {
+  width: 80%;
+  height: auto;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px 0px;
+}
+.ahContactNameRow {
   width: 80%;
   height: 20%;
   display: flex;
@@ -146,7 +164,7 @@ export default {
   justify-content: space-between;
   flex-direction: row;
 }
-.hrContactNameRowdiv{
+.ahContactNameRowdiv{
   width: 50%;
   height: auto;
   display: flex;
@@ -154,7 +172,7 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-.hrContactNameRowdiv3{
+.ahContactNameRowdiv3{
   width: 32%;
   height: auto;
   display: flex;
@@ -162,7 +180,7 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-.hrContactName a {
+.ahContactName a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -170,14 +188,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactName p {
+.ahContactName p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.hrContactNameRowdiv a {
+.ahContactNameRowdiv a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -185,14 +203,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactNameRowdiv p {
+.ahContactNameRowdiv p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.hrContactNameRowdiv3 a {
+.ahContactNameRowdiv3 a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -200,14 +218,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactNameRowdiv3 p {
+.ahContactNameRowdiv3 p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.popup-overlay {
+.ahpopup-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -220,7 +238,7 @@ export default {
   z-index: 999; /* Adjust z-index as needed */
 }
 
-.popup {
+.ahpopup {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -230,7 +248,7 @@ export default {
   position: relative;
 }
 
-.close-button {
+.ahclose-button {
   position: absolute;
   top: 10px;
   right: 10px;

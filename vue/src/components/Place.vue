@@ -5,7 +5,7 @@
       <div>
         <div class="pContents">
           <div class="pCard" v-for="item in displayedData" :key="item.id">
-            <div class="pCardContent"><a>ชื่ออุทยาน {{ item.id }}</a></div>
+            <div class="pCardContent"><a>ชื่ออุทยาน {{ item.id }}</a> <a href="/place/detail" style="width: auto;height:auto; cursor:default;"><div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div></a></div>
             <div class="pDetail">
               <div class="pimg">
                 <div class="pimg1">
@@ -90,7 +90,17 @@ export default {
   justify-content: space-between;
   flex-direction: column;
 }
-
+.pclicked {
+  z-index: 200;
+  background-color: #000000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
 .pText {
   margin-top: 4vh;
   width: 99%;
@@ -188,7 +198,7 @@ export default {
   padding: 5px;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   flex-direction: row;
 }
 

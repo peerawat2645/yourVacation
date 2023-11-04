@@ -22,7 +22,7 @@
               <div class="ReCardContentBoxDetail"><a>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></div>
               <div class="ReCardReserve">
                 <a>ราคาเริ่มต้น xxx บาท</a>
-                <a href="#"><button class="ReCardReserveBtn">จองห้องพัก</button></a>
+                <a href="/hotel/detail"><button class="ReCardReserveBtn">จองห้องพัก</button></a>
               </div>
             </div>
           </div>

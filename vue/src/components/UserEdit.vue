@@ -1,51 +1,36 @@
 <template>
-  <div class="hrbody">
-    <a href="/home#foryou" class="hrblack-button">Back</a>
-    <div class="hrContact">
-      <a style="color: rgb(83, 176, 177);">Check Reservation Detail</a>
-      <p>If you have any questions or would like to contact us, please contact us through the channels below.</p>
-      <div class="hrContactNameRow">
-        <div class="hrContactNameRowdiv">
-          <a>Hotel Name</a>
-          <p>00000000000</p></div>
-      <div class="hrContactNameRowdiv">
-        <a>RoomType</a>
-        <p>00000000000</p></div>
-    </div>
-    <div class="hrContactNameRow">
-      <div class="hrContactNameRowdiv3">
-        <a>จำนวนห้อง</a>
-        <p>00000000000</p></div>
-    <div class="hrContactNameRowdiv3">
-      <a>จำนวนผู้เข้าพัก</a>
-        <p>3 คน</p></div>
-        <div class="hrContactNameRowdiv3">
-          <a>ราคา</a>
-            <p>00000000000 บาท</p></div>
-  </div>
-        <div class="hrContactNameRow">
-          <div class="hrContactNameRowdiv">
+  <div class="uebody">
+    <a href="/home" class="ueblack-button">Back</a>
+    <div class="ueContact">
+      <a style="color: rgb(83, 176, 177);">Edit User</a>
+      <div class="ueContactNameRow">
+        <div class="ueContactNameRowdiv">
           <a>Name</a>
-        <p>ssssssssss</p></div>
-        <div class="hrContactNameRowdiv">
+          <input type="text" class="uecustom-input" placeholder="Your Input">
+        </div>
+        <div class="ueContactNameRowdiv">
           <a>Surname</a>
-        <p>ssssssssss</p></div>
+          <input type="text" class="uecustom-input" placeholder="Your Input">
+        </div>
       </div>
-      <div class="hrContactName">
-        <a>Phone</a>
-        <p>00000000000</p>
-      </div>
-      <div class="hrContactName">
+      <div class="ueContactName">
         <a>Email</a>
-        <p>DataSecurityCPEGroup3@gmail.com</p>
+        <input type="text" class="uecustom-input" placeholder="Your Input">
       </div>
-      <div style="width: 100%; align-items:center; "><button class="hrblack-button" @click="openPopup">จอง</button></div>
-      <div class="popup-overlay" v-if="isPopupOpen">
-        <div class="popup">
-          <span @click="closePopup" class="close-button">X</span>
-          <h2>Pay</h2>
-          <img :src="imageUrl" alt="Image Description" :width="imageWidth" :height="imageHeight" />
-          <a href="/home#foryou" class="hrblack-button" style="color: white; font-size:18px">Success</a>
+      <div class="ueContactName">
+        <a>Phone</a>
+        <input type="text" class="uecustom-input" placeholder="Your Input">
+      </div>
+      <div class="ueContactName">
+        <a>Location</a>
+        <input type="text" class="uecustom-input" placeholder="Your Input">
+      </div>
+      <div style="width: 100%; align-items:center; "><button class="ueblack-button" @click="openPopup">แก้ไข</button></div>
+      <div class="uepopup-overlay" v-if="isPopupOpen">
+        <div class="uepopup">
+          <span @click="closePopup" class="ueclose-button">X</span>
+          <h2>ยืนยันการแก้ไข</h2>
+          <a href="/home" class="ueblack-button" style="color: white; font-size:18px">Success</a>
         </div>
       </div>
     </div>
@@ -53,14 +38,13 @@
 </template>
 <script>
 export default {
-  name: 'ReservationHotel',
+  name: 'UserEdit',
   props: {
     msg: String
   },
   data() {
     return {
       isPopupOpen: false,
-      imageUrl: 'https://f.ptcdn.info/986/049/000/on5jobi79VITjvICQT0-o.png',
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
     };
@@ -76,7 +60,7 @@ export default {
 }
 </script>
 <style>
-.hrbody {
+.uebody {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -84,7 +68,12 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-.hrblack-button {
+.uecustom-input {
+  border: 10px solid grey;
+  /* You can add more custom styles as needed */
+  height: 40px;
+}
+.ueblack-button {
   display: inline-block;
   padding: 10px 20px;
   background-color: #000;
@@ -97,11 +86,19 @@ export default {
   align-self: flex-start;
 }
 
-.hrblack-button:hover {
+.ueblack-button:hover {
   background-color: #333;
   /* Darker shade of black on hover */
 }
-.hrContact {
+.ueUpload {
+  width: 80%;
+  height: 15%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.ueContact {
   width: 45%;
   height: 85%;
   padding: 50px;
@@ -114,7 +111,7 @@ export default {
   border-radius: 20px;
 }
 
-.hrContact a {
+.ueContact a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 40px;
   font-weight: 600;
@@ -122,7 +119,7 @@ export default {
   color: rgb(83, 176, 177);
 }
 
-.hrContact p {
+.ueContact p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 400;
@@ -130,15 +127,25 @@ export default {
   color: rgb(64, 64, 64);
 }
 
-.hrContactName {
+.ueContactName {
   width: 80%;
   height: 20%;
   display: flex;
   align-items: start;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
 }
-.hrContactNameRow {
+.ueContactLabel {
+  width: 80%;
+  height: auto;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px 0px;
+}
+.ueContactNameRow {
   width: 80%;
   height: 20%;
   display: flex;
@@ -146,7 +153,7 @@ export default {
   justify-content: space-between;
   flex-direction: row;
 }
-.hrContactNameRowdiv{
+.ueContactNameRowdiv{
   width: 50%;
   height: auto;
   display: flex;
@@ -154,7 +161,7 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-.hrContactNameRowdiv3{
+.ueContactNameRowdiv3{
   width: 32%;
   height: auto;
   display: flex;
@@ -162,7 +169,7 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-.hrContactName a {
+.ueContactName a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -170,14 +177,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactName p {
+.ueContactName p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.hrContactNameRowdiv a {
+.ueContactNameRowdiv a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -185,14 +192,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactNameRowdiv p {
+.ueContactNameRowdiv p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.hrContactNameRowdiv3 a {
+.ueContactNameRowdiv3 a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -200,14 +207,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hrContactNameRowdiv3 p {
+.ueContactNameRowdiv3 p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
   cursor: default;
   color: rgb(64, 64, 64);
 }
-.popup-overlay {
+.uepopup-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -220,7 +227,7 @@ export default {
   z-index: 999; /* Adjust z-index as needed */
 }
 
-.popup {
+.uepopup {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -230,7 +237,7 @@ export default {
   position: relative;
 }
 
-.close-button {
+.ueclose-button {
   position: absolute;
   top: 10px;
   right: 10px;
