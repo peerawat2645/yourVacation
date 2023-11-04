@@ -11,6 +11,7 @@ import AddHotel from "../components/HotelAdd.vue";
 import HotelEdit from "../components/HotelEdit.vue";
 import RoomTypeEdit from "../components/RoomTypeEdit.vue";
 import UserEdit from "../components/UserEdit.vue";
+import HotelCreate from "../components/CreateHotel.vue";
 const routeList = [
     {
         path: "/",
@@ -59,6 +60,10 @@ const routeList = [
     {
         path: "/user",
         component: UserEdit,
+    },
+    {
+        path: "/hotel/create",
+        component: HotelCreate,
     },
 ];
 
