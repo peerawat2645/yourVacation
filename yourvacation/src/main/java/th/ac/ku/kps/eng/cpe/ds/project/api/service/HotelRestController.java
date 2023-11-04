@@ -1,7 +1,11 @@
 package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -32,6 +38,7 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.AdvertismentDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.HotelDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.services.AdvertisementService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.HotelService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.ImgHotelService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.ReservationService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
@@ -55,6 +62,9 @@ public class HotelRestController {
 	
 	@Autowired
 	private SubdistrictService subdistrictService;
+
+	@Autowired
+	private ImgHotelService imgHotelService;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -74,6 +84,46 @@ public class HotelRestController {
 		res.setBody(responObject);
 		return new ResponseEntity<Response<ObjectNode>>(res, res.getHttpStatus());
 	}
+
+	@PostMapping("/uploadImage")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,@Param("hotelId") int id) {
+        try {
+        	String uploadDir = "C:/yourvacation";
+        	
+        	File folder = new File(uploadDir + File.separator + "Hotel" + File.separator);
+    		if (!folder.exists()) {
+    			folder.mkdirs();
+    		}
+
+    		UUID uuid = UUID.randomUUID();
+
+    		String filename = uuid.toString();
+
+    		String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+
+    		filename = filename + "." + type;
+
+    		String path = uploadDir + File.separator + "Hotel" + File.separator + filename;
+    		
+    		OutputStream outputStream = new FileOutputStream(path);
+    		outputStream.write(file.getBytes());
+    		outputStream.close();
+        	
+        	Hotel hotel = hotelService.findById(id);
+        	
+        	Imghotel imghotel= new Imghotel();
+        	
+        	imghotel.setHotel(hotel);
+        	imghotel.setFilePath(filename);
+        	
+        	imgHotelService.save(imghotel);
+
+            return ResponseEntity.ok("Image uploaded and encrypted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
+        }
+    }
 	
 	@PostMapping("/create")
 	public ResponseEntity<Response<Hotel>> create(@Valid @RequestBody Hotel hotel) {
