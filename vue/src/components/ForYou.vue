@@ -13,23 +13,26 @@
                 <div class="PlaceProvince">
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
-                        font-weight: 600; color:black">จังหวัด</a>
-                        <select style="width: 100%;">
+                        font-weight: 600; color:black;">จังหวัด</a>
+                        <select style="width: 100%;" @change="ProvinceChange">
                             <option value="">Select Province</option>
+                            <option v-for="item in province" v-bind:key="item.provinceId" :value=item.provinceId>{{item.name}}</option>
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                         font-weight: 600; color:black">อำเภอ</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
+                        <select style="width: 100%;" @change="DistrictChange">
+                            <option value="">Select District</option>
+                            <option v-for="item in district" v-bind:key="item.id" :value=item.districtId>{{item.name}}</option>
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
-                        font-weight: 600; color:black">ตำบล</a>
+                        font-weight: 600; color:black;">ตำบล</a>
                         <select style="width: 100%;">
-                            <option value="">Select Province</option>
+                            <option value="">Select subdistrict</option>
+                            <option v-for="item in subdistrict" v-bind:key="item.id">{{item.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -58,7 +61,7 @@
                         <input type="checkbox"> <a style="font-size: 16px;
                         font-weight: 600; color:black">กางเต้นท์</a>
                     </label>
-                    <div class="clicked" style="padding: 10px 50px;">ค้นหา</div>
+                    <div class="clicked" style="padding: 10px 50px;" >ค้นหา</div>
                 </div>
             </div>
             <div class="Hotelbox" v-if="activeComponent === 'HotelVue'">
@@ -133,6 +136,8 @@
 import RecomendPlace from './Recomend.vue';
 import HotelVue from './Hotel.vue';
 import PlaceVue from './Place.vue';
+import SubdistrictService from '@/services/SubdistrictService';
+
 export default {
     name: 'ForYou',
     props: {
@@ -151,8 +156,14 @@ export default {
             isColorChanged3: false,
             isClicked1: true,
             isClicked2: false,
-            isClicked3: false
+            isClicked3: false,
+            subdistrict:[],
+            district:[],
+            province:[]
         };
+    },
+    created() {
+        this.provinceAll();
     },
     methods: {
         changeColor(a) {
@@ -183,10 +194,66 @@ export default {
                 this.isClicked2 = false;
                 this.isClicked3 = true;
             }
+        },
+        provinceAll(){
+            SubdistrictService.province()
+                .then((response) => {
+                    {
+                        this.province = response.data.body
+                        console.log(this.province)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
+        ProvinceChange(event){
+            const selectedValue = event.target.value;
+
+            SubdistrictService.districtId(selectedValue)
+                .then((response) => {
+                    {
+                        this.district = response.data.body
+                        
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
+        DistrictChange(event){
+            const selectedValue = event.target.value;
+
+            SubdistrictService.subdistrictId(selectedValue)
+                .then((response) => {
+                    {
+                        this.subdistrict = response.data.body
+                        
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
         }
     }
 }
 </script>
+
 <style>
 .clicked {
     z-index: 200;

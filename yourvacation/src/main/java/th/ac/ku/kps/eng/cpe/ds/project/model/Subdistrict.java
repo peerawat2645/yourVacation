@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Subdistrict implements java.io.Serializable {
 
 	private Integer subdistrictId;
+	@JsonIgnore
 	private District district;
 	private String name;
 	@JsonIgnore

@@ -8,7 +8,7 @@
           <p>Username</p>
           <input type="text" placeholder="Username" v-model="username">
           <p>Password</p>
-          <input type="text" placeholder="Password" v-model="password">
+          <input type="password" placeholder="Password" v-model="password">
         </div>
         <div class="loginbottom">
           <a href="/"><button class="loginregister_btn">
@@ -242,6 +242,16 @@ export default {
 }
 
 input[type="text"] {
+  border: 2px solid grey;
+  /* Border color and width */
+  border-radius: 10px;
+  /* Border radius */
+  padding: 10px;
+  width: 90%;
+  /* Padding inside the input */
+}
+
+input[type="password"] {
   border: 2px solid grey;
   /* Border color and width */
   border-radius: 10px;

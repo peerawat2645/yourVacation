@@ -31,7 +31,7 @@
                     <p>Email</p>
                     <input type="text" placeholder="Email" v-model="user.email">
                     <p>Password</p>
-                    <input type="text" placeholder="Password" v-model="user.password">
+                    <input type="password" placeholder="Password" v-model="user.password">
                     <p>Phone Number</p>
                     <input type="text" placeholder="Phone Number" v-model="user.phone">
                     <p>Address</p>
@@ -282,6 +282,16 @@ input[type="text"] {
     padding: 10px;
     width: 90%;
     /* Padding inside the input */
+}
+
+input[type="password"] {
+  border: 2px solid grey;
+  /* Border color and width */
+  border-radius: 10px;
+  /* Border radius */
+  padding: 10px;
+  width: 90%;
+  /* Padding inside the input */
 }
 
 .error-message {

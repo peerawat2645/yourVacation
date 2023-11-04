@@ -20,5 +20,8 @@ public class DistrictService {
 	public List<District> findAll(){
 		return (List<District>) districtRepository.findAll();
 	}
-
+	
+	public List<District> findByProvinceId(int provinceId) {
+        return districtRepository.findByProvinceId(provinceId) ;
+    }
 }

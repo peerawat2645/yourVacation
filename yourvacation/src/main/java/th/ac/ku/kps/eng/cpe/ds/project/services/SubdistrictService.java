@@ -21,4 +21,8 @@ public class SubdistrictService {
 		return (List<Subdistrict>) subdistrictRepository.findAll();
 	}
 
+	
+	public List<Subdistrict> findByDistrictId(int districtId) {
+        return subdistrictRepository.findByDistrictId(districtId) ;
+    }
 }

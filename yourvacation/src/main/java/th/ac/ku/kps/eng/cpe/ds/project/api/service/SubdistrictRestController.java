@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -72,11 +73,41 @@ public class SubdistrictRestController {
 
 	}
 	
+	@GetMapping("/subdistrict/{id}")
+	public ResponseEntity<Response<List<Subdistrict>>> getSubdistrictId(@PathVariable("id") int id) {
+		Response<List<Subdistrict>> res = new Response<>();
+		try {
+			res.setBody(subdistrictService.findByDistrictId(id));
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<List<Subdistrict>>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<List<Subdistrict>>>(res, res.getHttpStatus());
+		}
+
+	}
+	
 	@GetMapping("/district/")
 	public ResponseEntity<Response<List<District>>> getDistrict() {
 		Response<List<District>> res = new Response<>();
 		try {
 			res.setBody(districtService.findAll());
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<List<District>>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<List<District>>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/district/{id}")
+	public ResponseEntity<Response<List<District>>> getDistrictId(@PathVariable("id") int id) {
+		Response<List<District>> res = new Response<>();
+		try {
+			res.setBody(districtService.findByProvinceId(id));
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<List<District>>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
