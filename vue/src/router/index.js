@@ -3,6 +3,7 @@ import LoginPage from "../components/Login.vue";
 import AllComponent from "../components/AllComponent.vue";
 import AfterLogin from "../components/AllComponetAfterlogin.vue";
 import RegisterPage from "../components/Register.vue";
+import RegisterHotelPage from "../components/RegisterHotel.vue";
 import PlaceDetail from "../components/PlaceDetail.vue";
 import HotelDetail from "../components/HotelDetail.vue";
 import ReservationHotel from "../components/Reservation.vue";
@@ -24,6 +25,10 @@ const routeList = [
     {
         path: "/register",
         component: RegisterPage,
+    },
+    {
+        path: "/registerHotel",
+        component: RegisterHotelPage,
     },
     {
         path: "/home",
