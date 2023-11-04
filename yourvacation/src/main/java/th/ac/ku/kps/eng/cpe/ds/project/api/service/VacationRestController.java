@@ -2,6 +2,7 @@ package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -11,16 +12,24 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import th.ac.ku.kps.eng.cpe.ds.project.api.util.Response;
+import th.ac.ku.kps.eng.cpe.ds.project.model.District;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Tag;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Tagname;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
+import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.VacationDTO;
+import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.TagnameService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
 
 @CrossOrigin("http://localhost:8081/")
@@ -30,6 +39,12 @@ public class VacationRestController {
 
 	@Autowired
 	private VacationService vacationService;
+	
+	@Autowired
+	private TagnameService tagnameService;
+	
+	@Autowired
+	private SubdistrictService subdistrictService;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -51,42 +66,96 @@ public class VacationRestController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<Response<List<Vacation>>> findListVacation(@Param("tagnameIds") List<Integer> tagnameIds,@Param("subdistrictId") int subdistrictId,@Param("districtId") int districtId,@Param("provinceId") int provinceId) {
-		Response<List<Vacation>> res = new Response<>();
+	public ResponseEntity<Response<List<VacationDTO>>> findListVacation(@Param("tagnameIds")@RequestParam(required = false, defaultValue = "") List<Integer> tagnameIds,@Param("subdistrictId") int subdistrictId,@Param("districtId") int districtId,@Param("provinceId") int provinceId) {
+		Response<List<VacationDTO>> res = new Response<>();
 		try {
+			List<VacationDTO> vacationDTO = new ArrayList<VacationDTO>();
 			List<Vacation> vacations = new ArrayList<Vacation>();
-			if(tagnameIds != null && subdistrictId != 0) {
+			System.out.println(tagnameIds.size());
+			if(tagnameIds.isEmpty()) {
+				List<Tagname> tagnameList = tagnameService.findAll();
+				for(Tagname t:tagnameList) {
+					tagnameIds.add(t.getTagNameId());
+				}
+			}
+			System.out.println(tagnameIds.size());
+			if(subdistrictId != 0) {
 				vacations = vacationService.findBySubdistrictIdAndTagId(subdistrictId, tagnameIds);
 			}
-			else if(tagnameIds != null && districtId != 0) {
+			else if(districtId != 0) {
 				vacations = vacationService.findByDistrictIdAndTagId(districtId, tagnameIds);
 			}
-			else if(tagnameIds != null && provinceId != 0) {
+			else if(provinceId != 0) {
 				vacations = vacationService.findByProvinceIdAndTagId(provinceId, tagnameIds);
 			}
-			res.setBody(vacations);
+			
+			System.out.println(vacations.size());
+			for(Vacation v:vacations) {
+				VacationDTO dto = new VacationDTO();
+				dto.setVacation(v);
+				List<String> tagNames = new ArrayList<String>();
+				List<Tag> tags = v.getTags();
+				for(Tag t:tags) {
+					tagNames.add(t.getTagname().getName());
+				}
+				dto.setTagName(tagNames);
+				vacationDTO.add(dto);
+			}
+			res.setBody(vacationDTO);
 			res.setHttpStatus(HttpStatus.OK);
-			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+			return new ResponseEntity<Response<List<VacationDTO>>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
-			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+			return new ResponseEntity<Response<List<VacationDTO>>>(res, res.getHttpStatus());
 		}
 
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<Response<List<Vacation>>> findByDistrict(@PathVariable("id") int districtId) {
-		Response<List<Vacation>> res = new Response<>();
+	public ResponseEntity<Response<List<VacationDTO>>> findByDistrict(@PathVariable("id") int districtId) {
+		Response<List<VacationDTO>> res = new Response<>();
 		try {
+			List<VacationDTO> vacationDTO = new ArrayList<VacationDTO>();
 			List<Vacation> vacations = vacationService.findByDistrictId(districtId);
-			res.setBody(vacations);
+			for(Vacation v:vacations) {
+				VacationDTO dto = new VacationDTO();
+				dto.setVacation(v);
+				List<String> tagNames = new ArrayList<String>();
+				List<Tag> tags = v.getTags();
+				for(Tag t:tags) {
+					tagNames.add(t.getTagname().getName());
+				}
+				dto.setTagName(tagNames);
+				vacationDTO.add(dto);
+			}
+			res.setBody(vacationDTO);
 			res.setHttpStatus(HttpStatus.OK);
-			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+			return new ResponseEntity<Response<List<VacationDTO>>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
-			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+			return new ResponseEntity<Response<List<VacationDTO>>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/random/{id}")
+	public ResponseEntity<Response<Vacation>> findByDistrictRandom(@PathVariable("id") int subdistrictId) {
+		Response<Vacation> res = new Response<>();
+		try {
+			District district = subdistrictService.findById(subdistrictId).getDistrict();
+			List<Vacation> vacations = vacationService.findByDistrictId(district.getDistrictId());
+			System.out.println(vacations.size());
+			Random rand = new Random();
+		    Vacation vacation = vacations.get(rand.nextInt(vacations.size()));
+			res.setBody(vacation);
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<Vacation>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<Vacation>>(res, res.getHttpStatus());
 		}
 
 	}

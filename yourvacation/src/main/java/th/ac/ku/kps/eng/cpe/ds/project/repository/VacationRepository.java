@@ -11,7 +11,7 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
 @Repository
 public interface VacationRepository extends CrudRepository<Vacation, Integer>{
 	
-	@Query("from Vacation v inner join v.subdistrict s inner join s.district d inner join v.imgvacations where d.districtId =:districtId")
+	@Query("from Vacation v inner join v.subdistrict s inner join s.district d where d.districtId =:districtId")
 	public List<Vacation> findByDistrictId(int districtId);
 	
 	@Query("From Vacation v inner join v.subdistrict s inner join v.tags t inner join t.tagname tn where tn.tagNameId in :tagId and s.subdistrictId =:subId")

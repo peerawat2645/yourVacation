@@ -37,12 +37,7 @@ public class HotelService {
 		return Base64.getEncoder().encodeToString(encryptedBytes);
 	}
 
-	public static String decrypt(String encryptedText, PrivateKey privateKey) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
-		return new String(decryptedBytes);
-	}
+	
 
 	public static Hotel encryptData(Hotel hotel) throws Exception {
 		KeyPair keypair = generateKeyPair();
@@ -59,6 +54,13 @@ public class HotelService {
 		String encodedPrivateKey = Base64.getEncoder().encodeToString(privateKeyBytes);
 		hotel.setPrivateKey(encodedPrivateKey);
 		return hotel;
+	}
+	
+	public static String decrypt(String encryptedText, PrivateKey privateKey) throws Exception {
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.DECRYPT_MODE, privateKey);
+		byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
+		return new String(decryptedBytes);
 	}
 
 	public static List<Hotel> decryptData(List<Hotel> hotels) throws Exception {
@@ -104,43 +106,43 @@ public class HotelService {
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByGuestAndNotInReservationId(int guest, List<Integer> roomId) throws Exception {
-		List<Hotel> hotels = hotelRepository.findByGuestAndNotInReservationId(guest, roomId);
+	public List<Hotel> findByGuestAndNotInReservationIdAndSubdistrictId(int guest, List<Integer> roomId,int subdistrictId) throws Exception {
+		List<Hotel> hotels = hotelRepository.findByGuestAndNotInReservationIdAndSubdistrictId(guest, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByAmountRoomAndNotInReservationId(int amountRoom, List<Integer> roomId) throws Exception {
-		List<Hotel> hotels = hotelRepository.findByAmountRoomAndNotInReservationId(amountRoom, roomId);
+	public List<Hotel> findByAmountRoomAndNotInReservationIdAndSubdistrictId(int amountRoom, List<Integer> roomId,int subdistrictId) throws Exception {
+		List<Hotel> hotels = hotelRepository.findByAmountRoomAndNotInReservationIdAndSubdistrictId(amountRoom, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByPriceAndNotInReservationId(int price, List<Integer> roomId) throws Exception {
-		List<Hotel> hotels = hotelRepository.findByPriceAndNotInReservationId(price, roomId);
+	public List<Hotel> findByPriceAndNotInReservationIdAndSubdistrictId(int priceMin,int priceMax, List<Integer> roomId,int subdistrictId) throws Exception {
+		List<Hotel> hotels = hotelRepository.findByPriceAndNotInReservationIdAndSubdistrictId(priceMin, priceMax, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByGuestAndAmountRoomAndNotInReservationId(int guest, int amountRoom, List<Integer> roomId)
+	public List<Hotel> findByGuestAndAmountRoomAndNotInReservationIdAndSubdistrictId(int guest, int amountRoom, List<Integer> roomId,int subdistrictId)
 			throws Exception {
-		List<Hotel> hotels = hotelRepository.findByGuestAndAmountRoomAndNotInReservationId(guest, amountRoom, roomId);
+		List<Hotel> hotels = hotelRepository.findByGuestAndAmountRoomAndNotInReservationIdAndSubdistrictId(guest, amountRoom, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByGuestAndPriceAndNotInReservationId(int guest, int price, List<Integer> roomId)
+	public List<Hotel> findByGuestAndPriceAndNotInReservationIdAndSubdistrictId(int guest, int priceMin,int priceMax, List<Integer> roomId,int subdistrictId)
 			throws Exception {
-		List<Hotel> hotels = hotelRepository.findByGuestAndPriceAndNotInReservationId(guest, price, roomId);
+		List<Hotel> hotels = hotelRepository.findByGuestAndPriceAndNotInReservationIdAndSubdistrictId(guest,priceMin, priceMax, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByAmountRoomAndPriceAndNotInReservationId(int amountRoom, int price, List<Integer> roomId)
+	public List<Hotel> findByAmountRoomAndPriceAndNotInReservationIdAndSubdistrictIdAndSubdistrictId(int amountRoom, int priceMin,int priceMax, List<Integer> roomId,int subdistrictId)
 			throws Exception {
-		List<Hotel> hotels = hotelRepository.findByAmountRoomAndPriceAndNotInReservationId(amountRoom, price, roomId);
+		List<Hotel> hotels = hotelRepository.findByAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(amountRoom, priceMin, priceMax, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 
-	public List<Hotel> findByGuestAndAmountRoomAndPriceAndNotInReservationId(int guest, int amountRoom, int price,
-			List<Integer> roomId) throws Exception {
-		List<Hotel> hotels = hotelRepository.findByGuestAndAmountRoomAndPriceAndNotInReservationId(guest, amountRoom,
-				price, roomId);
+	public List<Hotel> findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(int guest, int amountRoom, int priceMin,int priceMax,
+			List<Integer> roomId,int subdistrictId) throws Exception {
+		List<Hotel> hotels = hotelRepository.findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(guest, amountRoom,
+				priceMin, priceMax, roomId, subdistrictId);
 		return decryptData(hotels);
 	}
 

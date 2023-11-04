@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
@@ -12,26 +13,26 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
 public interface HotelRepository extends CrudRepository<Hotel, Integer>{
 	
 	@Query("from Hotel h inner join h.rooms r where r.roomId not in (:roomId)")
-	public List<Hotel> findByNotInReservationId(List<Integer> roomId);
+	public List<Hotel> findByNotInReservationId(@Param("roomId")List<Integer> roomId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.guest >=:guest and r.roomId not in :roomId")
-	public List<Hotel> findByGuestAndNotInReservationId(int guest,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest >=:guest and r.roomId not in :roomId")
+	public List<Hotel> findByGuestAndNotInReservationIdAndSubdistrictId(@Param("guest")int guest,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.amountRoom >=:amountRoom and r.roomId not in :roomId")
-	public List<Hotel> findByAmountRoomAndNotInReservationId(int amountRoom,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.amountRoom >=:amountRoom and r.roomId not in :roomId")
+	public List<Hotel> findByAmountRoomAndNotInReservationIdAndSubdistrictId(@Param("amountRoom")int amountRoom,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where (r.price >=:price and r.price <=:price) and r.roomId not in :roomId")
-	public List<Hotel> findByPriceAndNotInReservationId(int price,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and (:priceMax >=r.price and :priceMin <=r.price) and r.roomId not in :roomId")
+	public List<Hotel> findByPriceAndNotInReservationIdAndSubdistrictId(@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.guest >=:guest and r.amountRoom >=:amountRoom and r.roomId not in :roomId")
-	public List<Hotel> findByGuestAndAmountRoomAndNotInReservationId(int guest,int amountRoom,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest >=:guest and r.amountRoom >=:amountRoom and r.roomId not in :roomId")
+	public List<Hotel> findByGuestAndAmountRoomAndNotInReservationIdAndSubdistrictId(@Param("guest")int guest,@Param("amountRoom")int amountRoom,List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.guest >=:guest and (r.price >=:price and r.price <=:price) and r.roomId not in :roomId")
-	public List<Hotel> findByGuestAndPriceAndNotInReservationId(int guest,int price,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest >=:guest and (:priceMax >=r.price and :priceMin <=r.price) and r.roomId not in :roomId")
+	public List<Hotel> findByGuestAndPriceAndNotInReservationIdAndSubdistrictId(@Param("guest")int guest,@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.amountRoom >=:amountRoom and (r.price >=:price and r.price <=:price) and r.roomId not in :roomId")
-	public List<Hotel> findByAmountRoomAndPriceAndNotInReservationId(int amountRoom,int price,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.amountRoom >=:amountRoom and (:priceMax >=r.price and :priceMin <=r.price) and r.roomId not in :roomId")
+	public List<Hotel> findByAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(@Param("amountRoom")int amountRoom,@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r where r.guest >=:guest and r.amountRoom >=:amountRoom and (r.price >=:price and r.price <=:price) and r.roomId not in :roomId")
-	public List<Hotel> findByGuestAndAmountRoomAndPriceAndNotInReservationId(int guest,int amountRoom,int price,List<Integer> roomId);
+	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest >=:guest and r.amountRoom >=:amountRoom and (:priceMax >=r.price and :priceMin <=r.price) and r.roomId not in :roomId")
+	public List<Hotel> findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(@Param("guest")int guest,@Param("amountRoom")int amountRoom,@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 }
