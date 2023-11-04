@@ -11,15 +11,15 @@ import th.ac.ku.kps.eng.cpe.ds.project.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	 @Autowired
-	  UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-	  @Override
-	  @Transactional
-	  public UserDetails loadUserByUsername(String username)  {
-	    User user = userRepository.findByUsername(username);
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username) {
+		User user = userRepository.findByUsername(username);
 
-	    return UserDetailsImpl.build(user);
-	  }
+		return UserDetailsImpl.build(user);
+	}
 
 }

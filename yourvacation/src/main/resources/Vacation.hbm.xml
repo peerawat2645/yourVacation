@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Vacation" optimistic-lock="none" table="vacation">
         <id name="vacationId" type="java.lang.Integer">
@@ -21,17 +21,17 @@
         <property name="tagName" type="string">
             <column length="16" name="tagName" not-null="true"/>
         </property>
-        <set fetch="select" inverse="true" lazy="true" name="tags" table="tag">
+        <bag fetch="select" inverse="true" lazy="true" name="tags" table="tag">
             <key>
                 <column name="vacationId" not-null="true"/>
             </key>
             <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Tag"/>
-        </set>
-        <set fetch="select" inverse="true" lazy="true" name="imgvacations" table="imgvacation">
+        </bag>
+        <bag fetch="select" inverse="true" lazy="true" name="imgvacations" table="imgvacation">
             <key>
                 <column name="vacationId" not-null="true"/>
             </key>
             <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Imgvacation"/>
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>

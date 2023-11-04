@@ -1,8 +1,8 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,7 +14,7 @@ public class Province implements java.io.Serializable {
 	private Integer provinceId;
 	private String name;
 	@JsonIgnore
-	private Set districts = new HashSet(0);
+	private List<District> districts = new ArrayList<District>();
 
 	public Province() {
 	}
@@ -23,7 +23,7 @@ public class Province implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Province(String name, Set districts) {
+	public Province(String name, List<District> districts) {
 		this.name = name;
 		this.districts = districts;
 	}
@@ -44,11 +44,11 @@ public class Province implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set getDistricts() {
+	public List<District> getDistricts() {
 		return this.districts;
 	}
 
-	public void setDistricts(Set districts) {
+	public void setDistricts(List<District> districts) {
 		this.districts = districts;
 	}
 

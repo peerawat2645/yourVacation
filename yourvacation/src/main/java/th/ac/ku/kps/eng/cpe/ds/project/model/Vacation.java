@@ -1,8 +1,8 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,9 +18,9 @@ public class Vacation implements java.io.Serializable {
 	private String address;
 	private String tagName;
 	@JsonIgnore
-	private Set tags = new HashSet(0);
+	private List<Tag> tags = new ArrayList<Tag>();
 	@JsonIgnore
-	private Set imgvacations = new HashSet(0);
+	private List<Imgvacation> imgvacations = new ArrayList<Imgvacation>();
 
 	public Vacation() {
 	}
@@ -33,8 +33,8 @@ public class Vacation implements java.io.Serializable {
 		this.tagName = tagName;
 	}
 
-	public Vacation(Subdistrict subdistrict, String name, String description, String address, String tagName, Set tags,
-			Set imgvacations) {
+	public Vacation(Subdistrict subdistrict, String name, String description, String address, String tagName, List<Tag> tags,
+			List<Imgvacation> imgvacations) {
 		this.subdistrict = subdistrict;
 		this.name = name;
 		this.description = description;
@@ -92,19 +92,19 @@ public class Vacation implements java.io.Serializable {
 		this.tagName = tagName;
 	}
 
-	public Set getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
 	}
 
-	public void setTags(Set tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
-	public Set getImgvacations() {
+	public List<Imgvacation> getImgvacations() {
 		return this.imgvacations;
 	}
 
-	public void setImgvacations(Set imgvacations) {
+	public void setImgvacations(List<Imgvacation> imgvacations) {
 		this.imgvacations = imgvacations;
 	}
 

@@ -1,7 +1,9 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +23,9 @@ public class User implements java.io.Serializable {
 	private int money;
 	private String address;
 	@JsonIgnore
-	private Set reservations = new HashSet(0);
+	private List<Userhotel> userhotels = new ArrayList<Userhotel>();
+	@JsonIgnore
+	private List<Reservation> reservations = new ArrayList<Reservation>();
 	@JsonIgnore
 	private Set<Role> roles = new HashSet(0);
 
@@ -41,7 +45,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String name, String lastname, String email, String username, String password, String phone, int money,
-			String address, Set reservations, Set roles) {
+			String address, List<Userhotel> userhotels, List<Reservation> reservations, Set<Role> roles) {
 		this.name = name;
 		this.lastname = lastname;
 		this.email = email;
@@ -50,6 +54,7 @@ public class User implements java.io.Serializable {
 		this.phone = phone;
 		this.money = money;
 		this.address = address;
+		this.userhotels = userhotels;
 		this.reservations = reservations;
 		this.roles = roles;
 	}
@@ -126,11 +131,19 @@ public class User implements java.io.Serializable {
 		this.address = address;
 	}
 
-	public Set getReservations() {
+	public List<Userhotel> getUserhotels() {
+		return this.userhotels;
+	}
+
+	public void setUserhotels(List<Userhotel> userhotels) {
+		this.userhotels = userhotels;
+	}
+
+	public List<Reservation> getReservations() {
 		return this.reservations;
 	}
 
-	public void setReservations(Set reservations) {
+	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
 

@@ -1,8 +1,8 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,9 +15,9 @@ public class Subdistrict implements java.io.Serializable {
 	private District district;
 	private String name;
 	@JsonIgnore
-	private Set vacations = new HashSet(0);
+	private List<Vacation> vacations = new ArrayList<Vacation>();
 	@JsonIgnore
-	private Set hotels = new HashSet(0);
+	private List<Hotel> hotels = new ArrayList<Hotel>();
 
 	public Subdistrict() {
 	}
@@ -27,7 +27,7 @@ public class Subdistrict implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Subdistrict(District district, String name, Set vacations, Set hotels) {
+	public Subdistrict(District district, String name, List<Vacation> vacations, List<Hotel> hotels) {
 		this.district = district;
 		this.name = name;
 		this.vacations = vacations;
@@ -58,19 +58,19 @@ public class Subdistrict implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set getVacations() {
+	public List<Vacation> getVacations() {
 		return this.vacations;
 	}
 
-	public void setVacations(Set vacations) {
+	public void setVacations(List<Vacation> vacations) {
 		this.vacations = vacations;
 	}
 
-	public Set getHotels() {
+	public List<Hotel> getHotels() {
 		return this.hotels;
 	}
 
-	public void setHotels(Set hotels) {
+	public void setHotels(List<Hotel> hotels) {
 		this.hotels = hotels;
 	}
 

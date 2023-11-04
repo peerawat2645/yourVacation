@@ -1,8 +1,8 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +18,7 @@ public class Room implements java.io.Serializable {
 	private int price;
 	private int amountRoom;
 	@JsonIgnore
-	private Set reservations = new HashSet(0);
+	private List<Reservation> reservations = new ArrayList<Reservation>();
 
 	public Room() {
 	}
@@ -31,7 +31,7 @@ public class Room implements java.io.Serializable {
 		this.amountRoom = amountRoom;
 	}
 
-	public Room(Hotel hotel, int guest, String type, int price, int amountRoom, Set reservations) {
+	public Room(Hotel hotel, int guest, String type, int price, int amountRoom, List<Reservation> reservations) {
 		this.hotel = hotel;
 		this.guest = guest;
 		this.type = type;
@@ -88,11 +88,11 @@ public class Room implements java.io.Serializable {
 		this.amountRoom = amountRoom;
 	}
 
-	public Set getReservations() {
+	public List<Reservation> getReservations() {
 		return this.reservations;
 	}
 
-	public void setReservations(Set reservations) {
+	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
 

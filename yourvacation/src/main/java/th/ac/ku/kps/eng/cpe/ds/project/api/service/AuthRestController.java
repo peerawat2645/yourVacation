@@ -1,5 +1,7 @@
 package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
+
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -25,10 +27,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import th.ac.ku.kps.eng.cpe.ds.project.api.util.Response;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Role;
 import th.ac.ku.kps.eng.cpe.ds.project.model.User;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.UserDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.security.jwt.JwtUtils;
 import th.ac.ku.kps.eng.cpe.ds.project.security.services.UserDetailsImpl;
+import th.ac.ku.kps.eng.cpe.ds.project.services.RoleService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.UserService;
 
 @CrossOrigin("http://localhost:8081/")
@@ -47,6 +51,9 @@ public class AuthRestController {
 
 	@Autowired
 	private JwtUtils jwtUtils;
+
+	@Autowired
+	private RoleService roleService;
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -80,7 +87,7 @@ public class AuthRestController {
 			} else {
 				Authentication authentication = authenticationManager.authenticate(
 						new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword()));
-				
+
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
 				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -88,7 +95,6 @@ public class AuthRestController {
 				ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
 				res.setMessage(jwtCookie.toString());
-				System.out.println(jwtCookie.toString());
 				res.setBody(userService.findByUsername(userDTO.getUsername()));
 				res.setHttpStatus(HttpStatus.OK);
 				return new ResponseEntity<Response<User>>(res, res.getHttpStatus());
@@ -109,20 +115,20 @@ public class AuthRestController {
 				res.setBody("exist username");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
-			}
-			else if(user.getPassword().length() < 6) {
+			} else if (user.getPassword().length() < 6) {
 				res.setBody("password length less 6 character");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
-			}
-			else if(user.getPhone().length() != 10) {
+			} else if (user.getPhone().length() != 10) {
 				res.setBody("phone number not equal 10 character");
 				res.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
 			}
 			user.setPassword(encoder.encode(user.getPassword()));
-			System.out.println("check");
 			userService.save(user);
+			
+			Role role = new Role(user, "user");
+			roleService.save(role);
 			res.setBody("User registered successfully!");
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
@@ -133,6 +139,42 @@ public class AuthRestController {
 		}
 
 	}
+
+	@PostMapping("/register/hotel")
+	public ResponseEntity<Response<String>> createUserHotel(@Valid @RequestBody User user) {
+		Response<String> res = new Response<>();
+		try {
+			if (!userService.existsByUsername(user.getUsername())) {
+				res.setBody("exist username");
+				res.setHttpStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+			} else if (user.getPassword().length() < 6) {
+				res.setBody("password length less 6 character");
+				res.setHttpStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+			} else if (user.getPhone().length() != 10) {
+				res.setBody("phone number not equal 10 character");
+				res.setHttpStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+			}
+			user.setPassword(encoder.encode(user.getPassword()));
+
+			user = userService.save(user);
+			
+			Role role = new Role(user, "hotel");
+			roleService.save(role);
+			
+			res.setBody("User registered successfully!");
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		}
+
+	}
+
 	@PostMapping("/signout")
 	public ResponseEntity<?> logoutUser() {
 		Response<String> res = new Response<>();

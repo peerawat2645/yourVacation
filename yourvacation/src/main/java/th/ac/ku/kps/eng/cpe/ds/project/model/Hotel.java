@@ -1,11 +1,9 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Nov 4, 2023, 1:39:16 AM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Hotel implements java.io.Serializable {
 
 	private Integer hotelId;
-	@JsonIgnore
 	private Subdistrict subdistrict;
 	private String name;
 	private String address;
@@ -24,12 +21,13 @@ public class Hotel implements java.io.Serializable {
 	private String status;
 	private Date checkinTime;
 	private boolean facilities;
-	@JsonIgnore
 	private String privateKey;
 	@JsonIgnore
-	private Set advertisements = new HashSet(0);
+	private List<Advertisement> advertisements = new ArrayList<Advertisement>();
 	@JsonIgnore
-	private Set rooms = new HashSet(0);
+	private List<Userhotel> userhotels = new ArrayList<Userhotel>();
+	@JsonIgnore
+	private List<Room> rooms = new ArrayList<Room>();
 	@JsonIgnore
 	private List<Imghotel> imghotels = new ArrayList<Imghotel>();
 
@@ -50,7 +48,8 @@ public class Hotel implements java.io.Serializable {
 	}
 
 	public Hotel(Subdistrict subdistrict, String name, String address, Date openTime, Date closeTime, String status,
-			Date checkinTime, boolean facilities, String privateKey, Set advertisements, Set rooms, List<Imghotel> imghotels) {
+			Date checkinTime, boolean facilities, String privateKey, List<Advertisement> advertisements, List<Userhotel> userhotels, List<Room> rooms,
+			List<Imghotel> imghotels) {
 		this.subdistrict = subdistrict;
 		this.name = name;
 		this.address = address;
@@ -61,6 +60,7 @@ public class Hotel implements java.io.Serializable {
 		this.facilities = facilities;
 		this.privateKey = privateKey;
 		this.advertisements = advertisements;
+		this.userhotels = userhotels;
 		this.rooms = rooms;
 		this.imghotels = imghotels;
 	}
@@ -145,19 +145,27 @@ public class Hotel implements java.io.Serializable {
 		this.privateKey = privateKey;
 	}
 
-	public Set getAdvertisements() {
+	public List<Advertisement> getAdvertisements() {
 		return this.advertisements;
 	}
 
-	public void setAdvertisements(Set advertisements) {
+	public void setAdvertisements(List<Advertisement> advertisements) {
 		this.advertisements = advertisements;
 	}
 
-	public Set getRooms() {
+	public List<Userhotel> getUserhotels() {
+		return this.userhotels;
+	}
+
+	public void setUserhotels(List<Userhotel> userhotels) {
+		this.userhotels = userhotels;
+	}
+
+	public List<Room> getRooms() {
 		return this.rooms;
 	}
 
-	public void setRooms(Set rooms) {
+	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
 

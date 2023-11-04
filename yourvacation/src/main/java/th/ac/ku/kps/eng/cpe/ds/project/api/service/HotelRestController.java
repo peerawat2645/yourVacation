@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -150,6 +151,23 @@ public class HotelRestController {
 		try {
 			Hotel hotel = hotelService.findById(hotelId);
 			res.setBody(hotel);
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setMessage(ex.getMessage());
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/test")
+	public ResponseEntity<Response<Hotel>> roomaaa(Authentication authentication) {
+		Response<Hotel> res = new Response<>();
+		try {
+			System.out.println(authentication.getUsername());
+			res.setBody(null);
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
 		} catch (Exception ex) {

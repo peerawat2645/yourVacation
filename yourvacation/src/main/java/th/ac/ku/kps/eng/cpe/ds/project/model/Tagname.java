@@ -1,8 +1,8 @@
 package th.ac.ku.kps.eng.cpe.ds.project.model;
-// Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final
+// Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,7 +14,7 @@ public class Tagname implements java.io.Serializable {
 	private Integer tagNameId;
 	private String name;
 	@JsonIgnore
-	private Set tags = new HashSet(0);
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	public Tagname() {
 	}
@@ -23,7 +23,7 @@ public class Tagname implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Tagname(String name, Set tags) {
+	public Tagname(String name, List<Tag> tags) {
 		this.name = name;
 		this.tags = tags;
 	}
@@ -44,11 +44,11 @@ public class Tagname implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
 	}
 
-	public void setTags(Set tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 

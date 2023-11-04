@@ -19,6 +19,10 @@ public class RoleService {
 		return roleRepository.findById(id).orElse(null);
 	}
 	
+	public Role findByUserId(int id) {
+		return roleRepository.findByUserId(id);
+	}
+	
 	public void deleteById(int id) {
 		roleRepository.deleteById(id);
 	}

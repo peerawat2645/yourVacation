@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2023 at 08:20 PM
+-- Generation Time: Nov 04, 2023 at 09:33 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -169,6 +169,14 @@ CREATE TABLE `role` (
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`roleId`, `name`, `userId`) VALUES
+(1, 'hotel', 5),
+(2, 'user', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -256,7 +264,20 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `name`, `lastname`, `email`, `username`, `password`, `phone`, `money`, `address`) VALUES
-(4, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username', '$2a$10$TWqmgtVJxWMp.WdDk0C8uOH4HqXyxlD4LUsyKpdoZiHA5pFr0vwtS', '0865118978', 0, 'asdasd');
+(4, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username', '$2a$10$TWqmgtVJxWMp.WdDk0C8uOH4HqXyxlD4LUsyKpdoZiHA5pFr0vwtS', '0865118978', 0, 'asdasd'),
+(5, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username2', '$2a$10$MWwTWBADGUDdZ9ijVeViQuygISbGeI8JD1HQGs.KFfQDTIVCFxvXe', '0865118978', 0, 'asdasd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userhotel`
+--
+
+CREATE TABLE `userhotel` (
+  `userHotelId` int(11) NOT NULL,
+  `hotelId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -375,6 +396,14 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`userId`);
 
 --
+-- Indexes for table `userhotel`
+--
+ALTER TABLE `userhotel`
+  ADD PRIMARY KEY (`userHotelId`),
+  ADD KEY `hotelId` (`hotelId`),
+  ADD KEY `userId` (`userId`);
+
+--
 -- Indexes for table `vacation`
 --
 ALTER TABLE `vacation`
@@ -437,7 +466,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `room`
@@ -467,7 +496,13 @@ ALTER TABLE `tagname`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `userhotel`
+--
+ALTER TABLE `userhotel`
+  MODIFY `userHotelId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `vacation`
@@ -541,6 +576,13 @@ ALTER TABLE `subdistrict`
 ALTER TABLE `tag`
   ADD CONSTRAINT `tag_ibfk_1` FOREIGN KEY (`tagNameId`) REFERENCES `tagname` (`tagNameId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tag_ibfk_2` FOREIGN KEY (`vacationId`) REFERENCES `vacation` (`vacationId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `userhotel`
+--
+ALTER TABLE `userhotel`
+  ADD CONSTRAINT `userhotel_ibfk_1` FOREIGN KEY (`hotelId`) REFERENCES `hotel` (`hotelId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userhotel_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `vacation`

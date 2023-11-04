@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Imghotel" optimistic-lock="none" table="imghotel">
-        <id name="imghotelId" type="java.lang.Integer">
-            <column name="imghotelId"/>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Userhotel" optimistic-lock="none" table="userhotel">
+        <id name="userHotelId" type="java.lang.Integer">
+            <column name="userHotelId"/>
             <generator class="identity"/>
         </id>
         <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Hotel" fetch="select" name="hotel">
             <column name="hotelId" not-null="true"/>
         </many-to-one>
-        <property name="filePath" type="string">
-            <column name="filePath" not-null="true"/>
-        </property>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.User" fetch="select" name="user">
+            <column name="userId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

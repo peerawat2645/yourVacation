@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Oct 7, 2023, 10:27:50 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 4, 2023, 2:14:42 PM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.User" optimistic-lock="none" table="user">
         <id name="userId" type="java.lang.Integer">
@@ -30,12 +30,18 @@
         <property name="address" type="string">
             <column name="address" not-null="true"/>
         </property>
-        <set fetch="select" inverse="true" lazy="true" name="reservations" table="reservation">
+        <bag fetch="select" inverse="true" lazy="true" name="userhotels" table="userhotel">
+            <key>
+                <column name="userId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Userhotel"/>
+        </bag>
+        <bag fetch="select" inverse="true" lazy="true" name="reservations" table="reservation">
             <key>
                 <column name="userId" not-null="true"/>
             </key>
             <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Reservation"/>
-        </set>
+        </bag>
         <set fetch="select" inverse="true" lazy="true" name="roles" table="role">
             <key>
                 <column name="userId" not-null="true"/>

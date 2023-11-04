@@ -1,7 +1,9 @@
 package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,11 +16,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import th.ac.ku.kps.eng.cpe.ds.project.api.util.Response;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Role;
+import th.ac.ku.kps.eng.cpe.ds.project.model.User;
+import th.ac.ku.kps.eng.cpe.ds.project.services.RoleService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.UserService;
 
 @CrossOrigin("http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/customers")
 public class TestRestController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -40,7 +52,12 @@ public class TestRestController {
 	}
 
 	@GetMapping("/all")
-	public String allAccess() {
+	public String allAccess(Authentication authentication) {
+		System.out.println(authentication.getName());
+		User user = userService.findByUsername(authentication.getName());
+		Role role = roleService.findByUserId(user.getUserId());
+		if(role.getName().equals("hotel"))
+			System.out.println("hotel");
 		return "Public Content.";
 	}
 
