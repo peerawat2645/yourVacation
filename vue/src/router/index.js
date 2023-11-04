@@ -3,7 +3,15 @@ import LoginPage from "../components/Login.vue";
 import AllComponent from "../components/AllComponent.vue";
 import AfterLogin from "../components/AllComponetAfterlogin.vue";
 import RegisterPage from "../components/Register.vue";
-import RegisterHotelPage from "../components/RegisterHotel.vue";
+import PlaceDetail from "../components/PlaceDetail.vue";
+import HotelDetail from "../components/HotelDetail.vue";
+import ReservationHotel from "../components/Reservation.vue";
+import HotelView from "../components/HotelView.vue";
+import AddHotel from "../components/HotelAdd.vue";
+import HotelEdit from "../components/HotelEdit.vue";
+import RoomTypeEdit from "../components/RoomTypeEdit.vue";
+import UserEdit from "../components/UserEdit.vue";
+import HotelCreate from "../components/CreateHotel.vue";
 const routeList = [
     {
         path: "/",
@@ -22,10 +30,43 @@ const routeList = [
         component: AfterLogin,
     },
     {
-        path: "/registerHotel",
-        component: RegisterHotelPage,
+        path: "/place/detail",
+        component: PlaceDetail,
+    },
+    {
+        path: "/hotel/detail",
+        component: HotelDetail,
+    },
+    {
+        path: "/hotel/reservation",
+        component: ReservationHotel,
+    },
+    {
+        path: "/hotel/home",
+        component: HotelView,
+    },
+    {
+        path: "/hotel/add",
+        component: AddHotel,
+    },
+    {
+        path: "/hotel/edit",
+        component: HotelEdit,
+    },
+    {
+        path: "/hotel/roomtype/edit",
+        component: RoomTypeEdit,
+    },
+    {
+        path: "/user",
+        component: UserEdit,
+    },
+    {
+        path: "/hotel/create",
+        component: HotelCreate,
     },
 ];
+
 
 const router = createRouter({
     history: createWebHistory(),
