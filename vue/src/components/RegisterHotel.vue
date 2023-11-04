@@ -3,7 +3,7 @@
         <div class="registerpic_background">
             <a>Your Vacation</a>
             <div class="registerlogin">
-                <a style="font-size: 30px;">Register(For Hotel)</a>
+                <a style="font-size: 30px">Register(For Hotel)</a>
                 <div class="registertextbox">
                     <div style="display: flex;
         align-items: center;
@@ -54,7 +54,7 @@
 import apiService from '@/services/apiService';
 import router from '@/router';
 export default {
-    name: 'RegisterHotelPage',
+    name: 'RegisterPage',
     props: {
         msg: String
     },

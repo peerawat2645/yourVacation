@@ -31,4 +31,18 @@ export default {
 
     return axios(config);
   },
+  registerHotel(user) {
+    const registerHotelURL = `${baseURL}/register/hotel`;
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(user),
+      url: registerHotelURL,
+    };
+
+    return axios(config);
+  },
+
 };

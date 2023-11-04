@@ -204,22 +204,28 @@ export default {
 }
 .small-link {
   white-space: nowrap;
-  font-size: 20px !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  color: rgb(0, 0, 0);
-  width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 90%;
+  padding-left: 10px;
+  padding-right: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
   height: auto;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   border-radius: 15px;
-  border-color: rgb(0, 0, 0);
-  text-decoration: none;  
+  border-color: white;
+  border-width: 3px;
+  border-style: solid;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 .small-link:hover {
   background-color: rgb(76, 153, 163);
