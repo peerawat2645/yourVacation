@@ -3,7 +3,9 @@ package th.ac.ku.kps.eng.cpe.ds.project.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,6 +31,8 @@ public class Hotel implements java.io.Serializable {
 	@JsonIgnore
 	private List<Room> rooms = new ArrayList<Room>();
 	@JsonIgnore
+	private List<Facilities> facilitieses = new ArrayList<Facilities>();
+	@JsonIgnore
 	private List<Imghotel> imghotels = new ArrayList<Imghotel>();
 
 	public Hotel() {
@@ -49,7 +53,7 @@ public class Hotel implements java.io.Serializable {
 
 	public Hotel(Subdistrict subdistrict, String name, String address, Date openTime, Date closeTime, String status,
 			Date checkinTime, boolean facilities, String privateKey, List<Advertisement> advertisements, List<Userhotel> userhotels, List<Room> rooms,
-			List<Imghotel> imghotels) {
+			List<Facilities> facilitieses, List<Imghotel> imghotels) {
 		this.subdistrict = subdistrict;
 		this.name = name;
 		this.address = address;
@@ -62,6 +66,7 @@ public class Hotel implements java.io.Serializable {
 		this.advertisements = advertisements;
 		this.userhotels = userhotels;
 		this.rooms = rooms;
+		this.facilitieses = facilitieses;
 		this.imghotels = imghotels;
 	}
 
@@ -176,5 +181,13 @@ public class Hotel implements java.io.Serializable {
 	public void setImghotels(List<Imghotel> imghotels) {
 		this.imghotels = imghotels;
 	}
+
+	public List<Facilities> getFacilitieses() {
+		return facilitieses;
+	}
+
+	public void setFacilitieses(List<Facilities> facilitieses) {
+		this.facilitieses = facilitieses;
+	} 
 
 }

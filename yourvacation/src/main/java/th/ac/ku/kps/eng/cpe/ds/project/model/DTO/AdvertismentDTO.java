@@ -5,6 +5,21 @@ public class AdvertismentDTO {
 	private String imgPath;
 	private int subdistrictId;
 	private int minprice;
+	
+	
+
+	public AdvertismentDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AdvertismentDTO(String name, String imgPath, int subdistrictId, int minprice) {
+		super();
+		this.name = name;
+		this.imgPath = imgPath;
+		this.subdistrictId = subdistrictId;
+		this.minprice = minprice;
+	}
 
 	public String getName() {
 		return name;

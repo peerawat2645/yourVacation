@@ -1,8 +1,12 @@
 package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -18,16 +22,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import th.ac.ku.kps.eng.cpe.ds.project.api.util.Response;
 import th.ac.ku.kps.eng.cpe.ds.project.model.District;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Imgvacation;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Tag;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Tagname;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.VacationDTO;
+import th.ac.ku.kps.eng.cpe.ds.project.services.ImgVacationService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.TagnameService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
@@ -45,6 +52,9 @@ public class VacationRestController {
 	
 	@Autowired
 	private SubdistrictService subdistrictService;
+	
+	@Autowired
+	private ImgVacationService imgVacationService;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -159,5 +169,45 @@ public class VacationRestController {
 		}
 
 	}
+	
+	@PostMapping("/uploadImage")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,@Param("vacationId") int id) {
+        try {
+            String uploadDir = "C:/yourvacation";
+
+            File folder = new File(uploadDir + File.separator + "Vacation" + File.separator);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            UUID uuid = UUID.randomUUID();
+
+            String filename = uuid.toString();
+
+            String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+
+            filename = filename + "." + type;
+
+            String path = uploadDir + File.separator + "Vacation" + File.separator + filename;
+
+            OutputStream outputStream = new FileOutputStream(path);
+            outputStream.write(file.getBytes());
+            outputStream.close();
+
+            Vacation vacation = vacationService.findById(id);
+
+            Imgvacation imgvacation= new Imgvacation();
+
+            imgvacation.setVacation(vacation);
+            imgvacation.setFilePath(filename);
+
+            imgVacationService.save(imgvacation);
+
+            return ResponseEntity.ok("Image uploaded and encrypted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
+        }
+    }
 	
 }

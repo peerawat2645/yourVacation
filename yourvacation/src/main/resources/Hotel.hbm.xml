@@ -51,6 +51,12 @@
             </key>
             <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Room"/>
         </bag>
+        <bag fetch="select" inverse="true" lazy="true" name="facilitieses" table="facilities">
+            <key>
+                <column name="hotelId" not-null="true"/>
+            </key>
+            <one-to-many class="th.ac.ku.kps.eng.cpe.ds.project.model.Facilities"/>
+        </bag>
         <bag fetch="select" inverse="true" lazy="true" name="imghotels" table="imghotel">
             <key>
                 <column name="hotelId" not-null="true"/>

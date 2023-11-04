@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Nov 5, 2023, 3:52:08 AM by Hibernate Tools 5.6.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="yourvacation" name="th.ac.ku.kps.eng.cpe.ds.project.model.Facilities" optimistic-lock="none" table="facilities">
+        <id name="facilitiesId" type="java.lang.Integer">
+            <column name="facilitiesId"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Facilitiesname" fetch="select" name="facilitiesname">
+            <column name="facilitiesNameId" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="th.ac.ku.kps.eng.cpe.ds.project.model.Hotel" fetch="select" name="hotel">
+            <column name="hotelId" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
