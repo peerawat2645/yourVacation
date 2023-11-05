@@ -157,9 +157,11 @@ public class RoomRestController {
 			Hotel hotel = userhotel.getHotel();
 
 			room.setHotel(hotel);
-
-			room = roomService.save(room);
-
+			Room r = roomService.findByHotelIdAndType(hotel.getHotelId(), room.getType());
+			System.out.println(r);
+			if(r == null) {
+				room = roomService.save(room);
+			}
 			res.setBody(room);
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Room>>(res, res.getHttpStatus());

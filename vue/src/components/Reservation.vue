@@ -196,7 +196,7 @@ export default {
         });
     },
     createReservation() {
-      ReservationService.createReservation(this.$route.params.id,this.$route.params.userId)
+      ReservationService.createReservation(this.$route.params.id,this.$route.params.userId,this.formdata.countRoom)
         .then(() => {
           {
             router.push('/home/'+this.$route.params.userId);

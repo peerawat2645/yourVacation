@@ -1,23 +1,35 @@
 <template>
   <div class="ahbody">
-    <a :href="'/hotel/home/'+this.$route.params.userId" class="ahblack-button">Back</a>
+    <a :href="'/hotel/home/' + this.$route.params.userId" class="ahblack-button">Back</a>
     <div class="ahContact">
       <a style="color: rgb(83, 176, 177);">Room Type Edit</a>
       <div class="ahContactName">
-          <a>RoomType Name</a>
-          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.type></div>
-    <div class="ahContactNameRow">
-      <div class="ahContactNameRowdiv3">
-        <a>จำนวนห้อง</a>
-        <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.amountRoom></div>
-    <div class="ahContactNameRowdiv3">
-      <a>จำนวนผู้เข้าพัก</a>
-      <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.guest></div>
+        <a>RoomType Name</a>
+        <div>
+          <label for="roomType">Room Type:</label>
+          <input type="radio" id="roomTypeSingle" value="studio" v-model="room.type">
+          <label for="roomTypeSingle">Studio</label>
+          <input type="radio" id="roomTypeDouble" value="deluxe" v-model="room.type">
+          <label for="roomTypeDouble">Deluxe</label>
+          <input type="radio" id="roomTypeSuite" value="suite" v-model="room.type">
+          <label for="roomTypeSuite">Suite</label>
+        </div>
+      </div>
+      <div class="ahContactNameRow">
+        <div class="ahContactNameRowdiv3">
+          <a>จำนวนห้อง</a>
+          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.amountRoom>
+        </div>
+        <div class="ahContactNameRowdiv3">
+          <a>จำนวนผู้เข้าพัก</a>
+          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.guest>
+        </div>
         <div class="ahContactNameRowdiv3">
           <a>ราคา</a>
-          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.price></div>
-  </div>
-  <!--<div class="ahContactLabel">
+          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.price>
+        </div>
+      </div>
+      <!--<div class="ahContactLabel">
     <label style="margin-left: 10px; margin-right:10px;">
       <input type="checkbox"> <a style="font-size: 16px;
       font-weight: 600; color:black">เครื่องปรับอากาศ</a>
@@ -84,13 +96,14 @@ font-weight: 600; color:black">รปภ</a>
 </label>
   </div>-->
       <div class="ahUpload">
-          <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
-          <button @click="uploadFile">Upload</button>
-          <div v-if="imageUrl">
-            <img :src="imageUrl" alt="Uploaded Image" />
-          </div>
+        <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
+        <button @click="uploadFile">Upload</button>
+        <div v-if="imageUrl">
+          <img :src="imageUrl" alt="Uploaded Image" />
+        </div>
       </div>
-      <div style="width: 100%; align-items:center; "><button class="ahblack-button" @click="openPopup">แก้ไข</button></div>
+      <div style="width: 100%; align-items:center; "><button class="ahblack-button" @click="openPopup">แก้ไข</button>
+      </div>
       <div class="ahpopup-overlay" v-if="isPopupOpen">
         <div class="ahpopup">
           <span @click="closePopup" class="ahclose-button">X</span>
@@ -112,10 +125,10 @@ export default {
       isPopupOpen: false,
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
-      room:[]
+      room: []
     };
   },
-  created(){
+  created() {
     this.rooms();
   }
   ,
@@ -167,10 +180,10 @@ export default {
       }
       this.error = false;
       console.log("in")
-      HotelService.roomUpdate(this.room,this.$route.params.userId)
+      HotelService.roomUpdate(this.room, this.$route.params.userId)
         .then(() => {
           {
-            router.push('/hotel/home/'+this.$route.params.userId);
+            router.push('/hotel/home/' + this.$route.params.userId);
           }
         })
         .catch(error => {
@@ -194,11 +207,13 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
+
 .ahcustom-input {
   border: 10px solid grey;
   /* You can add more custom styles as needed */
   height: 40px;
 }
+
 .ahblack-button {
   display: inline-block;
   padding: 10px 20px;
@@ -216,6 +231,7 @@ export default {
   background-color: #333;
   /* Darker shade of black on hover */
 }
+
 .ahUpload {
   width: 80%;
   height: 15%;
@@ -224,6 +240,7 @@ export default {
   justify-content: space-between;
   flex-direction: column;
 }
+
 .ahContact {
   width: 45%;
   height: 85%;
@@ -261,6 +278,7 @@ export default {
   justify-content: space-between;
   flex-direction: column;
 }
+
 .ahContactLabel {
   width: 80%;
   height: auto;
@@ -271,6 +289,7 @@ export default {
   flex-wrap: wrap;
   padding: 20px 0px;
 }
+
 .ahContactNameRow {
   width: 80%;
   height: 20%;
@@ -279,7 +298,8 @@ export default {
   justify-content: space-between;
   flex-direction: row;
 }
-.ahContactNameRowdiv{
+
+.ahContactNameRowdiv {
   width: 50%;
   height: auto;
   display: flex;
@@ -287,7 +307,8 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-.ahContactNameRowdiv3{
+
+.ahContactNameRowdiv3 {
   width: 32%;
   height: auto;
   display: flex;
@@ -295,6 +316,7 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
+
 .ahContactName a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
@@ -310,6 +332,7 @@ export default {
   cursor: default;
   color: rgb(64, 64, 64);
 }
+
 .ahContactNameRowdiv a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
@@ -325,6 +348,7 @@ export default {
   cursor: default;
   color: rgb(64, 64, 64);
 }
+
 .ahContactNameRowdiv3 a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
@@ -340,6 +364,7 @@ export default {
   cursor: default;
   color: rgb(64, 64, 64);
 }
+
 .ahpopup-overlay {
   position: fixed;
   top: 0;
@@ -350,7 +375,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Adjust z-index as needed */
+  z-index: 999;
+  /* Adjust z-index as needed */
 }
 
 .ahpopup {
@@ -369,5 +395,4 @@ export default {
   right: 10px;
   cursor: pointer;
   font-size: 20px;
-}
-</style>
+}</style>

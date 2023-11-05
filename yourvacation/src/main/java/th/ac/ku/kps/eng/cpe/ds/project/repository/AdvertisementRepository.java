@@ -17,6 +17,6 @@ public interface AdvertisementRepository  extends CrudRepository<Advertisement, 
 	@Query("select a.hotel from Advertisement a where a.dateEnd >=:endDate")
 	public List<Hotel> findHotelAll(@Param("endDate")Date endDate);
 	
-	@Query("select h from Advertisement a inner join a.hotel h where h.hotelId =:hotelId and a.dateEnd >=:endDate")
+	@Query("select h from Advertisement a inner join a.hotel h where (h.hotelId =:hotelId and a.dateEnd >=:endDate)")
 	public List<Hotel> findByHotelId(@Param("hotelId")int hotelId,@Param("endDate")Date endDate);
 }

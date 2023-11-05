@@ -5,7 +5,15 @@
       <a style="color: rgb(83, 176, 177);">Add Room Type Detail</a>
       <div class="ahContactName">
         <a>RoomType Name</a>
-        <input type="text" class="ahcustom-input" placeholder="Your Input" v-model="room.type">
+        <div>
+          <label for="roomType">Room Type:</label>
+          <input type="radio" id="roomTypeSingle" value="studio" v-model="room.type">
+          <label for="roomTypeSingle">Studio</label>
+          <input type="radio" id="roomTypeDouble" value="deluxe" v-model="room.type">
+          <label for="roomTypeDouble">Deluxe</label>
+          <input type="radio" id="roomTypeSuite" value="suite" v-model="room.type">
+          <label for="roomTypeSuite">Suite</label>
+        </div>
       </div>
       <div class="ahContactNameRow">
         <div class="ahContactNameRowdiv3">
@@ -117,7 +125,7 @@ export default {
       imageHeight: 300,
       room: {
         guest: '',
-        type: '',
+        type: 'studio',
         price: '',
         amountRoom: '',
       }

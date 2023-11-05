@@ -133,7 +133,7 @@ public class AuthRestController {
 				return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
 			}
 			user.setPassword(encoder.encode(user.getPassword()));
-			userService.save(user);
+			User u =userService.save(user);
 			
 			Role role = new Role(user, "user");
 			roleService.save(role);
@@ -171,7 +171,8 @@ public class AuthRestController {
 			
 			Role role = new Role(user, "hotel");
 			roleService.save(role);
-			
+
+			res.setMessage(user.getUserId().toString());
 			res.setBody("User registered successfully!");
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());

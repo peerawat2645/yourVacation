@@ -103,7 +103,7 @@ export default {
               router.push('/hotel/home/' + id);
             }
             else {
-              router.push('/hotel/create');
+              router.push('/hotel/create/user/'+id);
             }
           }
         })

@@ -5,7 +5,7 @@
     <div class="ReContent" v-else>
       <div>
         <div class="ReContents">
-          <div class="ReCard" v-for="item in recommend" v-bind:key="item.name">
+          <div class="ReCard" v-for="item in displayedData" v-bind:key="item.name">
             <div class="Reimg">
               <div class="Reimg1">
                 <img

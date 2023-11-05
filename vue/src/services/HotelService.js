@@ -206,8 +206,8 @@ export default {
 
     return axios(config);
   },
-  hotelAdd(hotel, subId) {
-    const placeURL = `${baseURL}/hotel/create/${subId}`;
+  hotelAdd(hotel, subId, userId) {
+    const placeURL = `${baseURL}/hotel/create/${subId}/user/${userId}`;
     console.log(JSON.stringify(hotel))
     const config = {
       method: 'post',

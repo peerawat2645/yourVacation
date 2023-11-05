@@ -64,11 +64,11 @@ public class ReservationRestController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<Response<String>> create(@Param("userId") int userId,@Param("roomId") int roomId) {
+	public ResponseEntity<Response<String>> create(@Param("userId") int userId,@Param("roomId") int roomId,@Param("countRoom") int countRoom) {
 		Response<String> res = new Response<>();
 		try {
-			
 			Room room = roomService.findById(roomId);
+			room.setAmountRoom(room.getAmountRoom()-countRoom);
 			User user = userService.findById(userId);
 			Promotion promotion = promotionService.findById(1);
 			Reservation reservation = new Reservation(promotion,room,user);

@@ -17,7 +17,7 @@
     <div class="fContent">
       <div style="width: 100%;">
         <div class="fContents">
-          <div class="fCard" v-for="item in place" :key="item.id">
+          <div class="fCard" v-for="item in displayedData" :key="item.id">
             <div class="fimg">
               <div class="fimg1">
                 <img
@@ -83,7 +83,7 @@ export default {
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.sampleData.slice(start, end);
+      return this.place.slice(start, end);
     },
   },
   created(){

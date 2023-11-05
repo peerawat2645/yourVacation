@@ -4,7 +4,7 @@
     <div class="hContent">
       <div style="width: 100%;">
         <div class="hContents">
-          <div class="hCard" v-for="item in hotel" :key="item.id">
+          <div class="hCard" v-for="item in displayedData" :key="item.id">
             <div class="himg">
               <div class="himg1">
                 <img

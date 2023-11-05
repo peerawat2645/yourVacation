@@ -42,6 +42,7 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Imghotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Room;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Subdistrict;
+import th.ac.ku.kps.eng.cpe.ds.project.model.User;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Userhotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.AdvertismentDTO;
@@ -57,13 +58,14 @@ import th.ac.ku.kps.eng.cpe.ds.project.services.ImgHotelService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.ReservationService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.UserHotelService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.UserService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
 
 @CrossOrigin("http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/hotel")
 public class HotelRestController {
-	
+
 	private static String uploadDir = "C:/yourvacation";
 
 	@Autowired
@@ -90,6 +92,9 @@ public class HotelRestController {
 	@Autowired
 	private UserHotelService userHotelService;
 
+	@Autowired
+	private UserService userService;
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
 		Response<ObjectNode> res = new Response<>();
@@ -109,13 +114,17 @@ public class HotelRestController {
 		return new ResponseEntity<Response<ObjectNode>>(res, res.getHttpStatus());
 	}
 
-	@PostMapping("/create/{id}")
-	public ResponseEntity<Response<Hotel>> create(@Valid @RequestBody Hotel hotel, @PathVariable("id") int id) {
+	@PostMapping("/create/{id}/user/{userId}")
+	public ResponseEntity<Response<Hotel>> create(@Valid @RequestBody Hotel hotel, @PathVariable("id") int id,
+			@PathVariable("userId") int userId) {
 		Response<Hotel> res = new Response<>();
 		try {
 			Subdistrict subdistrict = subdistrictService.findById(id);
+			User user = userService.findById(userId);
 			hotel.setSubdistrict(subdistrict);
 			Hotel h = hotelService.save(hotel);
+			Userhotel userhotel = new Userhotel(hotel, user);
+			userHotelService.save(userhotel);
 			res.setBody(h);
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
@@ -160,14 +169,14 @@ public class HotelRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/image/{id}")
 	public ResponseEntity<Response<String>> getImage(@PathVariable("id") int hotelId) {
 		Response<String> res = new Response<>();
 		try {
 			Imghotel imghotel = imgHotelService.findByHotelId(hotelId);
 			String path = uploadDir + File.separator + "no-image.png";
-			if(imghotel!=null)
+			if (imghotel != null)
 				path = uploadDir + File.separator + "Hotel" + File.separator + imghotel.getFilePath();
 			res.setBody(ImageBase64Helper.toImageBase64(path));
 			res.setHttpStatus(HttpStatus.OK);
@@ -179,13 +188,14 @@ public class HotelRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/editImage/{id}")
 	public ResponseEntity<Response<String>> editImage(@PathVariable("id") int hotelId) {
 		Response<String> res = new Response<>();
 		try {
 			Imghotel imghotel = imgHotelService.findByHotelId(hotelId);
-			//String path = uploadDir+ File.separator + "Hotel" + File.separator + imghotel.getFilePath();
+			// String path = uploadDir+ File.separator + "Hotel" + File.separator +
+			// imghotel.getFilePath();
 			res.setBody(imghotel.getFilePath());
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
@@ -196,15 +206,15 @@ public class HotelRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/checked/{id}")
 	public ResponseEntity<Response<Boolean>> checkedHotel(@PathVariable("id") int userId) {
 		Response<Boolean> res = new Response<>();
 		try {
 			Userhotel uh = userHotelService.findByUserId(userId);
 			boolean check = true;
-			if(uh == null) {
-				check =false;
+			if (uh == null) {
+				check = false;
 			}
 			res.setBody(check);
 			res.setHttpStatus(HttpStatus.OK);
@@ -305,10 +315,6 @@ public class HotelRestController {
 				guest = 9999;
 			}
 
-			if (amountRoom <= 0) {
-				amountRoom = 9999;
-			}
-
 			if (guest == 0 && amountRoom == 0) {
 				hotels = hotelService.findByPriceAndNotInReservationIdAndSubdistrictId(priceMin, priceMax, roomIds,
 						subdistrictId);
@@ -329,15 +335,17 @@ public class HotelRestController {
 					name.add(f.getFacilitiesname().getName());
 				}
 				List<Room> rooms = h.getRooms();
-				int min = rooms.get(0).getPrice(); // Initialize min with the first element
+				if (rooms.size() > 0) {
+					int min = rooms.get(0).getPrice(); // Initialize min with the first element
 
-				for (int i = 1; i < rooms.size(); i++) {
-					int current = rooms.get(i).getPrice();
-					if (current < min) {
-						min = current;
+					for (int i = 1; i < rooms.size(); i++) {
+						int current = rooms.get(i).getPrice();
+						if (current < min) {
+							min = current;
+						}
 					}
+					dto.setMinPrice(min);
 				}
-				dto.setMinPrice(min);
 				dtos.add(dto);
 			}
 
@@ -345,6 +353,7 @@ public class HotelRestController {
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<List<HotelFacilitiesDTO>>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
+			res.setMessage(ex.getMessage());
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<Response<List<HotelFacilitiesDTO>>>(res, res.getHttpStatus());
@@ -459,8 +468,9 @@ public class HotelRestController {
 				adsDTO.setName(h.getName());
 				List<Imghotel> imghotels = h.getImghotels();
 				if (!imghotels.isEmpty()) {
-					String path = uploadDir + File.separator + "Hotel" + File.separator + imghotels.get(0).getFilePath();
-					
+					String path = uploadDir + File.separator + "Hotel" + File.separator
+							+ imghotels.get(0).getFilePath();
+
 					adsDTO.setImgPath(ImageBase64Helper.toImageBase64(path));
 				}
 				adsDTO.setSubdistrictId(h.getSubdistrict().getSubdistrictId());
@@ -561,12 +571,13 @@ public class HotelRestController {
 	}
 
 	@PostMapping("/uploadImage/{id}")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable("id") int id) {
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
+			@PathVariable("id") int id) {
 		try {
-			
+
 			Imghotel img = imgHotelService.findByHotelId(id);
-			
-			if(img !=null) {
+
+			if (img != null) {
 				imgHotelService.deleteById(img.getImghotelId());
 			}
 
@@ -590,7 +601,7 @@ public class HotelRestController {
 			outputStream.close();
 
 			Hotel hotel = hotelService.findById(id);
-			
+
 			hotel = hotelService.save(hotel);
 
 			Imghotel imghotel = new Imghotel();
@@ -682,19 +693,21 @@ public class HotelRestController {
 
 			for (Room r : rooms) {
 				boolean checked = true;
-				for (RoomDTO dto : dtos) {
-					if (dto.getType().equals(r.getType())) {
-						checked = false;
+				if (r.getAmountRoom() > 0) {
+					for (RoomDTO dto : dtos) {
+						if (dto.getType().equals(r.getType())) {
+							checked = false;
+						}
 					}
-				}
 
-				if (checked) {
-					RoomDTO dto = new RoomDTO();
-					dto.setType(r.getType());
-					dto.setPrice(r.getPrice());
-					dto.setRoomId(r.getRoomId());
-					dto.setAmountRoom(r.getAmountRoom());
-					dtos.add(dto);
+					if (checked) {
+						RoomDTO dto = new RoomDTO();
+						dto.setType(r.getType());
+						dto.setPrice(r.getPrice());
+						dto.setRoomId(r.getRoomId());
+						dto.setAmountRoom(r.getAmountRoom());
+						dtos.add(dto);
+					}
 				}
 			}
 

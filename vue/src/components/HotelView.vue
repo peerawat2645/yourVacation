@@ -14,7 +14,7 @@
     <div class="hvContent">
       <div style="width: 100%;">
         <div class="hvContents">
-          <div class="hvCard" v-for="item in room" :key="item.id">
+          <div class="hvCard" v-for="item in displayedData" :key="item.id">
             <div class="hvimg">
               <div class="hvimg1">
                 <img

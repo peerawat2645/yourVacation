@@ -266,7 +266,7 @@ export default {
       this.formData.openTime = this.convertTime(this.formData.openTime);
       this.formData.checkinTime = this.convertTime(this.formData.checkinTime);
       
-      HotelService.hotelAdd(this.formData, this.formData2.subdistrictId)
+      HotelService.hotelAdd(this.formData, this.formData2.subdistrictId, this.$route.params.id)
         .then((response) => {
           {
             this.uploadImage(response.data.body.hotelId);

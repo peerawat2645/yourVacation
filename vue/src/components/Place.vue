@@ -4,7 +4,7 @@
     <div class="pContent">
       <div>
         <div class="pContents">
-          <div class="pCard" v-for="item in place" :key="item.vacation.name">
+          <div class="pCard" v-for="item in displayedData" :key="item.vacation.name">
             <div class="pCardContent"><a>ชื่ออุทยาน {{ item.vacation.name }}</a> <a
                 :href="'/place/' + item.vacation.vacationId + '/user/' + this.$route.params.id"
                 style="width: auto;height:auto; cursor:default;">

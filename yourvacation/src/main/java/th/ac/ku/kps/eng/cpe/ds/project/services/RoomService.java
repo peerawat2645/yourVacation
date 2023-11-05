@@ -21,6 +21,10 @@ public class RoomService {
 		return roomRepository.findById(id).orElse(null);
 	}
 	
+	public Room findByHotelIdAndType(int id,String type) {
+		return roomRepository.findByHotelIdAndType(id,type);
+	}
+	
 	public void deleteById(int id) {
 		roomRepository.deleteById(id);
 	}

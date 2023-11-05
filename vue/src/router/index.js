@@ -68,7 +68,7 @@ const routeList = [
         component: UserEdit,
     },
     {
-        path: "/hotel/create",
+        path: "/hotel/create/user/:id",
         component: HotelCreate,
     },
     {

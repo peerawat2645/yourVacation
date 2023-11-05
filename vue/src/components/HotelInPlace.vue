@@ -5,7 +5,7 @@
     <div class="hContent">
       <div style="width: 100%;">
         <div class="hContents">
-          <div class="hCard" v-for="(item, index) in hotel" :key="item.id">
+          <div class="hCard" v-for="(item, index) in displayedData" :key="item.id">
             <div class="himg">
               <div class="himg1">
                 <img :src="'data:image/png;base64,' + getImage(item.hotel.hotelId, index)">

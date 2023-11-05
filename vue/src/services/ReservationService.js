@@ -15,8 +15,8 @@ export default {
 
     return axios(config);
   },
-  createReservation(roomId,userId){
-    const hotelURL = `${baseURL}/reserv/?roomId=${roomId}&userId=${userId}`;
+  createReservation(roomId,userId,countRoom){
+    const hotelURL = `${baseURL}/reserv/?roomId=${roomId}&userId=${userId}&countRoom=${countRoom}`;
     const config = {
       method: 'post',
       headers: {

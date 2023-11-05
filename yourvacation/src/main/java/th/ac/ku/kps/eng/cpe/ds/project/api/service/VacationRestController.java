@@ -46,16 +46,16 @@ public class VacationRestController {
 
 	@Autowired
 	private VacationService vacationService;
-	
+
 	@Autowired
 	private TagnameService tagnameService;
-	
+
 	@Autowired
 	private SubdistrictService subdistrictService;
-	
+
 	@Autowired
 	private ImgVacationService imgVacationService;
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Response<ObjectNode>> handleValidationExceptions(MethodArgumentNotValidException ex) {
 		Response<ObjectNode> res = new Response<>();
@@ -74,42 +74,52 @@ public class VacationRestController {
 		res.setBody(responObject);
 		return new ResponseEntity<Response<ObjectNode>>(res, res.getHttpStatus());
 	}
-	
+
 	@PostMapping("/")
-	public ResponseEntity<Response<List<VacationDTO>>> findListVacation(@Param("tagnameIds")@RequestParam(required = false, defaultValue = "") List<Integer> tagnameIds,@Param("subdistrictId") int subdistrictId,@Param("districtId") int districtId,@Param("provinceId") int provinceId) {
+	public ResponseEntity<Response<List<VacationDTO>>> findListVacation(
+			@Param("tagnameIds") @RequestParam(required = false, defaultValue = "") List<Integer> tagnameIds,
+			@Param("subdistrictId") int subdistrictId, @Param("districtId") int districtId,
+			@Param("provinceId") int provinceId) {
 		Response<List<VacationDTO>> res = new Response<>();
 		try {
 			List<VacationDTO> vacationDTO = new ArrayList<VacationDTO>();
 			List<Vacation> vacations = new ArrayList<Vacation>();
 			System.out.println(tagnameIds.size());
-			if(tagnameIds.isEmpty()) {
+			if (tagnameIds.isEmpty()) {
 				List<Tagname> tagnameList = tagnameService.findAll();
-				for(Tagname t:tagnameList) {
+				for (Tagname t : tagnameList) {
 					tagnameIds.add(t.getTagNameId());
 				}
 			}
 			System.out.println(tagnameIds.size());
-			if(subdistrictId != 0) {
+			if (subdistrictId != 0) {
 				vacations = vacationService.findBySubdistrictIdAndTagId(subdistrictId, tagnameIds);
-			}
-			else if(districtId != 0) {
+			} else if (districtId != 0) {
 				vacations = vacationService.findByDistrictIdAndTagId(districtId, tagnameIds);
-			}
-			else if(provinceId != 0) {
+			} else if (provinceId != 0) {
 				vacations = vacationService.findByProvinceIdAndTagId(provinceId, tagnameIds);
 			}
-			
+
 			System.out.println(vacations.size());
-			for(Vacation v:vacations) {
-				VacationDTO dto = new VacationDTO();
-				dto.setVacation(v);
-				List<String> tagNames = new ArrayList<String>();
-				List<Tag> tags = v.getTags();
-				for(Tag t:tags) {
-					tagNames.add(t.getTagname().getName());
+			for (Vacation v : vacations) {
+				boolean checked = true;
+				for(VacationDTO d:vacationDTO) {
+					if(v.getVacationId() == d.getVacation().getVacationId()) {
+						checked = false;
+						break;
+					}
 				}
-				dto.setTagName(tagNames);
-				vacationDTO.add(dto);
+				if (checked) {
+					VacationDTO dto = new VacationDTO();
+					dto.setVacation(v);
+					List<String> tagNames = new ArrayList<String>();
+					List<Tag> tags = v.getTags();
+					for (Tag t : tags) {
+						tagNames.add(t.getTagname().getName());
+					}
+					dto.setTagName(tagNames);
+					vacationDTO.add(dto);
+				}
 			}
 			res.setBody(vacationDTO);
 			res.setHttpStatus(HttpStatus.OK);
@@ -121,19 +131,19 @@ public class VacationRestController {
 		}
 
 	}
-	
+
 	@PostMapping("/{id}")
 	public ResponseEntity<Response<List<VacationDTO>>> findByDistrict(@PathVariable("id") int districtId) {
 		Response<List<VacationDTO>> res = new Response<>();
 		try {
 			List<VacationDTO> vacationDTO = new ArrayList<VacationDTO>();
 			List<Vacation> vacations = vacationService.findByDistrictId(districtId);
-			for(Vacation v:vacations) {
+			for (Vacation v : vacations) {
 				VacationDTO dto = new VacationDTO();
 				dto.setVacation(v);
 				List<String> tagNames = new ArrayList<String>();
 				List<Tag> tags = v.getTags();
-				for(Tag t:tags) {
+				for (Tag t : tags) {
 					tagNames.add(t.getTagname().getName());
 				}
 				dto.setTagName(tagNames);
@@ -149,7 +159,7 @@ public class VacationRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/random/{id}")
 	public ResponseEntity<Response<Vacation>> findByDistrictRandom(@PathVariable("id") int subdistrictId) {
 		Response<Vacation> res = new Response<>();
@@ -158,7 +168,7 @@ public class VacationRestController {
 			List<Vacation> vacations = vacationService.findByDistrictId(district.getDistrictId());
 			System.out.println(vacations.size());
 			Random rand = new Random();
-		    Vacation vacation = vacations.get(rand.nextInt(vacations.size()));
+			Vacation vacation = vacations.get(rand.nextInt(vacations.size()));
 			res.setBody(vacation);
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Vacation>>(res, res.getHttpStatus());
@@ -169,7 +179,7 @@ public class VacationRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/random")
 	public ResponseEntity<Response<List<Vacation>>> random() {
 		Response<List<Vacation>> res = new Response<>();
@@ -185,7 +195,7 @@ public class VacationRestController {
 		}
 
 	}
-	
+
 	@GetMapping("/all")
 	public ResponseEntity<Response<List<Vacation>>> getAll() {
 		Response<List<Vacation>> res = new Response<>();
@@ -201,45 +211,46 @@ public class VacationRestController {
 		}
 
 	}
-	
+
 	@PostMapping("/uploadImage")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,@Param("vacationId") int id) {
-        try {
-            String uploadDir = "C:/yourvacation";
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
+			@Param("vacationId") int id) {
+		try {
+			String uploadDir = "C:/yourvacation";
 
-            File folder = new File(uploadDir + File.separator + "Vacation" + File.separator);
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
+			File folder = new File(uploadDir + File.separator + "Vacation" + File.separator);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
 
-            UUID uuid = UUID.randomUUID();
+			UUID uuid = UUID.randomUUID();
 
-            String filename = uuid.toString();
+			String filename = uuid.toString();
 
-            String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+			String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
 
-            filename = filename + "." + type;
+			filename = filename + "." + type;
 
-            String path = uploadDir + File.separator + "Vacation" + File.separator + filename;
+			String path = uploadDir + File.separator + "Vacation" + File.separator + filename;
 
-            OutputStream outputStream = new FileOutputStream(path);
-            outputStream.write(file.getBytes());
-            outputStream.close();
+			OutputStream outputStream = new FileOutputStream(path);
+			outputStream.write(file.getBytes());
+			outputStream.close();
 
-            Vacation vacation = vacationService.findById(id);
+			Vacation vacation = vacationService.findById(id);
 
-            Imgvacation imgvacation= new Imgvacation();
+			Imgvacation imgvacation = new Imgvacation();
 
-            imgvacation.setVacation(vacation);
-            imgvacation.setFilePath(filename);
+			imgvacation.setVacation(vacation);
+			imgvacation.setFilePath(filename);
 
-            imgVacationService.save(imgvacation);
+			imgVacationService.save(imgvacation);
 
-            return ResponseEntity.ok("Image uploaded and encrypted successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
-        }
-    }
-	
+			return ResponseEntity.ok("Image uploaded and encrypted successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
+		}
+	}
+
 }

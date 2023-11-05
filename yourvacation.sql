@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2023 at 05:17 PM
+-- Generation Time: Nov 05, 2023 at 09:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,10 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `yourvacation`
 --
-
 CREATE DATABASE IF NOT EXISTS `yourvacation` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `yourvacation`;
-
 -- --------------------------------------------------------
 
 --
@@ -145,11 +143,8 @@ CREATE TABLE `hotel` (
 --
 
 INSERT INTO `hotel` (`hotelId`, `name`, `subdistrictId`, `address`, `openTime`, `closeTime`, `status`, `checkinTime`, `privateKey`) VALUES
-(1, 'SmfFDGHXw/vS3umfMPQQoF7EO/MfV9pNe7xdGXA+2CvNe3/gsPuRtc1i4nBT+cNTx4bXSWZiu0srMBKqG8W15GPeAa5+7KYsVLp/7b5ClzWWmQYG2wKV7269oSqIqN7Fd8kEmGq1BEZqmpXoz4txeaAgl/8TFQz9uF40YrYxoKDxoDOHzljKGlQsCzSwUON6+sufajkMnDvXPIbB50JhzuSrX0gSWzMkIwG8DjhBpGVb/oEQwpRrWerZIEve85XYw0D7rfBys0yAq4nN3R6ZRsMGfZpH3ak27DrtD8aIznS+G8LJXBYQxgnEmTmcnurU3jh7vhqP1psI+1KF+UgQuw==', 1, 'S52RyarNOdbsuemdPioICSmvEQBsrDldtnyr3bD+t9qkwbqdswqIKQId6WejX80nfD2kVCOZi7uUzskG5Pz19kXmbeWAjZBPHsXsR774pCvCi6bqiDczv4IcNaxwZl+xdB7mX7t6BAfeyde7mtoSfCGAYtbDuwS9CdSeC1B5KuoU4CzX2Srfdihov7vC6EJxIc1kP8oUkbU0kAs19sUZZv8HwBVqFxlVmbh+INrioKUgHErYejgDPdh7GEcbucBtpdzyf5GIq0FooTvyVGCxa5x3Am1ydo9UG2QGdVB56UZDdF6I1hW8h1V2NPMbZ6WjMEiQ2Nrx9jvTT3u4N6E/+Q==', '2023-11-05 07:00:00', '2023-11-03 07:00:00', 'open', '2023-11-03 07:00:00', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCobdtAxoNTPHoQnxKCwxLgSAWiOBI5E1h5+fgIjekO7A9xxCVLLlIDs7YpiVNFVf/jXmhnrieCmK5Mk5I8/DHofkROKsWB6kCKgEmxNmrArLrmFaHXbGc+n/t02Soonld8BaAosvgl0z1V04EeUrNpKr6kORPJmWmd9/pjxWMSAkHvOPKtTO1bGcTuN2XQwd+uDu0UjGEn5gxwuAG0y4uLQ6VMbmUHpdQI5p9vHJdGt0VHFSrGPZy8bARXcgGrwAeDQsNwKyE7FMv/NHQktfP9pkjTfYgdtofZksOUW2nrrHJWmKucM8/bTiDExNjbJ6qBkC3VEf6kpEzf0AKGrulpAgMBAAECggEAU4NRLS+hKzL39WjihUrTf7jGblZuFrXUb3q19QvkbP04dTkEIuB/Uw2XO8Y3L1CClksX6pzMQ3GQLzEW2D1WQ8jj9nw3vYCY6vPMVl28lfevnmlIe6fpE4DA7oHFaSmGCF1Duhpvd1Xj+jvqsE3iXrmOmKAigxoZ5/Vuxmy3gFQm6zj1EuPwMusmWA9t+azt5NbmSuIk4EFhYeEHmnlMeN7tnV82BpRp629egIHb2ZyUd3VaANR7FumCvyY2MUl+Qz2F9bfUcG45qruzSvwKIoE1gsxhuDap5kXB7Agug6OQjQU7LLDyKO9l4Gi3DuQQSxilvOUQlCDaBOQ5+8H4lwKBgQDc6jMZIbjiSTSKtu9NK+i7fko/71qEMvZVs6v/72I/qOSoQ7wFyhjA2XJqOojYTyZTAniQQ4lPrUPQUID1QwpM698tEbeLfMYs39CJxyVrqyoO3GyfMsnsWMDMFhF7Wy9CUOrzvICp7haG9fvd56w2vus4TY1eBVJOedqwRaAbxwKBgQDDLbrCFvK5dXBzFOxnXjwAg0jjWQVSnZ9RTpcHxi8jLV7axys3ttJetYoV6DFo52euQsEDGP9K3rXdSvj2kzrg9JhxfncpCl44Ijg0QYAfJXy+CDWfCXLTAx8NNfG1p7Ft3CfBSeX+eHTptkegov/eSx+hA4H8DJK454aq7uDxTwKBgQCHLW/TAwWEwdK6xrGrgSDKCb8ZXDcBCcYeLvEijLKLzacNJ1VYHZAEAYq3YdX2tof2514quIi/DoCeaYRfj4QwCWzowRyU5+bD8rhCdm95cKUtrsdwqr1QOAbRWvebifJjG+yI9GGumZeDQeW6pVaFsVFxhFLqo0r35ixhDFmqZQKBgHYW4Pw1rj4PlC3M5wvTtDILPLpxTgsiWxZymmaVvkdmWBG+l6Np9fZfmGCQz/RMrip9MRKSuUOvZBG0HtXxVpps4x8oCSjHoSINcjwLtV0i7Up85RSIPvT02oC/trLV90AlB9imwYUplHMjWksS1ATHJyfgW3EImm1Nh+k8BtV5AoGAGyrma+F5RjpoKMjbTZmq64LdqBcc5e9H+f2afkN9UlpncKFrTLrq7ln2s+FG7mQEftj1N4+AtpUTKF7OjkYSxV4O9Gs6/Ob8yRuYDU9RSynQQuEDAcFIns5ZB5muqAXGSzxV/H2u67ZxWc1DQp/7SIK/Qnkr/Ozl3J8/66ztKaE='),
-(2, 'SwZ2nLSscnqNfg7zRzGrIQwyrZTRpyDIVv+p/DZBOiajqP6weUkAw1PgYVRrhzzHn2SUe6z0zrVW4rElwlOIgjyfdhsnhfTVZAATLE5nlYu8NPWLR5UGfhpuhPspl0tdRwsk/qBSCZWvfvgKRpfN06Up127pb07EKGvmdusOCUfqsjB3+9csDPlg9l55sThKzXjuoaOVsmyt0cYr6qAjYbSr5VJ2bBxxv6oXW83wDfiIcEVoEliND/sJBCWYIQOZKxnxj+7N5rVHvJ2g5RmoEAOepiyNUcgwWmyghhcl+iZfuRZj6yZsvK8/+KTyTDDvoiDILjljUVB0Qn26NPT7DQ==', 1, 'cx9IhKfigspELKYSyD07RP4gOCNY++dZHuG1D3K1kodn834uYdNcZWV+ELBtkiNA2akddUYi+e9bAqvpLUdjNi0+2E5ST9pWYIOaiom9aKUCZKOK6YOvQOEmmaD3ZDCgvfwiBT9VGuZIL4t+A51rw0IEcuvu9pm7B35eCEhiS9W6qFdsecU1ZH+VJ5pBRAVVpaieOveB+s/CjhzQJhuzBVJN8L45or/elcMVAMe7L3fh4KyERXC4FpHeVepf/zl6Gw7dgksEZIO2BMpCHXJAX+LC9LFuuaLTn08Vs/0B0o397A/XiESBT/MR0DcGjOaUKv7pphDOkZVfg49LNtD8xA==', '2023-11-05 17:00:00', '2023-11-05 17:00:00', 'open', '2023-11-05 17:00:00', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDmLdUv7e3XFx5OdwUHP+tt91CN3FOOeHznYT1uRLwhV4p/BE21WJ5+Jk4KfbEGG784NtFeJj4iI2ZxZWba+LqMei8J0WBRr7uxbork7iM74B++gYrfbo7yzb67Q0RJsXmH97dHkhPR/FD8tysBeO8mJGMSmbtR7vF5da4nIfV1DrJPgCGiFbP5/kX9/l0wmibLDzEqH69C9M5b6buqr81+j/GOkLKwB47ShnKltXX+LwXHa2NPZMmIx2GHcmCrwOkzEt+Y3m9jZOkRHzFdC1Iw/dte9t/3hzQuzAppEDF9jhEuO5igzXeIILhMEjYzBvrDxtA1FRvs2lGOLzgOKNKzAgMBAAECggEAI1hTXa5D8Nzgbv0QvRnAHZ019eqou/5dc6w3YijU2KvYHQP8qMWoZMeeATdmyQDWvpuQT8xAiz5zWyNOhX5fKvYSJghMKY76G9dVJa05pNaYGUlMGV4hPkCAssG0CTri5hGQR8GzIHIFv6CiznGTC4DX48HOhVjTJKsA6Ipq5iPmdvPL2sNHDOXEOTPJr9oyicxpD8uNpPTANr7dNRScYxRDwY7Hban+VgHJkaH2LSwUwiEs81NK/Ew+zO2EOLzezyw3jPLDMDWO0RLD+Wwf9NlYNqlSZ6RlYlxr1Fj9JgpxgwdnEV97FRb5SjuR9WoMf5wQhNDOWfmRYwH6yrz8tQKBgQD9tyfpYYzB1aN9rFryfdothOTKIAZiUAS+BhG6TkzLDt6nxaS5kBxldtfd44sp6mRf0HEGfYYpmHQPz7jVyI9fJyoD6RxEuuCBc1rfFfSzZ5GGelIHvik4FdAGCEJxAfY7ueOtP/KHstRrvxTx3brsgx9wfCPGhgjXrlMBuWUFpQKBgQDoQGwxn7WoohOANuB1jpEOJX3BU/tfryWbgl8vv9SRUb9ipIs7I5IthG5l3Vuw2TACd2Sd9Hjzt9IdX6YUC5Mh+gaTyxJIF18sxhWypYNvtq4Z5rQbJBFGPoLZTdGK1RIQda5ensvxJ3m/dri0lLCG8Pqa9X2fW1j6Qq3oFu33dwKBgQCM+Xs8y05J2eppBx7VxKY5SrFRui+x6uJnr7mj+qPi5FVFhaV80h1lJ37UtP17gdjaAFj9ETw92o8KxhHe//ziE0HeQGXLrsbWRwGEGZAJK5AJ1+fCk6AVoNEguPAqGLv3/dcLSg/55JzxbZA2wEx/5G/QsbmzMoCxTxSiTaBbXQKBgFQopAwHV4hX0sEvIX73vlBl/X/Est4lVXdYcq2W0awm9zcDcQBpD1s3FdoLsGIREXiTUv55zCpkfdrvAftZhmNVenSrrWA6N969mLc3ir08cTIpizIai7fshvW/YSLxuq4ENr9Kw5QLPe7HUn79MkpzoBvuwSqxqzhkWSg0xt5ZAoGATlxc4byhZns3TPvMaLoaqXSCDV+GAa0ySTwp4Co9fBupfDH7y8kIL8zUrNQDj2kv7T97ihRlzsgX/VhzA1MBTa8ZwKn0cKPwl7B3kuDM3N6Y6afNKIeFsTsbIiamFfLS5MwZzL/qHEqOCiKVNUPq9jyPXAjn5rseI+Ws9+VYxBg='),
-(3, 'hU9jaMIpa9KP3/Ei/Q2ZwmODtgUd6WYq0Me/Lfp+7oO9NRAM/2IQ2gFzC0Yut++qtdyOU0atkEDRMCwTM3yZpqjHI1JgLB1qFXEDJXuUQxL/aTZ0e9vYDJXJVVJisdJ2o6iv5iH+J4wWWQ34dNW2ZY5CW8559uqHg67VsRF4QkITM+FDDZDgwEJ7v73aYvKtiqGjqp2hSR/ng1nJTMHar+bvKox1deQH4U+Er1+9Zse9FK13iNNbzbYyal9zGQRnONT0ecsEyJ0TQar2+dM1p8XtTM/GRGhfo3sNIx+KSMOAhqS9mYFSh87nUYxzBiImwDo71VanpCm6hPNX6ikyYw==', 1, 'gWszeZbeDdFjRifxGCqBMVX5Yo+rZ24T/vONhRSGr+woiWpocMbdMf4WesXLsdwnWhfi1Z5zIO17tVBqy7yfnlBYm0TopsS7f5jKbluKhOxcSUCsLyl4P/tqzTgVVF9CpvRTqMhALYNavtVsy2kCyfoQI6Fy1ZBptqs8vq3rrlGfjGHKmE82yxJWOtlKRku9aixrW8o7fCMPgUtwNE5hz2aHJljQlApEiO8Fph+t7fTPNoKV9VZShZl4tEb7DBNGTfUON31QTfMJ61WWrN56FWXpS3eUWzN06W2hcHQwbrV1jVGHG/cfdLdqR6QIyoqqg8pM9ACvezijN6fiirXgDA==', '2023-11-05 17:57:00', '2023-11-05 19:56:00', 'open', '2023-11-05 17:57:00', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDC0bZDef/g+va3YlGcMnOzHtTAyqgWNcguS1hRr6D/SL6S1kyCiLZdOZqkFqhm5Rs1M2stJ211li7Hy+9mNT13oH0svnhjZikCP4ML/+Nt6vLpUiz6CwQ5wgaIUTOGUkg/XWZoDL/Vp+v7EKL37utV8Kq19QzDdWhQH89sZL5q3Y00YSSESUdex52XDoJzgIYFkuzjVLGEKChm6fhXDjMcYKVfjpJXVP8n73zkXZIG/XxmqxaywWzfz2WJxNffQOMj5R8Ku4ayu41yBo+FyCLjGIy3DfXDV1HB/QU411H3/XfLa7pU4n130j/zA6qUMln/9d+m+6sRD6zAQUcmsGnXAgMBAAECggEAWaZDZz2m4BLcoXre7y/QSibv5F/dhYruOU92rvBQ9+izucJfptnegXvWi5fZmq/nG040Da1NE4UutcZEvhXV2UzDDWoA4EzMpjovxb/VGmm5qmCkTdPv99wvQV+MhE0s7eu/CjaDuH/zea8oL0uEhCGhjOXdH7zRab2Zp9mcPnQyV74lzqzCf1Det3W0f6wSA71ndOd0eQXR53dojnfb0KqHjSv2q4pmxVLbQTLvl4QanMM6R09cDe/ECWyy1yZvnWEhzM1WAZ8Je1yaLAnUWN4BDsKDwJPWh6mH0SpK4mTxzd00ODPEsISVKGGZORwOcl5ZX4ImiiY0Zwj1+mo6cQKBgQD7zJHPY3XShNgdYQtDwMHJAi6xH/Km5wXqY/NepE8YGQqemwRnAdBuQ4/7FMrgE14k5WtZbTFC/zCx/FkWe56SYYP06Dgt0792xRCuhrsUxMlFfFxRvil4C6qD/T/GC3DoN+mv8ESRtExKLyneCxVhnk0Hi9fDOIhTIBAKdrf5VQKBgQDGEcgwXZDYQKLmMMe0vxDTdXMcwpgi4yDkpj1GyEmAbkF/xGQbjKaepV+nq21FQmqcADBzczfRwSVHwPUmbA+Xb+opN/ZyMWaCdfht755gjdSM4WWuHMftNNG8nQGrxHv0lYCy3QUIgPqHUeBFSe4Q2+xHroYaBy0GxCfStCUmewKBgA4wV+MU2rXTMI5vQoA9422dRt5KS5UmHYo4uaUSozZbauLHH3difclI21str8TysnJnzyXJ5mW9FZRiAO8oZiYfgp0RXOEQNpDNyAPdqbsg36qfuGAO1C1kkuY/JhHV4TXkuLFmW6bOPyJLCBPwEfNfRT3wnmbsz5nHi7/bMsDFAoGAcNIcJ4CESsm2gEv01T2oBer2oMEvC2A4kkUmzjSzuVYUNQTWyOJ63g7wx37cBQFp3GY3MuvENdRAufhtK2+OCgKTbNsVo8ID0/gChAxjODhRg9W3p095ieH2Peto0kBfItgtsLQ4c7mT+pRmnNEZq7y5f7Mna5f+y8XbsScvqhUCgYEAhEyTe+amxwzo9+gcMw+8WOcTNHZ/dnylosmMyrX3A0iCP5aFwgq++oD1YqCbhk+xhZ3/4jz8EaK2afN5J6yj167h+DUT4MErXlQNgUQiPA35stgZRwjTF3m/jBNAM6n87j+sqEe7tZF0ZZP6Xa+u4fC/+sovU5Jh5chAXxcFL0E='),
-(4, 'G82TiolevFATCnl9gEt9RzVZKFlkCVFhmenzlNJbiqL4dtzRa2rqAP+ReMiARWIBK87ZmulDLZGSxbV73F9oek4rg0xXhLcV/e9LflM3SQveLHdAt20bNSy1o8hXpOCHFXfLgn43bUfeoOPsLy63jwlJ8jHaksma8GzYSorNiLyOhhh+E1PwSbHKBtO/x6Noqs1EVjE+bpX6xbj8ALGbYLz+l9ylFxcoRvE6wjKduxWqA9CqgZqqRK3/epFRM/+GrZqbs5Tx/FOhDOEzQ1r5khbml48LSEJZq8gGDKXtsHvAAuJ5eLkLAg2s1o+PWfPiybN0JV+i42TySZ8k+3Zaqg==', 1, 'rTHkcTdGln04C9x7Pi0g86Hc8fXmJPRk315+jTcVf5S0o1H7DQB8jcaU1NXL0+TLo/pgBSNCyaxurGrf1X2+ItU9yUX+77ja4Chx8g6fJ0X0Fhm2ToqRbWkpbYyTKmThde+2Cqx9UEl9ZQHEQUa7gv+7wrskXyJql+vs245OPVuCPGTB77QYWotSc5EhpN6GN8sOyCuoegxRJY+4dqpmWKoxnsO+lvuBll9FBLpj9sX2bIN7OZjf9En/hD89J7ISUwDuOsvzx/QX23JNraEslsi0+swPH+f6vIUnWl/6YP2EYjcgckpHYp4BI0r4aS7urC15JSawEKdF1hShYwhTVA==', '2023-11-05 22:17:00', '2023-11-05 23:16:00', 'open', '2023-11-05 22:17:00', 'MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDJfe/GQqMItG1dtUJnHUkpQqDC+nmSCJhsYQzK29VQDUXvebLE1KRQh32Vk6AFw7+reKhRbNR/LTVzAj7ne/gyd14sKx47XyFWPsYawxdF9ZY2cupwoJqMOu81rajjlw1xCER3M/MHiQWtXNsqmtEO4XjglRLbMsc/M6P6J+Y5feAOLoXcrVPHCRKjTQnUImA1w64yx9w0fwkf1JsvBYOnDTT4GjZoeGCXdOdtnHHpzZ7DUh/pTDIlp0PCLHT/46AZ7sAL3jJuoLgFXyKrVVIa5ptrlayjukUpIKJTi8g3jFJVMID4g/EpFSN/b2KeHC9RAIZT09kChZfgPjrwMNBtAgMBAAECggEAKqF0m7P5npveD9eL5xkxI4OvU9F+60DaTwPxmvIMHdXRGCvdgPukkE06au1DDDUwVm0+34txIj9EccLl4EBAcR0EVcABs3obKY46h+sC/5BIadjCdXXlfQnzFp5Zf120QFgJdFcPcmaxRs7AqDD9TnKyCoI/7RS/R0X7ya+rbDovDRDvMKqra8IxFZUEmzW+wMozQZ9mU66yHTYra2ZElpCtSGReZ/2IppXo5F3uMz5L8/1qFZEJAKZ8a5pUgvS6mprrssQXwnO8cy83di7J8UlKaq5uMcfULEhjK4HdJFt+bCMk3uB25ejJfJHb11r9dOgw+8lV4U6BEmzu2sf9mQKBgQDMgdUE5CABohBuHx6pNkxhLMcqJ1B626BMxbEK7R/z81lik/2tT1I3VbUD+Tp3leX0LmE4YbWzLbwIygOKmvUh/bCUHx0I3uJ8UujF0OlykhvXrtB2WJIPaD0lwzes9CcI/ivh+EKyGgw//6Lt8WDp4alCafGJx9lFXJUE6Ez9jwKBgQD8Ob++dUlqGcpJUO11xTD60NfPx+stcp/uKlpZLGmH7q9bU1qg3wfMDmnmcL+4Nems1DR5u+PE6O/TgRmp3OCnZ5QNnYSFpFtCB/yJIx8tjh+WIr28sjbCXHrHHfQEG3fYZMMZCYkIStJmE844dv2SwelOGvOFytIW5oI7UPxMQwKBgByEomL7OOdhZS8mEc2A7+fBKcjcEKIBTHpIOycN6B3JupY/kul/HTTwM7zpHVkdwyJo8U++eGsTHpyPJy1F7Jcf3Gbba94XzreNjD5BorxCWbWbACDwuvWBEL3aWkI5DdR4NUBesVZKwZiPGnZZ6azTthm30mHnR4ofnfxANLRLAoGASCpBuT2XjrroTMfR2TNdSzX7uWBq4mr8ZUlK5l61pwXcuFWGBacqdPDezecOg6cxP5jLltTyW0GGdM5oSFiBEoSpMKgT5aTb022zjI02+3LBiNRR0y5uSnfpTRU93vr49DoINB6tTWkS/8/E3hT1gkrm9MjzSiF4sMKtGkmWlj8CgYBVqfhtXsP7CKlE7OtaFv+6Mcd/jKyFiWwBHbJUGlda6bBh2bS9IR9F4Uil8fnIhjkJeSv2IapS0XaZLIofqzEQJEuiY7VPRJ/5eEzZT2fuNGlQs4eWkE8KYRvWrakoWKzQ8mjfw8n9kNpGbAi0BxaxZ48kLaiJ8+vpPrWOsnPKag=='),
-(5, 'dXrjizXvt424XWgfFxEeywt7FSErZOikfQohkJpjQM0IDdimoUx22BQZG0dByXEOiGJzwkxfsLeOGnB8ntX5GWVUXYzZhxMvXgt5+Pw3p/lP3TEU3yW9g0vbshcp/dpxl67vI3Tk98TfrTbPOcTFin2vrf3Zy0pTjWBq1NownoCDuRlNWpWRS3C60f332wnSj9ByjI7QuTwmwaLBmu3AFbzvfyos1UsQG6eIyKQcdDseAMNUSBAClu0NA3TdMSdd+f5SpEwb5m1XFeDyR/qoQtEZ3obhVo9++dZP9zIxy5VIjA+Pr6cJwVw1QWk+KpXCtGPy29mm+C0hA9ZFjq7YpQ==', 1, 'doxnReUT/b7eWcTyW+LbFDENcRoSqGjD7sBDwXz5+Fx6lj7eKQZSCYE/f/IZF+cOxfEM9IoNYwrchr5Lxy9UHxHAr343fiDwTkDtO4WS/ma5dkbqWiOSQO1IciLhMDU03taF3XhGCoImAZBxPlVMtuJalh+8AjAlpiWO5r90FHQd3UKZAkzhWo1eTFsoD1hMJEclbXr5Onhps0sa3Zd4ikOn0X0S2WjbBOcwPOUtiZUMgM3TdJwQySsJCWQ6aHFmJmxBNpkEiliqdtULCMd7CbwqawHwcwHM1A3fXF/2a8b7zlEcXBlG9uGjhdLQEpQWryERFiouudazomYeFFmcAw==', '2023-11-05 22:40:00', '2023-11-05 22:38:00', 'open', '2023-11-05 23:38:00', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtIaFwno4aCAogbM2aNvnoa6lJX95DqcGYEKm8HGUqlYYhEWplGd6GsyIMV03ok62+VKaMZksjoi0k6MAPN+kJqUy1GitfcEyMxycE0cCF3UJLrXloHIXXc/yE2m0B8ls269ql3vi8PYjimJLlbeOr8t+WNjsBvOwDCA1BZr64n/+e83O4FputkmumnNh7r97SXzS3zCSUB1eBukyG+GQE7CV9PV/9Z0ko5SV+TCt3R+N5XfyipmFONPmSD+zKcQHvMzeAcmaZ3/VIgRjSQYq8jl5hiGUzaY++pkr98KWheUEilVap735AH/VSa30sg6FqlBbU0GOynZZopCqKIhDbAgMBAAECggEAEPVLA5BO9Ex2oXfG08+FabdR8kv0+2+0n259EbM+UuN+gIgHgeD8zk4xjD/o86+zbwHfpmpGpeDhccy9M0BouneIz0cW7yw9c0n2j8mehVOHhjN3Ft7kWpbpKczeAeN5UnHbuC+U8ZXywy9ABD+1SJxrkM0TDo0ww5iVo82qlMQorOB5EIzAVyGTqJqBin+8X9eD+f0RhEBmitS1g+ae3Jwyr7WnBjJpN5J/2jbS42GRwkm957NvZOdAeaOxKWz97d9oxGi6dhhpKgNmWqXb0BwJNFaBRQHiJBHfHvlKV1Fs3Z2Sklm3OgEigukqrzaA34Myh6sfMp7h7MVrgSe/QQKBgQDK1paO8TYfgbSq9Du/CVpJLDpg8ge6+/q1MKP5JyqQaHxEe/2dUMRszWdsGKZIrmu/P/v4PQ3u60zlGNRnHOl2xazLcBtMwJSCWV22PSRA/5UyusVgn3iI6jASqalo0mgXyhsNs3oEodLGhrpZbVbkmLlEfShOMsfF1domTxDocQKBgQDagdz9Mg3HfsQJ71ygi4OLTBLcsuA3BviOaFqBgPp2FZoZelzsSbsas/tXUXEl08THoStZEe2PKnbtOSBK2dDymhCeepKlco6OTRk25jG9vFdd4nx//A+U75RSTAUlBDIl2Q7yzKdXYuSmuZKpRl9GWa6AISRQZf11tw1ts9NUCwKBgErWaa5LqOBvBq2cdv7BAKLGwrNKGTgQCCwZyiX/IWEua8sIxEXqqs5J6sKjRZbDY9WoUdsBC8b+4dwVESkKLck4ncxhjHEBDMobFsxKOroQkoepCXHg5KP/Y8U++9ZE60r7soeXlIlo+09sHg0onkqxXom6c8iGS9beVCKWQXLBAoGBAJOzbLoJ955+Ze2BS0+KfuTOC4H7t+v6XlGE4IjhsmvXtk66k811GXC3cJJZju5O85ktrKuMntRDlBhOoTF3gvI6ijlWCYKkqRAvtXeSqtTiVvwzeIzayX2XZN8sW93ltDA5RQ2CoStEweKhVi3uT8CyJm6d+HoQNwA3OHCLObJ5AoGAZv2a7Jov0Wm5W8s4EQbfcw8I/+yApENYdKv5ODRbi0Yi8c3IFss7Drbap8X/huTbVCNX9nJhdAj6Hd2Fa4Z4bep4R+hTpa8r24WMTr9bfpasfySOr/p/SsvNEoaYU6y0OmRE5QDXEQ6xAg/JTJY7RKMR6LpTFWZOrNc4/03zCug=');
+(2, 'BwX5KM89b1UhSJvb9QLxRXZY6QRn/HK4cPepRDFUkve1oVEE+aClNuWFvWi7tuX3/a5IUlSvjxpO7iaJE2TGlARAd+Syady+DoSkLegDxi89HCoie1GBxCkwxpK5EQSqmu1Db0X+xorX+BqwH9j9pBmRyT1mOep73qidQA7iQ3yEL9KSC6N54LyxcCDQGgBtYOHiY7VG/U1OZK4TTg16AB9gYIxJZm1wlIMjlSOYZO6Ndod+v1Z2S7BLhmrnEeHShBMLc9HRUDC4AVSDAOUMYSGbcX3TTe1yp3tbt4bbACciv/Bn0k6qh64PHKXKD1e6/HPBOYVRbCwFXChQS/lGGA==', 1, 'l26XY0vg89XmJv2yTmldsR9ifeeVa4NtLKCZN2IVIoHuGEWOxdTDT76+hJ/OsMA1ykn6LvjKUUHstUK3bAMUpOhGfawn4senh3kjf7PU1qiSZtHbKuFSUa4O2Jdzg7r60W9nhbukKSAK7d/aAAdCTiph2Gez/KJcS8rmsKwkSSYW1qjVWVg+s0yRyQfWPXZfLqKhE4/PYZPK1Efk2gWdS0iocf/ERu5yhIAv6C5nVr6VhC09fQPZCIqJ9UhI7GzuqgclxABUsSMlL8btCrjTSacK9E/o8GUWe2Fu1NMXhX1guPN8B/Z0IYyHGSSNqS3gIHcTe2FD7p98fEUdis74lA==', '2023-11-06 03:00:00', '2023-11-06 03:00:00', 'open', '2023-11-06 03:00:00', 'MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCtW7V100pt3V56eUZHRjHVsePSjWgsg7M9uNMDeOXQ3oH6xWk2TZeISPTg/ibvFgu08OumS7e5xC8dIQLTdrQ4M+UT0JVCua5t3OoCwZwDhNu9u2G2eC1ksSmgNj1uNRiEjlSFZoPSQPQ+zBBY+3peQM163mjG/cGEbVKCf2zTjTGLqwmkvUrLXdeefjo+4n1E9pOHb9S0aJ8iiezmgvKaqfBY6ZzS/AQbWgQAk0ed7CoJtfzaxK5BDS7fcnr8FWdpyz6NYypyg3gOuv29Oq5lVtyUSNXfFdWFKj6xrZXWr60lv5oJ3f2dtsSQdlGT4Cemxv/c/OQKPTanZC0CvLunAgMBAAECggEAGlWRma34ovrbRMiSa/ZWUKt+u7feaNCy1D/00hS1+IYsgY8mfejIiZvnkxwYhv421gw5B+B9rtsF+ytOFhh0pQsBFAL+AY5aWHcUF0oY7JHsnYRPAhx8bMza0Wsb5tdq+4vxe/hIMxLJ55YxL4s4GgRHEpChowTeNkMzIv6/Zd1PdTmJ90bgsz3Nuwj3XUhdsToBgLWDYRwEWxiUs5pNir7sTsGWaRU4aZDVoErmu6/xR5W/f1P8u/Uvaqr1DCuK7QIf8+hGkbtZp4dKJwhn1h5qrob1ecRPJEaPP6mreUH95zIyPTrxl9SrDhV2a8qdkSvDDuRynbweiwPCzwW9DQKBgQDQolyIC8eeyTXzXzoLhtxT4kc/+Ym3oZIfWqAjP0bO24Qt74TKqr7o+llT+1eEB5Br+NbDv4770I+w8SOVOqpqntgykPZ5bxodzYnjXZ4v9lMiWybnsz3hxrUgIZKkXmz0JqQzh5arw0VDux0dGSDEGGLS199mMzA3F+93SUik5QKBgQDUtyNNFJyL2XZv4XEyvJuxFAGoeH2/0Sp4cwtc9CJBHH3k7b+qbIuzxnf8F+N5DUHjLxk7kqqhvUNAgL4EUFlowOTNUbNa9bUzP72JqEDJZ0fmyago29AckD5VjCkBaiGmVfsNp5KacCVkODhQ7QwcjSK9VpdaHjWbaX5beOwBmwKBgBkLVGY0W8sQxjwnszUNBEfBguIIF2MGrx66Zzyz7NEKAszs0pjtdCtNWgm9wxyjN8/uOAGZbhWGTKll2Oqh9zEDTlqLkjqzfoQTVzkG1OVXAVW/cWUg3A3NJ5Lq1MqMVzHbrZxN62VE9HyT6oPCr286qio7JaMEBAapBeLg1iqNAoGBAKvXh10t2YnhFB0uMxSZ6e0UDILdVDkx8O19gyCE2WdgbRQUPVKgffutyiCN6+ZPH3s5AVlvEwm2rC3f06IIhzJpIm38IrjI5qmQRL6AflY2aY+4OXFIosdwf+r8X+QUqTqHG1nclkLNdmeQQ26dEbu/COGMopja7tOuVbXv6jkhAoGBAKmVTjjI9Qwr3kG81pT7iDcINvgBkQa8J4SSPMGk3LR+mi41Q5eUWNyv59Ll4jx4xLgGTId54PRMDiIp7Eqexp/33JUqK6IKRlu+pII/RrZaVytBke45jhec7M0PovtVVhT+BVuARJEs9muKNH7/jCJFypMeQKpCTfDmmxdcNZyn'),
+(6, 'qClagJ/YtlKxB7gSqqv7nqhFc2vlk6saSVl0BCd6yjYO8otZd7gnhk7d2PWdLGeNtKXB/wBOcrnawdZBlb+2F5WwbhfEUlifbeKnB9LLVewGTg1ei1qD2apLorWGbcoXSDN3lM8xXB2NUrvttpNnvaLSQmXlmX3/069czO1UX3jfymyZ6w/TD4hyByNmmKps9VNXmZKgQCiaWQVC1qB1AeXM/FA7zS2n09OILeSjbxdJX/SGpUcy2fJqiJczo82yujOF/G0YFINs10NOzFYYyxPHfkIuqXl9IsnJdSgFoJE4cGKE5QI5USpCHWmaw4sQRCIhLZ/08eUTcJwQzXndjA==', 6, 'lqvjOZmd28shalttknA1/9S03Y+7iZN0b3ik7utrcZorkadHzBv0l7PwdbUlXpE9sbGh9iEShyrTG/7cFMPTl5NUmtXsYkU7VdxH7UTabs4yl9lTJlNsix3/2RfN7MgcS8eTodKfpS1Eg452EHLCUTC78HF7eL1mjpm2DPiDHG5GYweRmjwzJ4Nl1icN7HNB3XzMjRVP2tBxUbdUilQIw0dHQ/pvIgshf71UoQs1UPAgEsgNy6pcyUZ+SerJWYGZxOB3MpOqgzGq0buhhX6kWMN4gJy4wHTQDCkjuhOeH6Vtj9p5HmsEW3vmAd7FiKK57lYnFWiFrRaDMjifgnmW0Q==', '2023-11-06 12:08:00', '2023-11-06 12:07:00', 'open', '2023-11-06 12:07:00', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzap1945KCEpzz4UVzE++khSxCVVwttbYaMUePs0Hk5pStuPKuFWXqnuhXbr3OBjgVpcPkJnCyGrDWKuaW4mqgS5inxbFaEVL+ts9LqIMtv/VY6xz2m+Jqv1NPZj0GhphISAnAoRVDjZxr3RXXIHu3vyjfy3pkkofRFVUuicpuG37j6WTJuo43iqMl7jP5xNF1RC3j3g2NeVgKQ2W/9K/gNWAv36QHBhf0AyMeqgC41nuTqKkBgSmu/gFo+wZ0bLjof+OjkEK11s1T22ums17HvonEnUHAaVLUkU8C2IHDo0yQZ4J62W+G9IxAJYcM9yMWQeEb0j8/nOW9ppk9ah7PAgMBAAECggEAEed1x/ZJzIkm+H9metFmfLh9bjEufbFAduSsC38L+Fe6RovKS+z+uqcY8ICwmDquphpgrgfX/y4Cr5ygXjZCBbUFitiDlkVcTubXUOmEDbC2PyVXQpTTx2tIWQgO1vPfhncJ4hsxEAi1r13krA8lyXReE9cuY5Lr0sWaNoaxmMMi4sUYnm1wyOY+8QQL1HGCUI+q+pEicMpCCLIJODvwha4CvoCQqSRtQ5dPanFE71qq4lt04r04fcPxXX2GFmvRAns+1i+wll6WEEwG9zvdMQ+2ivxEOPVW6VeAOdMEzyhv+DzUeNXhvxtwrFbbQUbprRc8wc2llFJbzTrhDN27QQKBgQDSp+Tw9a9sVK7uIxyzv0fTFExj4JEQPqb6PZ5SNkNKe79tmPQJQUzFHTfnmGSfYRva51N9fG5gV7mQFbYqTgmRl+YwTD2CWMROpyTCOgjavmjt6z1pAZnh6Nz1dIGr4QhJzBaymMEqBQ7VIOi2keqeIsz8EhXfzUixnCHJP0j06QKBgQDaCUmuuBewby/zW1KkYMv0vyX/KS/70sl815oym39DMhndbo0Q62p44tPiDTY3g0W8MLQVg2zY4amfxZy3Czmu+bD6htK4nFxhmG76tz3WC6XKZx8OPvvp2SJcUo6hMNgb8vGWMsua9Wc2HOhHoQMCXgxjCkSd/+AFLK/wGbwC9wKBgAkQeGV17Op4al6M3DtPy8NlaDQUAan1SDIUXK+k7hhSYtZQco/DY45Hx5QLlqjVAOHWel038XfrzmxIwuHnIbpGEv2ZCjyFnUzVHFvPK3peHx29tZLDIt/5qShWrw26TST/xypAMG+icBTzqY/Rj4rmbHOcQ5yxtKMP2NRUCMuhAoGBAIHi4Ir9zdbkFZuSPoP/yeBN8pOzdIs+gZsmUQxux3w/H1ti3RREOZQ0A+b42eBuCh/Wn6DlPvVgUQ0FyprcTAupYT2NDYC+XOYiyZH/kQ2uuJ//mGeDK8yd9jMrVx49G7BipHpGXjY8lLSOuezZxRIm9pgVaNT6tfg/K7wLiI33AoGAf4ePpmAP4/Q440iecHgAW/48qg/4QlBNz3uXnJ07AG1dE7d11Snt1IpvDxURehuM5xMxp8VNSIlO+hZmyZxRdmpeGnHoh/6MfIhHpNI+ghzcVxHeBCNWin9sejrncMrErVtvchjRg/5lgUMKX4SxxZu5mhlXPjJf57vASPTgbvk=');
 
 -- --------------------------------------------------------
 
@@ -168,8 +163,7 @@ CREATE TABLE `imghotel` (
 --
 
 INSERT INTO `imghotel` (`imghotelId`, `hotelId`, `filePath`) VALUES
-(6, 2, '47b2b665-cf96-4e76-8843-fd65689a0668.jpg'),
-(7, 5, '470f48af-86a8-454a-a5ed-90b5ef1f83a4.jpg');
+(6, 2, '47b2b665-cf96-4e76-8843-fd65689a0668.jpg');
 
 -- --------------------------------------------------------
 
@@ -240,7 +234,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`reservationId`, `userId`, `promotionId`, `roomId`) VALUES
-(5, 8, 1, 6);
+(7, 4, 1, 5),
+(8, 4, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -261,10 +256,8 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`roleId`, `name`, `userId`) VALUES
 (1, 'hotel', 5),
 (2, 'user', 4),
-(5, 'hotel', 8),
-(6, 'hotel', 9),
-(7, 'hotel', 10),
-(8, 'hotel', 11);
+(18, 'hotel', 21),
+(19, 'hotel', 6);
 
 -- --------------------------------------------------------
 
@@ -286,8 +279,9 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`roomId`, `hotelId`, `guest`, `type`, `price`, `amountRoom`) VALUES
-(5, 2, 2, 'suite', 2000, 1),
-(6, 2, 1, 'deluxe', 20000, 2);
+(5, 2, 2, 'suite', 2000, 94),
+(6, 2, 1, 'deluxe', 20000, 99),
+(24, 2, 2, 'studio', 3, 99);
 
 -- --------------------------------------------------------
 
@@ -332,7 +326,11 @@ CREATE TABLE `tag` (
 --
 
 INSERT INTO `tag` (`tagId`, `vacationId`, `tagNameId`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 1, 5),
+(3, 1, 2),
+(4, 5, 2),
+(5, 5, 6);
 
 -- --------------------------------------------------------
 
@@ -350,7 +348,12 @@ CREATE TABLE `tagname` (
 --
 
 INSERT INTO `tagname` (`tagNameId`, `name`) VALUES
-(1, 'sea');
+(1, 'sea'),
+(2, 'moutain'),
+(3, 'tent'),
+(4, 'river'),
+(5, 'waterActivity'),
+(6, 'activity');
 
 -- --------------------------------------------------------
 
@@ -375,14 +378,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `name`, `lastname`, `email`, `username`, `password`, `phone`, `money`, `address`) VALUES
-(4, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username', '$2a$10$TWqmgtVJxWMp.WdDk0C8uOH4HqXyxlD4LUsyKpdoZiHA5pFr0vwtS', '0865118978', 0, 'asdasd'),
+(4, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username', '$2a$10$TWqmgtVJxWMp.WdDk0C8uOH4HqXyxlD4LUsyKpdoZiHA5pFr0vwtS', '0865118978', 0, 'asdasd55'),
 (5, 'Peerawat', 'Wongmek', 'peace@gmail.com', 'username2', '$2a$10$MWwTWBADGUDdZ9ijVeViQuygISbGeI8JD1HQGs.KFfQDTIVCFxvXe', '0865118978', 0, 'asdasd'),
 (6, 'peerawat', 'wongmek', 'username@gmail.com', 'username3', '$2a$10$dqZEzqyoYiDcKG5U5B.YfOxTvlHCAP/wf5YNqIDXXt9BXxnC7kP9G', '0982636676', 0, '12312ased'),
-(7, 'asdas', 'asdasd', 'username2', 'username6', '$2a$10$ZWSthA07NfMHC1WrljSYV.vnOq.618ycxHzr/A/st..d4BzqWGosK', '0982636676', 0, '1231'),
-(8, 'ads', 'asda', 'username2', 'username4', '$2a$10$fafocPeWzkETAWO5MMCFtey1ZailyXbIOcTeL7CYqxufqMEB8mDCO', '0982636676', 0, '12312'),
-(9, 'peerawat', 'wongmek', 'username2', 'usern1m2', '$2a$10$UZf.exR1lUHgDFDMhU5Xu.3M7SY7FwlRO8PUSTrfAitfTbYFhuk1K', '0982636676', 0, '123'),
-(10, 'peerawat', 'wongmek', 'username2', 'fsdrwer', '$2a$10$7fiyHxkK2VOlB3sztGxDWOeAI42.rUUZIIQFUoQxWk4mXB3RtzJWu', '0982636676', 0, '123'),
-(11, 'peerawat', 'wongmek', 'username2', 'fsdrwer', '$2a$10$HbrTHBoJ59ytSx8J3rRVfeZ06G0zUDhrIQn/F4M7S7.Ceb9/udliW', '0982636676', 0, '123');
+(21, 'peerawat', 'wongmek', 'username2', 'username2233', '$2a$10$h6Un4TAbOj0g7293Ypq3SeWgOJ.Zg572365alY93Z1KMpkjR2shrK', '0982636676', 0, '123456');
 
 -- --------------------------------------------------------
 
@@ -401,7 +400,8 @@ CREATE TABLE `userhotel` (
 --
 
 INSERT INTO `userhotel` (`userHotelId`, `hotelId`, `userId`) VALUES
-(1, 2, 5);
+(1, 2, 5),
+(2, 6, 21);
 
 -- --------------------------------------------------------
 
@@ -423,9 +423,10 @@ CREATE TABLE `vacation` (
 --
 
 INSERT INTO `vacation` (`vacationId`, `subdistrictId`, `name`, `description`, `address`, `tagName`) VALUES
-(1, 1, 'สุวรรณภูมิ', 'สนามบิน', 'บราๆๆ', 'tent'),
-(2, 1, 'สุวรรณภูมิ2', 'สนามบิน', 'บราๆๆ', 'tent'),
-(3, 1, 'สุวรรณภูมิ3', 'สนามบิน', 'บราๆๆ', 'tent');
+(1, 1, 'น้ำตกเอกน้อย', 'มีสระม่วงและสถานที่ท่องเที่ยวทางธรรมชาติมากมาย', 'บราๆๆ', 'river'),
+(2, 1, 'นางโม', 'หมู่เกาะสวยงาม', 'บราๆๆ', 'sea'),
+(3, 1, 'แม่น้ำคลองโประ', 'มีธรรมชาติอันสวยงาม', 'นราธิวาส ', 'tent'),
+(5, 4, 'นครเชียงฟ้า', 'สถานที่ท่องเที่ยวที่อาจไม่เคยรู้จักมากนัก', 'ถนน ราชวิถี', 'mountain');
 
 --
 -- Indexes for dumped tables
@@ -589,7 +590,7 @@ ALTER TABLE `facilitiesname`
 -- AUTO_INCREMENT for table `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `hotelId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `hotelId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `imghotel`
@@ -619,19 +620,19 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `roomId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `roomId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `subdistrict`
@@ -643,31 +644,31 @@ ALTER TABLE `subdistrict`
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `tagId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tagId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tagname`
 --
 ALTER TABLE `tagname`
-  MODIFY `tagNameId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tagNameId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `userhotel`
 --
 ALTER TABLE `userhotel`
-  MODIFY `userHotelId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userHotelId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vacation`
 --
 ALTER TABLE `vacation`
-  MODIFY `vacationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vacationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

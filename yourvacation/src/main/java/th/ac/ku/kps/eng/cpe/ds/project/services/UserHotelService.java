@@ -15,4 +15,8 @@ public class UserHotelService {
 	public Userhotel findByUserId(int id) {
 		return userhotelRepository.findByUserId(id);
 	}
+	
+	public Userhotel save(Userhotel userhotel) {
+		return userhotelRepository.save(userhotel);
+	}
 }
