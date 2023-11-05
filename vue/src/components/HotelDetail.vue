@@ -39,7 +39,7 @@
         <div class="hddetailbox">
           <a>สถานที่ใกล้เคียง : </a>
           <div class="hddetailcontent" v-for="item in place" :key="item.id">
-            <p>{{ item.name }} <a href="/place/detail" class="hdblack-button"
+            <p>{{ item.name }} <a :href="'/place/'+item.vacationId+'/user/'+this.$route.params.userId" class="hdblack-button"
                 style="align-self: flex-end; color:white; margin:0%; padding:2px 5px; font-size:15px">เพิ่มเติม</a></p>
           </div>
         </div>

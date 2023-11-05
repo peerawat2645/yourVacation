@@ -1,6 +1,6 @@
 <template>
   <div class="hrbody">
-    <a href="/home#foryou" class="hrblack-button">Back</a>
+    <a :href="'/home/'+this.$route.params.userId" class="hrblack-button">Back</a>
     <div class="hrBox">
       <div class="hrpic">
         <div class="hrpicture-slider">

@@ -42,6 +42,7 @@ import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Imghotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Room;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Subdistrict;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Userhotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.AdvertismentDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.FacilitesDTO;
@@ -190,6 +191,27 @@ public class HotelRestController {
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/checked/{id}")
+	public ResponseEntity<Response<Boolean>> checkedHotel(@PathVariable("id") int userId) {
+		Response<Boolean> res = new Response<>();
+		try {
+			Userhotel uh = userHotelService.findByUserId(userId);
+			boolean check = true;
+			if(uh == null) {
+				check =false;
+			}
+			res.setBody(check);
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<Boolean>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<Boolean>>(res, res.getHttpStatus());
 		}
 
 	}

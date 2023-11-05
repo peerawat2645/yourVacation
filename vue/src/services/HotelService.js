@@ -287,5 +287,18 @@ export default {
     };
 
     return axios(config);
+  },
+  checkHotel(id){
+    const placeURL = `${baseURL}/hotel/checked/${id}`;
+    console.log(placeURL)
+    const config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: placeURL,
+    };
+
+    return axios(config);
   }
 };

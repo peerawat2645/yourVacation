@@ -26,6 +26,7 @@
 </template>
 <script>
 import apiService from '@/services/apiService';
+import HotelService from '@/services/HotelService';
 import router from '@/router';
 export default {
   name: 'LoginPage',
@@ -39,7 +40,8 @@ export default {
       error: false,
       errorMessage: '',
       registrationSuccess: false,
-      userId:'',
+      userId: '',
+      checked: '',
     };
   },
   mounted() {
@@ -56,7 +58,7 @@ export default {
         notification.style.opacity = 0;
         setTimeout(function () {
           notification.style.display = "none";
-        }, 1000); 
+        }, 1000);
       }
     }, 5000);
   },
@@ -81,12 +83,7 @@ export default {
 
       apiService.login(this.username, this.password)
         .then((response) => {
-          if(response.data.message == "user"){
-            router.push('/home/'+response.data.body.userId);
-          }
-          else if(response.data.message == "hotel"){
-            router.push('/hotel/home/'+response.data.body.userId);
-          }  
+          this.checkHotel(response.data.body.userId, response.data.message);
         })
         .catch(error => {
           console.error('Login error:', error);
@@ -94,6 +91,28 @@ export default {
           this.errorMessage = "Username or Password isn't correct";
         });
     },
+    checkHotel(id, message) {
+      HotelService.checkHotel(id)
+        .then((response) => {
+          this.checked = response.data.body
+          if (message == "user") {
+            router.push('/home/' + id);
+          }
+          else if (message == "hotel") {
+            if (response.data.body) {
+              router.push('/hotel/home/' + id);
+            }
+            else {
+              router.push('/hotel/create');
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Login error:', error);
+          this.error = true;
+          this.errorMessage = "Username or Password isn't correct";
+        });
+    }
   },
 };
 </script>
@@ -301,4 +320,5 @@ input[type="password"] {
   opacity: 1;
   transition: opacity 1s;
   /* Set the duration of the fade (1s = 1 second) */
-}</style>
+}
+</style>

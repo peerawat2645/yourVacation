@@ -1,6 +1,5 @@
 <template>
   <div class="hBody">
-    <a :href="'/home/'+this.$route.params.userId" class="pdblack-button">Back</a>
     <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
     <div class="hContent">
       <div style="width: 100%;">

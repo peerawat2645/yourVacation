@@ -1,6 +1,6 @@
 <template>
   <div class="pBody">
-    <div class="pText"><a>สถานที่ท่องเที่ยวแนะนำสำหรับคุณ</a><a style="font-size: 10px;">{{ checkedItems }}</a></div>
+    <div class="pText"><a>สถานที่ท่องเที่ยวแนะนำสำหรับคุณ</a></div>
     <div class="pContent">
       <div>
         <div class="pContents">
