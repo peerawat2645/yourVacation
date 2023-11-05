@@ -14,77 +14,87 @@
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                         font-weight: 600; color:black;">จังหวัด</a>
-                        <select style="width: 100%;" @change="ProvinceChange">
-                            <option value="">Select Province</option>
-                            <option v-for="item in province" v-bind:key="item.provinceId" :value=item.provinceId>{{item.name}}</option>
+                        <select style="width: 100%;" @change="ProvinceChange" v-model="formData.provinceId">
+                            <option v-for="(item, index) in province" :key="item.provinceId" :value="item.provinceId"
+                                :selected="index == 0">
+                                {{ item.name }}
+                            </option>
+
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                         font-weight: 600; color:black">อำเภอ</a>
-                        <select style="width: 100%;" @change="DistrictChange">
-                            <option value="">Select District</option>
-                            <option v-for="item in district" v-bind:key="item.id" :value=item.districtId>{{item.name}}</option>
+                        <select style="width: 100%;" @change="DistrictChange" v-model="formData.districtId">
+                            <option v-for="(item, index) in district" v-bind:key="item.districtId" :value=item.districtId
+                                :selected="index == 0">{{ item.name }}
+                            </option>
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                         font-weight: 600; color:black;">ตำบล</a>
-                        <select style="width: 100%;">
-                            <option value="">Select subdistrict</option>
-                            <option v-for="item in subdistrict" v-bind:key="item.id">{{item.name}}</option>
+                        <select style="width: 100%;" v-model="formData.subdistrictId">
+                            <option v-for="(item, index) in subdistrict" v-bind:key="item.subdistrictId"
+                                :selected="index == 0" :value=item.subdistrictId>{{ item.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="PlaceSelect">
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"> <a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(1)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">ทะเล</a>
                     </label>
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"> <a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(2)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">ภูเขา</a>
                     </label>
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"><a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(3)"><a style="font-size: 16px;
                         font-weight: 600; color:black"> แม่น้ำ</a>
                     </label>
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"> <a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(4)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">กิจกรรมทางน้ำ</a>
                     </label>
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"> <a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(5)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">กิจกรรมทางบก</a>
                     </label>
                     <label style="margin-left: 10px; margin-right:10px;">
-                        <input type="checkbox"> <a style="font-size: 16px;
+                        <input type="checkbox" @change="toggleItem(6)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">กางเต้นท์</a>
                     </label>
-                    <div class="clicked" style="padding: 10px 50px;" >ค้นหา</div>
                 </div>
             </div>
             <div class="Hotelbox" v-if="activeComponent === 'HotelVue'">
                 <div class="HotelProvince">
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
-                        font-weight: 600; color:black">จังหวัด</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
+                        font-weight: 600; color:black;">จังหวัด</a>
+                        <select style="width: 100%;" @change="ProvinceChange" v-model="formData.provinceId">
+                            <option v-for="(item, index) in province" :key="item.provinceId" :value="item.provinceId"
+                                :selected="index == 0">
+                                {{ item.name }}
+                            </option>
+
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                         font-weight: 600; color:black">อำเภอ</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
+                        <select style="width: 100%;" @change="DistrictChange" v-model="formData.districtId">
+                            <option v-for="(item, index) in district" v-bind:key="item.districtId" :value=item.districtId
+                                :selected="index == 0">{{ item.name }}
+                            </option>
                         </select>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
-                        font-weight: 600; color:black">ตำบล</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
+                        font-weight: 600; color:black;">ตำบล</a>
+                        <select style="width: 100%;" v-model="formData.subdistrictId">
+                            <option v-for="(item, index) in subdistrict" v-bind:key="item.subdistrictId"
+                                :selected="index == 0" :value=item.subdistrictId>{{ item.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -96,40 +106,31 @@
                         <div class="ProvinceBox" style="width:45%">
                             <a style="font-size: 16px;
                         font-weight: 600; color:black">ราคาเริ่มต้น</a>
-                            <select style="width: 100%;">
-                                <option value="">Select Province</option>
-                            </select>
+                            <input type="text" class="hcustom-input" placeholder="Your Input" v-model="hotelData.priceMin">
                         </div>
                         <a>-</a>
                         <div class="ProvinceBox" style="width:45%">
                             <a style="font-size: 16px;
                         font-weight: 600; color:black">ราคาสิ้นสุด</a>
-                            <select style="width: 100%;">
-                                <option value="">Select Province</option>
-                            </select>
+                            <input type="text" class="hcustom-input" placeholder="Your Input" v-model="hotelData.priceMax">
                         </div>
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                     font-weight: 600; color:black">จำนวนคนเข้าพัก</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
-                        </select>
+                        <input type="text" class="hcustom-input" placeholder="Your Input" v-model="hotelData.guest">
                     </div>
                     <div class="ProvinceBox">
                         <a style="font-size: 16px;
                     font-weight: 600; color:black">จำนวนห้องนอน</a>
-                        <select style="width: 100%;">
-                            <option value="">Select Province</option>
-                        </select>
+                        <input type="text" class="hcustom-input" placeholder="Your Input" v-model="hotelData.amountRoom">
                     </div>
-                    <div class="clicked" style="padding: 10px 50px;">ค้นหา</div>
                 </div>
             </div>
         </div>
         <RecomendPlace v-if="activeComponent === 'RecomendPlace'" />
-        <PlaceVue v-if="activeComponent === 'PlaceVue'" />
-        <HotelVue v-if="activeComponent === 'HotelVue'" />
+        <PlaceVue :checkedItems=formData v-if="activeComponent === 'PlaceVue'" />
+        <HotelVue :message=hotelData v-if="activeComponent === 'HotelVue'" />
     </div>
 </template>
 <script>
@@ -157,13 +158,31 @@ export default {
             isClicked1: true,
             isClicked2: false,
             isClicked3: false,
-            subdistrict:[],
-            district:[],
-            province:[]
+            subdistrict: [],
+            district: [],
+            province: [],
+            checkedItems: [],
+            formData: {
+                subdistrictId: 1,
+                districtId: 1,
+                provinceId: 1,
+                tagnameIds: [],
+            },
+            hotelData: {
+                subdistrictId: 1,
+                districtId: 1,
+                provinceId: 1,
+                priceMin: 0,
+                priceMax: 0,
+                guest: 0,
+                amountRoom: 0,
+            },
         };
     },
     created() {
         this.provinceAll();
+        this.districtAll();
+        this.subdistrictAll();
     },
     methods: {
         changeColor(a) {
@@ -195,7 +214,7 @@ export default {
                 this.isClicked3 = true;
             }
         },
-        provinceAll(){
+        provinceAll() {
             SubdistrictService.province()
                 .then((response) => {
                     {
@@ -212,14 +231,12 @@ export default {
                     }
                 });
         },
-        ProvinceChange(event){
-            const selectedValue = event.target.value;
-
-            SubdistrictService.districtId(selectedValue)
+        subdistrictAll() {
+            SubdistrictService.subdistrict()
                 .then((response) => {
                     {
-                        this.district = response.data.body
-                        
+                        this.subdistrict = response.data.body
+                        console.log(this.province)
                     }
                 })
                 .catch(error => {
@@ -231,14 +248,12 @@ export default {
                     }
                 });
         },
-        DistrictChange(event){
-            const selectedValue = event.target.value;
-
-            SubdistrictService.subdistrictId(selectedValue)
+        districtAll() {
+            SubdistrictService.district()
                 .then((response) => {
                     {
-                        this.subdistrict = response.data.body
-                        
+                        this.district = response.data.body
+                        console.log(this.province)
                     }
                 })
                 .catch(error => {
@@ -249,12 +264,76 @@ export default {
                         }
                     }
                 });
-        }
+        },
+        ProvinceChange(event) {
+            const selectedValue = event.target.value;
+
+            SubdistrictService.districtId(selectedValue)
+                .then((response) => {
+                    {
+                        this.district = response.data.body
+
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
+        DistrictChange(event) {
+            const selectedValue = event.target.value;
+
+            SubdistrictService.subdistrictId(selectedValue)
+                .then((response) => {
+                    {
+                        this.subdistrict = response.data.body
+
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
+        toggleItem(item) {
+            const index = this.formData.tagnameIds.indexOf(item);
+            if (index === -1) {
+                // If not, add it to the list
+                this.formData.tagnameIds.push(item);
+            } else {
+                // If it exists, remove it
+                this.formData.tagnameIds.splice(index, 1);
+            }
+            console.log(this.checkedItems)
+        },
+        submitForm(event) {
+            event.preventDefault();
+
+            // You can access form data in this.formData
+            console.log('Form data submitted:', this.formData);
+
+            // You can also send the form data to a server or perform other actions here
+        },
     }
 }
 </script>
 
 <style>
+.hcustom-input {
+    border: 10px solid grey;
+    /* You can add more custom styles as needed */
+    height: 30px;
+    width: 100%;
+}
+
 .clicked {
     z-index: 200;
     background-color: #000000;
@@ -370,6 +449,7 @@ export default {
     flex-direction: column;
     line-height: 40px;
 }
+
 .Hotelbox {
     width: 95%;
     display: flex;
@@ -411,5 +491,4 @@ export default {
     justify-content: center;
     flex-direction: column;
     line-height: 40px;
-}
-</style>
+}</style>

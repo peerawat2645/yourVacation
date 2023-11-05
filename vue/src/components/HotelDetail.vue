@@ -1,12 +1,12 @@
 <template>
   <div class="hdbody">
     <div class="hdname">
-      <a href="/home#foryou" class="hdblack-button">Back</a>
+      <a :href="'/home/'+this.$route.params.userId" class="hdblack-button">Back</a>
       <div style="width: 90%; display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center; margin-top:20px">
-        <p>โรงแรม xxxx</p>
+        <p>โรงแรม {{ this.hotel.name }}</p>
       </div>
     </div>
     <div class="hdbox">
@@ -25,60 +25,46 @@
           </div>
         </div>
         <div class="hdroomtype">
-          <div class="hdroomtypedetail" >
+          <div class="hdroomtypedetail" v-for="item in room" :key="item.id">
             <img :src="images[0]" />
-            <div class="hdroomtypedetailbox"><a>Superir room</a><p>3000 บาท</p><a href="/hotel/reservation" class="hdwhite-button">จอง</a></div>
+            <div class="hdroomtypedetailbox"><a>{{item.type}}</a>
+              <p>{{item.price}} บาท</p><a :href="'/hotel/reservation/'+item.roomId+'/user/'+this.$route.params.userId" class="hdwhite-button">จอง</a>
+            </div>
           </div>
-          <div class="hdroomtypedetail" >
-            <img :src="images[0]" />
-            <div class="hdroomtypedetailbox"><a>Superir room</a><p>3000 บาท</p><a href="/hotel/reservation" class="hdwhite-button">จอง</a></div>
-          </div>
-          <div class="hdroomtypedetail" >
-            <img :src="images[0]" />
-            <div class="hdroomtypedetailbox"><a>Superir room</a><p>3000 บาท</p><a href="/hotel/reservation" class="hdwhite-button">จอง</a></div>
-          </div>
-          
-      </div></div>
+
+
+        </div>
+      </div>
       <div class="hddetail">
         <div class="hddetailbox">
           <a>สถานที่ใกล้เคียง : </a>
-          <div class="hddetailcontent">
-            <p>ฟฟฟฟฟ <a href="/place/detail" class="hdblack-button"
-                style="align-self: flex-end; color:white; margin:0%; padding:2px 5px; font-size:15px">เพิ่มเติม</a></p>
-            <p>ฟฟฟฟฟ <a href="/place/detail" class="hdblack-button"
-                style="align-self: flex-end; color:white; margin:0%; padding:2px 5px; font-size:15px">เพิ่มเติม</a></p>
-            <p>ฟฟฟฟฟ <a href="/place/detail" class="hdblack-button"
+          <div class="hddetailcontent" v-for="item in place" :key="item.id">
+            <p>{{ item.name }} <a href="/place/detail" class="hdblack-button"
                 style="align-self: flex-end; color:white; margin:0%; padding:2px 5px; font-size:15px">เพิ่มเติม</a></p>
           </div>
         </div>
         <div class="hddetailbox">
           <a>ที่อยู่ : </a>
           <div class="hddetailcontent">
-            <p>ndcklsnjdnjsbvbvjbvjfkfjblbfjlfvsfjvlbvljbvfj fknvlf vfjhsof kshfviohfuf
-              jshsssssssssssssssssssssssssssssssssssssssssfhb jfvsjh</p>
+            <p>{{ this.hotel.address }}</p>
           </div>
         </div>
-        <div class="hddetailbox">
+        <!--<div class="hddetailbox">
           <a>รายละเอียด : </a>
           <div class="hddetailcontent">
-            <p>ndcklsnjdnjsbvbvjbvjfkfjblbfjlfvsfjvlbvljbvfj fknvlf vfjhsof kshfviohfuf
-              jshsssssssssssssssssssssssssssssssssssssssssfhb jfvsjh</p>
+            <p>{{this.hotel.description}}</p>
           </div>
-        </div>
+        </div>-->
         <div class="hddetailbox">
           <a>สิ่งอำนวยความสะดวก : </a>
-          <div class="hddetailcontent" style="width: 70%;">
+          <div class="hddetailcontent" style="width: 70%;" v-for="item in facilities" :key="item.id">
             <label style="margin-left: 10px; margin-right:10px;">
-              <input type="checkbox"><a style="font-size: 16px;
-              font-weight: 600; color:black"> TV</a>
-            </label>
-            <label style="margin-left: 10px; margin-right:10px;">
-              <input type="checkbox"><a style="font-size: 16px;
-            font-weight: 600; color:black"> ตู้เย็น</a>
-            </label>
-            <label style="margin-left: 10px; margin-right:10px;">
-              <input type="checkbox"><a style="font-size: 16px;
-          font-weight: 600; color:black"> อาหารเช้า</a>
+              <input type="checkbox" :checked="item.status">
+              <a style="font-size: 16px; font-weight: 600; color: black">
+                {{ item.name }}
+              </a>
+
+
             </label>
           </div>
         </div>
@@ -88,7 +74,7 @@
 </template>
 
 <script>
-
+import HotelService from '@/services/HotelService';
 export default {
   name: 'HotelDetail',
   data() {
@@ -103,6 +89,10 @@ export default {
         // Add more image URLs here
       ],
       currentIndex: 0,
+      hotel: [],
+      place: [],
+      facilities: [],
+      room: [],
     };
   },
   computed: {
@@ -112,10 +102,85 @@ export default {
       };
     },
   },
+  created() {
+    this.getDataHotel();
+    this.near();
+    this.facility();
+    this.rooms();
+  }
+  ,
   methods: {
     changeSlide(index) {
       this.currentIndex = index;
     },
+    getDataHotel() {
+      HotelService.getHotel(this.$route.params.id)
+        .then((response) => {
+          {
+            this.hotel = response.data.body
+            console.log(this.hotel)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
+    near() {
+      HotelService.near(this.$route.params.id)
+        .then((response) => {
+          {
+            this.place = response.data.body
+            console.log(this.place)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
+    facility() {
+      HotelService.facilities(this.$route.params.id)
+        .then((response) => {
+          {
+            this.facilities = response.data.body
+            console.log(this.facilities)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
+    rooms() {
+      HotelService.rooms(this.$route.params.id)
+        .then((response) => {
+          {
+            this.room = response.data.body
+            console.log(this.room)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    }
   },
 };
 </script>
@@ -146,6 +211,7 @@ export default {
   background-color: #333;
   /* Darker shade of black on hover */
 }
+
 .hdwhite-button {
   display: inline-block;
   padding: 5px 10px;
@@ -162,6 +228,7 @@ export default {
   background-color: #6d6d6d;
   /* Darker shade of black on hover */
 }
+
 .hdbox {
   width: 100%;
   height: auto;
@@ -217,7 +284,7 @@ export default {
 }
 
 .hddetailcontent {
-  width: 75%;
+  width: auto;
   height: auto;
   display: flex;
   align-items: start;
@@ -305,6 +372,7 @@ export default {
   text-align: center;
   flex-wrap: wrap;
 }
+
 .hdroomtypedetail {
   width: 200px;
   height: 180px;
@@ -318,11 +386,13 @@ export default {
   align-items: center;
   justify-content: end;
 }
-.hdroomtypedetail img{
+
+.hdroomtypedetail img {
   width: 100%;
   height: 100%;
 }
-.hdroomtypedetailbox{
+
+.hdroomtypedetailbox {
   width: 90%;
   height: 60%;
   display: flex;
@@ -337,14 +407,16 @@ export default {
   border-radius: 10px;
   padding-bottom: 5px;
 }
-.hdroomtypedetailbox a{
+
+.hdroomtypedetailbox a {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   cursor: default;
   color: rgb(0, 0, 0);
   font-size: 20px;
 }
-.hdroomtypedetailbox p{
+
+.hdroomtypedetailbox p {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   cursor: default;

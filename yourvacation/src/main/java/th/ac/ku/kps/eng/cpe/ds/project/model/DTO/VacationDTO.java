@@ -2,7 +2,6 @@ package th.ac.ku.kps.eng.cpe.ds.project.model.DTO;
 
 import java.util.List;
 
-import th.ac.ku.kps.eng.cpe.ds.project.model.Tag;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Vacation;
 
 public class VacationDTO {

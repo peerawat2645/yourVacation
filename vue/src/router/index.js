@@ -13,6 +13,7 @@ import HotelEdit from "../components/HotelEdit.vue";
 import RoomTypeEdit from "../components/RoomTypeEdit.vue";
 import UserEdit from "../components/UserEdit.vue";
 import HotelCreate from "../components/CreateHotel.vue";
+import HotelInPlace from "../components/HotelInPlace.vue"
 const routeList = [
     {
         path: "/",
@@ -31,44 +32,48 @@ const routeList = [
         component: RegisterHotelPage,
     },
     {
-        path: "/home",
+        path: "/home/:id",
         component: AfterLogin,
     },
     {
-        path: "/place/detail",
+        path: "/place/:id/user/:userId",
         component: PlaceDetail,
     },
     {
-        path: "/hotel/detail",
+        path: "/hotel/:id/user/:userId",
         component: HotelDetail,
     },
     {
-        path: "/hotel/reservation",
+        path: "/hotel/reservation/:id/user/:userId",
         component: ReservationHotel,
     },
     {
-        path: "/hotel/home",
+        path: "/hotel/home/:id",
         component: HotelView,
     },
     {
-        path: "/hotel/add",
+        path: "/hotel/:userId/add",
         component: AddHotel,
     },
     {
-        path: "/hotel/edit",
+        path: "/hotel/:id/edit",
         component: HotelEdit,
     },
     {
-        path: "/hotel/roomtype/edit",
+        path: "/hotel/:userId/roomtype/edit/:id",
         component: RoomTypeEdit,
     },
     {
-        path: "/user",
+        path: "/user/:id",
         component: UserEdit,
     },
     {
         path: "/hotel/create",
         component: HotelCreate,
+    },
+    {
+        path: "/hotel/place/:id/user/:userId",
+        component: HotelInPlace,
     },
 ];
 

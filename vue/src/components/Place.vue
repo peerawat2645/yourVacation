@@ -1,11 +1,11 @@
 <template>
   <div class="pBody">
-    <div class="pText"><a>สถานที่ท่องเที่ยว</a></div>
+    <div class="pText"><a>สถานที่ท่องเที่ยวแนะนำสำหรับคุณ</a><a  style="font-size: 10px;">{{checkedItems}}</a></div>
     <div class="pContent">
       <div>
         <div class="pContents">
-          <div class="pCard" v-for="item in displayedData" :key="item.id">
-            <div class="pCardContent"><a>ชื่ออุทยาน {{ item.id }}</a> <a href="/place/detail" style="width: auto;height:auto; cursor:default;"><div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div></a></div>
+          <div class="pCard" v-for="item in place" :key="item.vacation.name">
+            <div class="pCardContent"><a>ชื่ออุทยาน {{ item.vacation.name }}</a> <a :href="'/place/' + item.vacation.vacationId+'/user/'+this.$route.params.id" style="width: auto;height:auto; cursor:default;"><div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div></a></div>
             <div class="pDetail">
               <div class="pimg">
                 <div class="pimg1">
@@ -15,32 +15,31 @@
               </div>
               <div class="pDescription">
                 <div class="pCardContentBox">
-                  <ul>
-                    <li><a>aaaa</a></li>
-                    <li><a>bbbb</a></li>
-                    <li><a>cccc</a></li>
-                    <li><a>dddd</a></li>
+                  <ul v-for="tag in item.tagName" :key="tag">
+                    <li><a>{{tag}}</a></li>
                   </ul>
                 </div>
-                <div class="pCardContentBoxDetail"><a>{{ item.name }}</a></div>
+                <div class="pCardContentBoxDetail"><a>{{ item.vacation.description }}</a></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="pPaginate">
-          <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
-        </div>
+      </div>
+      <div class="pPaginate">
+        <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import PaginationVue from './Pagination.vue';
+import PlaceService from '@/services/PlaceService';
 export default {
   name: 'PlaceVue',
   components: {
     PaginationVue,
   },
+  props: ['checkedItems'],
   data() {
     return {
       sampleData: [
@@ -59,22 +58,44 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 6,
+      place:[],
+
     };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.sampleData.length / this.itemsPerPage);
+      return Math.ceil(this.place.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.sampleData.slice(start, end);
+      return this.place.slice(start, end);
     },
   },
+  created() {
+        this.PlaceAll();
+    },
   methods: {
     onPageChange(page) {
       this.currentPage = page;
     },
+    PlaceAll() {
+            PlaceService.PlaceServiceAll(this.checkedItems.districtId,this.checkedItems.provinceId,this.checkedItems.subdistrictId,this.checkedItems.tagnameIds)
+                .then((response) => {
+                    {
+                        this.place = response.data.body
+                        console.log(this.place)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
   },
 }
 </script>

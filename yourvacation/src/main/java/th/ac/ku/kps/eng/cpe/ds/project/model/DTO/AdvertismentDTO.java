@@ -5,20 +5,28 @@ public class AdvertismentDTO {
 	private String imgPath;
 	private int subdistrictId;
 	private int minprice;
-	
-	
+	private int hotelId;
 
 	public AdvertismentDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public AdvertismentDTO(String name, String imgPath, int subdistrictId, int minprice) {
+	public AdvertismentDTO(String name, String imgPath, int subdistrictId, int minprice, int hotelId) {
 		super();
 		this.name = name;
 		this.imgPath = imgPath;
 		this.subdistrictId = subdistrictId;
 		this.minprice = minprice;
+		this.hotelId = hotelId;
+	}
+
+	public int getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(int hotelId) {
+		this.hotelId = hotelId;
 	}
 
 	public String getName() {

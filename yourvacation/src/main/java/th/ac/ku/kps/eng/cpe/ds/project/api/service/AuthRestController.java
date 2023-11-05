@@ -2,6 +2,10 @@ package th.ac.ku.kps.eng.cpe.ds.project.api.service;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -93,8 +97,12 @@ public class AuthRestController {
 				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
 				ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+				
+				Set<Role> roles = user.getRoles();
+				
+				List<Role> rolesList = new ArrayList<>(roles);
 
-				res.setMessage(jwtCookie.toString());
+				res.setMessage(rolesList.get(0).getName());
 				res.setBody(userService.findByUsername(userDTO.getUsername()));
 				res.setHttpStatus(HttpStatus.OK);
 				return new ResponseEntity<Response<User>>(res, res.getHttpStatus());

@@ -1,12 +1,12 @@
 <template>
   <div class="pdbody">
     <div class="pdname">
-      <a href="/home#foryou" class="pdblack-button">Back</a>
+      <a :href="'/home/'+this.$route.params.userId" class="pdblack-button">Back</a>
       <div style="width: 90%; display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center; margin-top:20px">
-        <p>อุทยานแห่งชาติ xxxx</p>
+        <p>อุทยานแห่งชาติ {{place.name}}</p>
       </div>
     </div>
     <div class="pdbox">
@@ -26,34 +26,26 @@
         </div>
       </div>
       <div class="pddetail">
-        <a href="#" class="pdblack-button" style="align-self: flex-end;">ที่พักใกล้เคียง</a>
+        <a :href="'/hotel/place/'+place.vacationId+'/user/'+this.$route.params.userId" class="pdblack-button" style="align-self: flex-end;">ที่พักใกล้เคียง</a>
         <div class="pddetailbox">
           <a>ที่อยู่ : </a>
           <div class="pddetailcontent">
-            <p>ndcklsnjdnjsbvbvjbvjfkfjblbfjlfvsfjvlbvljbvfj fknvlf vfjhsof kshfviohfuf jshsssssssssssssssssssssssssssssssssssssssssfhb jfvsjh</p>
+            <p>{{place.address}}</p>
           </div>
         </div>
         <div class="pddetailbox">
           <a>รายละเอียด : </a>
           <div class="pddetailcontent">
-            <p>ndcklsnjdnjsbvbvjbvjfkfjblbfjlfvsfjvlbvljbvfj fknvlf vfjhsof kshfviohfuf jshsssssssssssssssssssssssssssssssssssssssssfhb jfvsjh</p>
+            <p>{{place.description}}</p>
           </div>
         </div>
         <div class="pddetailbox">
           <a>กิจกรรม : </a>
-          <div class="pddetailcontent">
+          <div class="pddetailcontent" v-for="tag in tagname" :key="tag">
             <label style="margin-left: 10px; margin-right:10px;">
               <input type="checkbox"><a style="font-size: 16px;
-              font-weight: 600; color:black"> ทะเล</a>
+              font-weight: 600; color:black"> {{tag}}</a>
           </label>
-          <label style="margin-left: 10px; margin-right:10px;">
-            <input type="checkbox"><a style="font-size: 16px;
-            font-weight: 600; color:black"> ภูเขา</a>
-        </label>
-        <label style="margin-left: 10px; margin-right:10px;">
-          <input type="checkbox"><a style="font-size: 16px;
-          font-weight: 600; color:black"> กิจกรรมทางน้ำ</a>
-      </label>
           </div>
         </div>
       </div>
@@ -62,7 +54,7 @@
 </template>
 
 <script>
-
+import PlaceService from '@/services/PlaceService';
 export default {
   name: 'PlaceDetail',
   data() {
@@ -79,6 +71,8 @@ export default {
         // Add more image URLs here
       ],
       currentIndex: 0,
+      place:[],
+      tagname:[],
     };
   },
   computed: {
@@ -88,10 +82,31 @@ export default {
       };
     },
   },
+  created() {
+    this.getPlace();
+  },
   methods: {
     changeSlide(index) {
       this.currentIndex = index;
     },
+    getPlace() {
+            PlaceService.getPlaceById(this.$route.params.id)
+                .then((response) => {
+                    {
+                        this.place = response.data.body[0].vacation
+                        this.tagname = response.data.body[0].tagName
+                        console.log(this.place)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
   },
 };
 </script>

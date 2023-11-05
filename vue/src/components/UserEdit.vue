@@ -6,37 +6,39 @@
       <div class="ueContactNameRow">
         <div class="ueContactNameRowdiv">
           <a>Name</a>
-          <input type="text" class="uecustom-input" placeholder="Your Input">
+          <input type="text" class="uecustom-input" placeholder="Your Input" v-model="user.name">
         </div>
         <div class="ueContactNameRowdiv">
           <a>Surname</a>
-          <input type="text" class="uecustom-input" placeholder="Your Input">
+          <input type="text" class="uecustom-input" placeholder="Your Input" v-model="user.lastname">
         </div>
       </div>
       <div class="ueContactName">
         <a>Email</a>
-        <input type="text" class="uecustom-input" placeholder="Your Input">
+        <input type="text" class="uecustom-input" placeholder="Your Input" v-model="user.email"> 
       </div>
       <div class="ueContactName">
         <a>Phone</a>
-        <input type="text" class="uecustom-input" placeholder="Your Input">
+        <input type="text" class="uecustom-input" placeholder="Your Input" v-model="user.phone">
       </div>
       <div class="ueContactName">
         <a>Location</a>
-        <input type="text" class="uecustom-input" placeholder="Your Input">
+        <input type="text" class="uecustom-input" placeholder="Your Input" v-model="user.address">
       </div>
       <div style="width: 100%; align-items:center; "><button class="ueblack-button" @click="openPopup">แก้ไข</button></div>
       <div class="uepopup-overlay" v-if="isPopupOpen">
         <div class="uepopup">
           <span @click="closePopup" class="ueclose-button">X</span>
           <h2>ยืนยันการแก้ไข</h2>
-          <a href="/home" class="ueblack-button" style="color: white; font-size:18px">Success</a>
+          <button  @click="saveUser" class="ueblack-button" style="color: white; font-size:18px">Success</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import UserService from '@/services/UserService'
+import router from '@/router';
 export default {
   name: 'UserEdit',
   props: {
@@ -47,15 +49,55 @@ export default {
       isPopupOpen: false,
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
+      user:[],
     };
   },
+  created(){
+    this.getUserData();
+  }
+  ,
   methods: {
     openPopup() {
       this.isPopupOpen = true;
     },
     closePopup() {
       this.isPopupOpen = false;
+
     },
+    saveUser() {
+      UserService.saveData(this.user).then((response) => {
+                    {
+                      router.push('/home/'+response.data.body.userId);
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+
+    },
+    getUserData(){
+      console.log(this.$route.params.id)
+      UserService.getUserData(this.$route.params.id)
+                .then((response) => {
+                    {
+                      this.user = response.data.body
+                      console.log(this.user)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+    }
   },
 }
 </script>

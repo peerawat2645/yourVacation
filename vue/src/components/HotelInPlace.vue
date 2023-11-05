@@ -1,30 +1,37 @@
 <template>
-  <div class="hpBody">
-    <div class="hpText"><a>โรงแรมใกล้กับ ชื่อสถานที่</a></div>
-    <div class="hpContent">
+  <div class="hBody">
+    <a :href="'/home/'+this.$route.params.userId" class="pdblack-button">Back</a>
+    <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a><a style="font-size: 10px;">{{ message }}</a></div>
+    <div class="hContent">
       <div style="width: 100%;">
-        <div class="hpContents">
-          <div class="hpCard" v-for="item in displayedData" :key="item.id">
-            <div class="hpimg">
-              <div class="hpimg1">
+        <div class="hContents">
+          <div class="hCard" v-for="item in hotel" :key="item.id">
+            <div class="himg">
+              <div class="himg1">
                 <img
                   src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/463156637.jpg?k=5d913fb55963d82c13fe5960117723b5d57007e15e813be871395bf090418f2f&o=&hp=1">
               </div>
             </div>
-            <div class="hpCardContent">
-              <div class="hpCardContentBox">
-                <p>โรงแรม {{ item.id }}</p>
+            <div class="hCardContent">
+              <div class="hCardContentBox">
+                <p>โรงแรม {{ item.hotel.name }}</p>
               </div>
-              <div class="hpCardContentBox"><a>ใกล้กับอุทยาน {{ item.name }}</a></div>
-              <div class="hpCardContentBoxDetail"><a>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></div>
-              <div class="hpCardReserve">
-                <a>ราคาเริ่มต้น xxx บาท</a>
-                <a href="/hotel/detail"><button class="hpCardReserveBtn">จองห้องพัก</button></a>
+              <div class="hCardContentBox"><a>ที่ตั้ง {{ item.hotel.address }}</a></div>
+              <div class="hCardContentBoxDetail">
+                <ul>
+                  <li>เวลาเปิด {{ convertTime(item.hotel.openTime) }}</li>
+                  <li>เวลาปิด {{ convertTime(item.hotel.closeTime) }}</li>
+                  <li>เวลาเช็คอิน {{ convertTime(item.hotel.checkinTime) }}</li>
+                </ul>
+              </div>
+              <div class="hCardReserve">
+                <a>ราคาเริ่มต้น {{ item.minPrice }} บาท</a>
+                <a :href="'/hotel/' + item.hotel.hotelId"><button class="hCardReserveBtn">จองห้องพัก</button></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="hpPaginate">
+        <div class="hPaginate">
           <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
         </div>
       </div>
@@ -35,11 +42,10 @@
 import PaginationVue from './Pagination.vue';
 import HotelService from '@/services/HotelService';
 export default {
-  name: 'HotelVue',
+  name: 'HotelInPlace',
   components: {
     PaginationVue,
   },
-  props: ['message'],
   data() {
     return {
       sampleData: [
@@ -58,7 +64,7 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 5,
-      hotel:[]
+      hotel:[],
     };
   },
   computed: {
@@ -68,17 +74,16 @@ export default {
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.hotel.slice(start, end);
-    },
+      return this.sampleData.slice(start, end);
+    }
   },
-  created(){
+  created() {
     this.HotelAll();
   },
   methods: {
     onPageChange(page) {
       this.currentPage = page;
-    },
-    convertTime(time) {
+    }, convertTime(time) {
       const utcDate = new Date(time); // Parse the UTC date // Add 7 hours for GMT+7
 
       return utcDate.toLocaleTimeString('en-US', {
@@ -88,30 +93,29 @@ export default {
       });
     },
     HotelAll() {
-      console.log(this.message.provinceId)
-            HotelService.HotelServiceAll(this.message.districtId,this.message.provinceId,this.message.subdistrictId,this.message.amountRoom,this.message.guest,this.message.priceMax,this.message.priceMin)
-                .then((response) => {
-                    {
-                        this.hotel = response.data.body
-                        console.log(this.hotel[0].hotel)
-                    }
-                })
-                .catch(error => {
-                    if (error.response) {
-                        if (error.response.status === 400) {
-                            this.error = true;
-                            this.errorMessage = error.response.data.body;
-                        }
-                    }
-                });
-        },
+      HotelService.HotelServiceAllByVacationId(this.$route.params.id)
+        .then((response) => {
+          {
+            this.hotel = response.data.body
+            console.log(this.hotel)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
   },
 }
 </script>
 <style>
-.hBody {
+.hpBody {
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   top: 0%;
   left: 0%;
   position: relative;
@@ -121,7 +125,7 @@ export default {
   flex-direction: column;
 }
 
-.hText {
+.hpText {
   margin-top: 4vh;
   width: 99%;
   display: flex;
@@ -131,7 +135,7 @@ export default {
   padding-left: 1%;
 }
 
-.hText a {
+.hpText a {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
   cursor: default;
@@ -139,7 +143,7 @@ export default {
   font-size: 35px;
 }
 
-.hContent {
+.hpContent {
   width: 98%;
   padding-left: 1%;
   height: 100%;
@@ -149,7 +153,7 @@ export default {
   flex-direction: column;
 }
 
-.hContents {
+.hpContents {
   width: 100%;
   height: 72vh;
   display: flex;
@@ -160,7 +164,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.hCard {
+.hpCard {
   width: 280px;
   height: 500px;
   background-color: rgb(244, 244, 244);
@@ -173,7 +177,7 @@ export default {
   margin: 6px;
 }
 
-.himg {
+.hpimg {
   width: 90%;
   height: 40%;
   display: flex;
@@ -182,7 +186,7 @@ export default {
   flex-direction: column;
 }
 
-.himg1 {
+.hpimg1 {
   z-index: 90;
   width: 100%;
   height: 100%;
@@ -190,7 +194,7 @@ export default {
   border-radius: 10px;
 }
 
-.himg2 {
+.hpimg2 {
   z-index: 89;
   margin-left: 120px;
   margin-top: -80px;
@@ -200,19 +204,19 @@ export default {
   border-radius: 10px;
 }
 
-.himg1 img {
+.hpimg1 img {
   width: 100%;
   /* Ensure the image doesn't exceed the width of the container */
   height: 100%;
 }
 
-.himg2 img {
+.hpimg2 img {
   width: 100%;
   /* Ensure the image doesn't exceed the width of the container */
   height: 100%;
 }
 
-.hCardContent {
+.hpCardContent {
   width: 100%;
   height: 55%;
   padding: 5px;
@@ -222,7 +226,7 @@ export default {
   flex-direction: column;
 }
 
-.hCardContentBox {
+.hpCardContentBox {
   width: 100%;
   height: 20%;
   display: inline-block;
@@ -232,7 +236,7 @@ export default {
   padding: 0%;
 }
 
-.hCardContentBoxDetail {
+.hpCardContentBoxDetail {
   width: 100%;
   height: 40%;
   display: inline-block;
@@ -242,7 +246,7 @@ export default {
   padding: 0%;
 }
 
-.hCardContentBox a {
+.hpCardContentBox a {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
@@ -252,7 +256,7 @@ export default {
   color: rgb(92, 185, 204);
 }
 
-.hCardContentBoxDetail a {
+.hpCardContentBoxDetail a {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
@@ -262,7 +266,7 @@ export default {
   color: rgb(255, 255, 255);
 }
 
-.hCardContentBox p {
+.hpCardContentBox p {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
@@ -272,7 +276,7 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hCardReserve {
+.hpCardReserve {
   margin-bottom: 10px;
   width: 95%;
   height: 40%;
@@ -282,7 +286,7 @@ export default {
   flex-direction: column;
 }
 
-.hCardReserve a {
+.hpCardReserve a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -290,14 +294,14 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-.hCardReserveBtn {
+.hpCardReserveBtn {
   border-radius: 10px;
   background-color: black;
   color: white;
   padding: 5px 10px;
 }
 
-.hPaginate {
+.hpPaginate {
   width: 100%;
   display: flex;
   align-items: center;

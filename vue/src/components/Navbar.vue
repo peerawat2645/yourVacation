@@ -7,18 +7,17 @@
         <button class="navbtn" @click="toggleUnderline(2)" :class="{ 'underlined': isUnderlined2 }"><a href="/home#foryou">For you</a></button>
         <button class="navbtn" @click="toggleUnderline(3)" :class="{ 'underlined': isUnderlined3 }"><a href="/home#filter">Picture Filter</a></button>
         <button class="navbtn" @click="toggleUnderline(4)" :class="{ 'underlined': isUnderlined4 }"><a href="/home#aboutus">About us</a></button>
-        <button class="navbtn" @click="toggleUnderline(5)" :class="{ 'underlined': isUnderlined5 }"><a href="/user">Profile</a></button>
+        <button class="navbtn" @click="toggleUnderline(5)" :class="{ 'underlined': isUnderlined5 }"><a :href="'/user/' + message">Profile</a></button>
         <button class="nblack-button"><a href="/" style="color: white;">Sign out</a></button>
       </div>
     </div>
   </div>
 </template>
 <script>
+
 export default {
   name: 'NavBar',
-  props: {
-    msg: String
-  },
+  props: ['message'],
   data() {
     return {
       isUnderlined1: true,
@@ -29,6 +28,7 @@ export default {
     };
   },
   methods: {
+    
     toggleUnderline(a) {
       if(a==1){
         this.isUnderlined1 = true;

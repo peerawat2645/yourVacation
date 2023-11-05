@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Room;
 import th.ac.ku.kps.eng.cpe.ds.project.repository.HotelRepository;
 
 @Service
@@ -144,6 +145,14 @@ public class HotelService {
 		List<Hotel> hotels = hotelRepository.findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(guest, amountRoom,
 				priceMin, priceMax, roomId, subdistrictId);
 		return decryptData(hotels);
+	}
+	
+	public List<Room> findRoomById(int id) {
+		return hotelRepository.findRoomByhotelId(id);
+	}
+	
+	public List<Hotel> findByDistrictId(int id) throws Exception {
+		return decryptData(hotelRepository.findByDistrictId(id));
 	}
 
 }

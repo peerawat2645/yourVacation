@@ -39,6 +39,7 @@ export default {
       error: false,
       errorMessage: '',
       registrationSuccess: false,
+      userId:'',
     };
   },
   mounted() {
@@ -79,8 +80,13 @@ export default {
       this.error = false;
 
       apiService.login(this.username, this.password)
-        .then(() => {
-          router.push('/home');
+        .then((response) => {
+          if(response.data.message == "user"){
+            router.push('/home/'+response.data.body.userId);
+          }
+          else if(response.data.message == "hotel"){
+            router.push('/hotel/home/'+response.data.body.userId);
+          }  
         })
         .catch(error => {
           console.error('Login error:', error);

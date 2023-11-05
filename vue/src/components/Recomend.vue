@@ -1,10 +1,11 @@
 <template>
   <div class="ReBody">
     <div class="ReText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
-    <div class="ReContent">
+    <div v-if="recommend === null" class="ReContentnull"><a style="font-size: 20px;">ไม่มีข้อมูล</a></div>
+    <div class="ReContent" v-else>
       <div>
         <div class="ReContents">
-          <div class="ReCard" v-for="item in displayedData" :key="item.id">
+          <div class="ReCard" v-for="item in recommend" v-bind:key="item.name">
             <div class="Reimg">
               <div class="Reimg1">
                 <img
@@ -16,26 +17,27 @@
             </div>
             <div class="ReCardContent">
               <div class="ReCardContentBox">
-                <p>โรงแรม {{ item.id }}</p>
+                <p>โรงแรม {{ item.name }}</p>
               </div>
-              <div class="ReCardContentBox"><a>ใกล้กับอุทยาน {{ item.name }}</a></div>
-              <div class="ReCardContentBoxDetail"><a>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></div>
+              <div class="ReCardContentBox"><a>ใกล้กับ {{placerecomend.name}} </a></div>
+              <div class="ReCardContentBoxDetail"><a>{{placerecomend.description}}</a></div>
               <div class="ReCardReserve">
-                <a>ราคาเริ่มต้น xxx บาท</a>
-                <a href="/hotel/detail"><button class="ReCardReserveBtn">จองห้องพัก</button></a>
+                <a>ราคาเริ่มต้น {{ item.minprice }} บาท</a>
+                <a :href="'/hotel/'+item.hotelId+'/user/'+this.$route.params.id"><button class="ReCardReserveBtn">จองห้องพัก</button></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="RePaginate">
-          <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
-        </div>
+      </div>
+      <div class="RePaginate">
+        <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import PaginationVue from './Pagination.vue';
+import hotelRecommendService from '@/services/HotelService';
 export default {
   name: 'RecomendPlace',
   components: {
@@ -43,37 +45,62 @@ export default {
   },
   data() {
     return {
-      sampleData: [
-        { id: 1, name: 'Item 1' },
-        { id: 2, name: 'Item 2' },
-        { id: 3, name: 'Item 3' },
-        { id: 4, name: 'Item 4' },
-        { id: 5, name: 'Item 5' },
-        { id: 6, name: 'Item 6' },
-        { id: 7, name: 'Item 7' },
-        { id: 8, name: 'Item 8' },
-        { id: 9, name: 'Item 9' },
-        { id: 10, name: 'Item 10' },
-        { id: 11, name: 'Item 11' },
-        { id: 12, name: 'Item 12' },
-      ],
+      recommend: [],
       currentPage: 1,
       itemsPerPage: 4,
+      subdistrict: 0,
+      placerecomend:[]
     };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.sampleData.length / this.itemsPerPage);
+      return Math.ceil(this.recommend.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.sampleData.slice(start, end);
+      return this.recommend.slice(start, end);
     },
+  },
+  created() {
+    this.recommendAll();
   },
   methods: {
     onPageChange(page) {
       this.currentPage = page;
+    },
+    recommendAll() {
+      hotelRecommendService.hotelRecommend()
+        .then((response) => {
+          {
+            this.recommend = response.data.body
+            this.subdistrict = this.recommend[0].subdistrictId
+            console.log(response.data.body)
+            hotelRecommendService.vacationRecommend(this.subdistrict)
+              .then((response) => {
+                {
+                  this.placerecomend = response.data.body
+                  
+                }
+              })
+              .catch(error => {
+                if (error.response) {
+                  if (error.response.status === 400) {
+                    this.error = true;
+                    this.errorMessage = error.response.data.body;
+                  }
+                }
+              });
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
     },
   },
 }
@@ -116,6 +143,16 @@ export default {
   display: flex;
   align-items: start;
   justify-content: start;
+  flex-direction: column;
+}
+
+.ReContentnull {
+  width: 98%;
+  padding-left: 1%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Room implements java.io.Serializable {
 
 	private Integer roomId;
+	@JsonIgnore
 	private Hotel hotel;
 	private int guest;
 	private String type;

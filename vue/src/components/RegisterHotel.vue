@@ -106,10 +106,10 @@ export default {
                 return;
             }
             this.error = false;
-            apiService.register(this.user)
+            apiService.registerHotel(this.user)
                 .then(() => {
                     {
-                        router.push('/login?registrationSuccess=true');
+                        router.push('/hotel/create');
                     }
                 })
                 .catch(error => {

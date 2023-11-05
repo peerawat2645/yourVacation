@@ -4,6 +4,7 @@ import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -62,7 +63,15 @@ public class AdvertisementService {
 	}
 	
 	public List<Hotel> findHotelAll() throws Exception{
-		List<Hotel> hotels = advertisementRepository.findHotelAll();
+		Date date = new Date();
+		List<Hotel> hotels = advertisementRepository.findHotelAll(date);
+		
+		return decryptData(hotels);
+	}
+	
+	public List<Hotel> findByHotelId(int hotelId) throws Exception{
+		Date date = new Date();
+		List<Hotel> hotels = advertisementRepository.findByHotelId(hotelId,date);
 		
 		return decryptData(hotels);
 	}

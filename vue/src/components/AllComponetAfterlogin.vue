@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <NavBar />
+        <NavBar :message=$route.params.id />
         <HomeVue id="home"/>
         <ForYou id="foryou"/>
         <FilterPic id="filter"/>
@@ -23,7 +23,12 @@ export default {
         ForYou,
         FilterPic,
         AboutUs,
-    }
+    },
+    data() {
+    return {
+      userId: '',
+    };
+  },
 }
 </script>
   

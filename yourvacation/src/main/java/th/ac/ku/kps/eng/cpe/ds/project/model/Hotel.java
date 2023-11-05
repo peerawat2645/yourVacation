@@ -3,9 +3,7 @@ package th.ac.ku.kps.eng.cpe.ds.project.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Hotel implements java.io.Serializable {
 
 	private Integer hotelId;
+	@JsonIgnore
 	private Subdistrict subdistrict;
 	private String name;
 	private String address;
@@ -22,6 +21,7 @@ public class Hotel implements java.io.Serializable {
 	private Date closeTime;
 	private String status;
 	private Date checkinTime;
+	@JsonIgnore
 	private String privateKey;
 	@JsonIgnore
 	private List<Advertisement> advertisements = new ArrayList<Advertisement>();

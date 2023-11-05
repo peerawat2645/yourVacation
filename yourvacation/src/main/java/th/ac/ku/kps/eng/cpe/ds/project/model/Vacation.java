@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Vacation implements java.io.Serializable {
 
 	private Integer vacationId;
+	@JsonIgnore
 	private Subdistrict subdistrict;
 	private String name;
 	private String description;

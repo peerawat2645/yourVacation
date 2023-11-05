@@ -14,7 +14,6 @@ export default {
       data,
       url: loginURL,
     };
-
     return axios(config);
   },
 

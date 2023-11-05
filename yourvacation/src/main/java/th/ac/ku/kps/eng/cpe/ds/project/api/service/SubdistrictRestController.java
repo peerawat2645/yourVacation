@@ -19,9 +19,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import th.ac.ku.kps.eng.cpe.ds.project.api.util.Response;
 import th.ac.ku.kps.eng.cpe.ds.project.model.District;
+import th.ac.ku.kps.eng.cpe.ds.project.model.Hotel;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Province;
 import th.ac.ku.kps.eng.cpe.ds.project.model.Subdistrict;
+import th.ac.ku.kps.eng.cpe.ds.project.model.DTO.SubdistrictDTO;
 import th.ac.ku.kps.eng.cpe.ds.project.services.DistrictService;
+import th.ac.ku.kps.eng.cpe.ds.project.services.HotelService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.ProvinceService;
 import th.ac.ku.kps.eng.cpe.ds.project.services.SubdistrictService;
 

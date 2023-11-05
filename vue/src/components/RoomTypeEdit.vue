@@ -1,23 +1,23 @@
 <template>
   <div class="ahbody">
-    <a href="/hotel/home" class="ahblack-button">Back</a>
+    <a :href="'/hotel/home/'+this.$route.params.userId" class="ahblack-button">Back</a>
     <div class="ahContact">
       <a style="color: rgb(83, 176, 177);">Room Type Edit</a>
       <div class="ahContactName">
           <a>RoomType Name</a>
-          <input type="text" class="ahcustom-input" placeholder="Your Input"></div>
+          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.type></div>
     <div class="ahContactNameRow">
       <div class="ahContactNameRowdiv3">
         <a>จำนวนห้อง</a>
-        <input type="text" class="ahcustom-input" placeholder="Your Input"></div>
+        <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.amountRoom></div>
     <div class="ahContactNameRowdiv3">
       <a>จำนวนผู้เข้าพัก</a>
-      <input type="text" class="ahcustom-input" placeholder="Your Input"></div>
+      <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.guest></div>
         <div class="ahContactNameRowdiv3">
           <a>ราคา</a>
-          <input type="text" class="ahcustom-input" placeholder="Your Input"></div>
+          <input type="text" class="ahcustom-input" placeholder="Your Input" v-model=room.price></div>
   </div>
-  <div class="ahContactLabel">
+  <!--<div class="ahContactLabel">
     <label style="margin-left: 10px; margin-right:10px;">
       <input type="checkbox"> <a style="font-size: 16px;
       font-weight: 600; color:black">เครื่องปรับอากาศ</a>
@@ -82,7 +82,7 @@ font-weight: 600; color:black">ร้านอาหาร</a>
 <input type="checkbox"> <a style="font-size: 16px;
 font-weight: 600; color:black">รปภ</a>
 </label>
-  </div>
+  </div>-->
       <div class="ahUpload">
           <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
           <button @click="uploadFile">Upload</button>
@@ -95,31 +95,92 @@ font-weight: 600; color:black">รปภ</a>
         <div class="ahpopup">
           <span @click="closePopup" class="ahclose-button">X</span>
           <h2>ยืนยันการแก้ไข</h2>
-          <a href="/hotel/home" class="ahblack-button" style="color: white; font-size:18px">Success</a>
+          <button class="ahblack-button" style="color: white; font-size:18px" @click="handleUpdateRoom">Success</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import HotelService from '@/services/HotelService';
+import router from '@/router';
 export default {
   name: 'RoomTypeEdit',
-  props: {
-    msg: String
-  },
+  props: ['message'],
   data() {
     return {
       isPopupOpen: false,
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
+      room:[]
     };
   },
+  created(){
+    this.rooms();
+  }
+  ,
   methods: {
     openPopup() {
       this.isPopupOpen = true;
     },
     closePopup() {
       this.isPopupOpen = false;
+    },
+    rooms() {
+      HotelService.roomEdit(this.$route.params.id)
+        .then((response) => {
+          {
+            this.room = response.data.body
+            console.log(this.room)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
+    handleUpdateRoom() {
+      if (!this.room.guest && !this.room.type && !this.room.price && !this.room.amountRoom) {
+        this.error = true;
+        this.errorMessage = 'Please fill in all required fields.';
+        return;
+      }
+      else if (!this.room.guest || !this.room.type || !this.room.price || !this.room.amountRoom) {
+        if (!this.room.guest) {
+          this.error = true;
+          this.errorMessage = 'Guest is required.';
+        } else if (!this.room.type) {
+          this.error = true;
+          this.errorMessage = 'Type is required.';
+        } else if (!this.room.price) {
+          this.error = true;
+          this.errorMessage = 'Price is required.';
+        } else if (!this.room.amountRoom) {
+          this.error = true;
+          this.errorMessage = 'AmountRoom is required.';
+        }
+        return;
+      }
+      this.error = false;
+      console.log("in")
+      HotelService.roomUpdate(this.room,this.$route.params.userId)
+        .then(() => {
+          {
+            router.push('/hotel/home/'+this.$route.params.userId);
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
     },
   },
 }
