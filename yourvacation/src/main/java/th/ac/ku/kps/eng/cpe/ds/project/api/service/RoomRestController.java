@@ -158,7 +158,6 @@ public class RoomRestController {
 
 			room.setHotel(hotel);
 			Room r = roomService.findByHotelIdAndType(hotel.getHotelId(), room.getType());
-			System.out.println(r);
 			if(r == null) {
 				room = roomService.save(room);
 			}
