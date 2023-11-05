@@ -90,7 +90,7 @@ font-weight: 600; color:black">รปภ</a>
             <img :src="imageUrl" alt="Uploaded Image" />
           </div>
       </div>
-      <div style="width: 100%; align-items:center; "><button class="ahblack-button" @click="openPopup">เพิ่ม</button></div>
+      <div style="width: 100%; align-items:center; "><button class="ahblack-button" @click="openPopup">แก้ไข</button></div>
       <div class="ahpopup-overlay" v-if="isPopupOpen">
         <div class="ahpopup">
           <span @click="closePopup" class="ahclose-button">X</span>

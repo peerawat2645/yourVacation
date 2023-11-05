@@ -9,7 +9,7 @@
             <div class="Reimg">
               <div class="Reimg1">
                 <img
-                  src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/463156637.jpg?k=5d913fb55963d82c13fe5960117723b5d57007e15e813be871395bf090418f2f&o=&hp=1">
+                :src="'data:image/png;base64,'+item.imgPath">
               </div>
               <div class="Reimg2">
                 <img src="https://media.bom.gov.au/social/upload/images/iStock-blue-sea-resize.jpg">
@@ -49,7 +49,8 @@ export default {
       currentPage: 1,
       itemsPerPage: 4,
       subdistrict: 0,
-      placerecomend:[]
+      placerecomend:[],
+      imagePath:''
     };
   },
   computed: {

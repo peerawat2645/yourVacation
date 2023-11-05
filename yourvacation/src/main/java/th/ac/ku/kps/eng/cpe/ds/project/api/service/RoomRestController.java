@@ -172,6 +172,24 @@ public class RoomRestController {
 
 	}
 	
+	@PostMapping("/delete/{id}")
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") int id) {
+		Response<String> res = new Response<>();
+		try {
+			
+			roomService.deleteById(id);
+			res.setBody("deleted");
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setMessage(ex.getMessage());
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		}
+
+	}
+	
 	@GetMapping("/")
 	public ResponseEntity<Response<RoomHotelDTO>> getRoom(@Param("id")int id) {
 		Response<RoomHotelDTO> res = new Response<>();

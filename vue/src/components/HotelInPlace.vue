@@ -1,20 +1,19 @@
 <template>
   <div class="hBody">
-    <a :href="'/home/'+this.$route.params.userId" class="pdblack-button">Back</a>
+    <a :href="'/home/' + this.$route.params.userId" class="pdblack-button">Back</a>
     <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a><a style="font-size: 10px;">{{ message }}</a></div>
     <div class="hContent">
       <div style="width: 100%;">
         <div class="hContents">
-          <div class="hCard" v-for="item in hotel" :key="item.id">
+          <div class="hCard" v-for="(item, index) in hotel" :key="item.id">
             <div class="himg">
               <div class="himg1">
-                <img
-                  src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/463156637.jpg?k=5d913fb55963d82c13fe5960117723b5d57007e15e813be871395bf090418f2f&o=&hp=1">
+                <img :src="'data:image/png;base64,' + getImage(item.hotel.hotelId, index)">
               </div>
             </div>
             <div class="hCardContent">
               <div class="hCardContentBox">
-                <p>โรงแรม {{ item.hotel.name }}</p>
+                <p>โรงแรม {{ item.hotel.name }} </p>
               </div>
               <div class="hCardContentBox"><a>ที่ตั้ง {{ item.hotel.address }}</a></div>
               <div class="hCardContentBoxDetail">
@@ -64,7 +63,9 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 5,
-      hotel:[],
+      imagePath: [],
+      count: 0,
+      hotel: [],
     };
   },
   computed: {
@@ -74,7 +75,7 @@ export default {
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.sampleData.slice(start, end);
+      return this.hotel.slice(start, end);
     }
   },
   created() {
@@ -109,6 +110,26 @@ export default {
           }
         });
     },
+    getImage(id, index) {
+      console.log(this.hotel.length)
+
+      HotelService.getImage(id)
+        .then((response) => {
+          {
+            this.imagePath.push(response.data.body)
+            console.log(response.data.body)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+      return this.imagePath[index];
+    }
   },
 }
 </script>
@@ -307,4 +328,5 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: row;
-}</style>
+}
+</style>

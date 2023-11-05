@@ -33,6 +33,10 @@ public class VacationService {
 		return vacationRepository.findByDistrictId(districtId);
 	}
 	
+	public List<Vacation> findByRandom(){
+		return vacationRepository.findByRandom();
+	}
+	
 	public List<Vacation> findBySubdistrictIdAndTagId(int subId,List<Integer> tagId){
 		return vacationRepository.findBySubdistrictIdAndTagId(subId, tagId);
 	}

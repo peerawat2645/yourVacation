@@ -80,11 +80,6 @@ export default {
   data() {
     return {
       images: [
-        'https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg',
-        'https://assets-global.website-files.com/5c6d6c45eaa55f57c6367749/65045f093c166fdddb4a94a5_x-65045f0266217.webp',
-        'https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg',
-        'https://img.freepik.com/free-photo/luxury-classic-modern-bedroom-suite-hotel_105762-1787.jpg?size=626&ext=jpg&ga=GA1.1.1412446893.1698883200&semt=ais',
-        'https://img.freepik.com/free-photo/modern-luxury-bedroom-suite-bathroom_105762-1791.jpg',
 
         // Add more image URLs here
       ],
@@ -107,6 +102,7 @@ export default {
     this.near();
     this.facility();
     this.rooms();
+    this.getImage();
   }
   ,
   methods: {
@@ -180,6 +176,26 @@ export default {
             }
           }
         });
+    },
+    
+    getImage(){
+      HotelService.getImage(this.$route.params.id)
+        .then((response) => {
+          {
+            let path = 'data:image/png;base64,'+response.data.body
+            console.log(response.data.body)
+            this.images.push(path);
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+        return this.imagePath;
     }
   },
 };

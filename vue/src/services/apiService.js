@@ -43,5 +43,17 @@ export default {
 
     return axios(config);
   },
+  signout() {
+    const url = `${baseURL}/signout`;
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: url,
+    };
+
+    return axios(config);
+  },
 
 };

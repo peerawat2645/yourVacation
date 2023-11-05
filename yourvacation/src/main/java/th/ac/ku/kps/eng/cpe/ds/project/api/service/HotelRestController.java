@@ -62,6 +62,8 @@ import th.ac.ku.kps.eng.cpe.ds.project.services.VacationService;
 @RestController
 @RequestMapping("/api/v1/hotel")
 public class HotelRestController {
+	
+	private static String uploadDir = "C:/yourvacation";
 
 	@Autowired
 	private HotelService hotelService;
@@ -157,6 +159,40 @@ public class HotelRestController {
 		}
 
 	}
+	
+	@GetMapping("/image/{id}")
+	public ResponseEntity<Response<String>> getImage(@PathVariable("id") int hotelId) {
+		Response<String> res = new Response<>();
+		try {
+			Imghotel imghotel = imgHotelService.findByHotelId(hotelId);
+			String path = uploadDir + File.separator + "Hotel" + File.separator + imghotel.getFilePath();
+			res.setBody(ImageBase64Helper.toImageBase64(path));
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/editImage/{id}")
+	public ResponseEntity<Response<String>> editImage(@PathVariable("id") int hotelId) {
+		Response<String> res = new Response<>();
+		try {
+			Imghotel imghotel = imgHotelService.findByHotelId(hotelId);
+			//String path = uploadDir+ File.separator + "Hotel" + File.separator + imghotel.getFilePath();
+			res.setBody(imghotel.getFilePath());
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());
+		}
+
+	}
 
 	@GetMapping("/edit/user/{id}")
 	public ResponseEntity<Response<Hotel>> editHotel(@PathVariable("id") int userId) {
@@ -176,6 +212,7 @@ public class HotelRestController {
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
 		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
 			res.setBody(null);
 			res.setHttpStatus(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<Response<Hotel>>(res, res.getHttpStatus());
@@ -398,7 +435,9 @@ public class HotelRestController {
 				adsDTO.setName(h.getName());
 				List<Imghotel> imghotels = h.getImghotels();
 				if (!imghotels.isEmpty()) {
-					adsDTO.setImgPath(imghotels.get(0).getFilePath());
+					String path = uploadDir + File.separator + "Hotel" + File.separator + imghotels.get(0).getFilePath();
+					
+					adsDTO.setImgPath(ImageBase64Helper.toImageBase64(path));
 				}
 				adsDTO.setSubdistrictId(h.getSubdistrict().getSubdistrictId());
 				adsDTO.setMinprice(findMinimum(h.getRooms()));
@@ -448,10 +487,12 @@ public class HotelRestController {
 		try {
 			Hotel h = userHotelService.findByUserId(id).getHotel();
 			List<Hotel> hotels = advertisementService.findByHotelId(h.getHotelId());
+			System.out.println(hotels.size());
 			boolean checked = false;
 			if (hotels.size() > 0) {
 				checked = true;
 			}
+			System.out.println(checked);
 			res.setBody(checked);
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<Boolean>>(res, res.getHttpStatus());
@@ -495,10 +536,15 @@ public class HotelRestController {
 
 	}
 
-	@PostMapping("/uploadImage")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @Param("hotelId") int id) {
+	@PostMapping("/uploadImage/{id}")
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable("id") int id) {
 		try {
-			String uploadDir = "C:/yourvacation";
+			
+			Imghotel img = imgHotelService.findByHotelId(id);
+			
+			if(img !=null) {
+				imgHotelService.deleteById(img.getImghotelId());
+			}
 
 			File folder = new File(uploadDir + File.separator + "Hotel" + File.separator);
 			if (!folder.exists()) {
@@ -520,6 +566,8 @@ public class HotelRestController {
 			outputStream.close();
 
 			Hotel hotel = hotelService.findById(id);
+			
+			hotel = hotelService.save(hotel);
 
 			Imghotel imghotel = new Imghotel();
 

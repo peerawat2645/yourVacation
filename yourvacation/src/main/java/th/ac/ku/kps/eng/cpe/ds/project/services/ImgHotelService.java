@@ -1,5 +1,6 @@
 package th.ac.ku.kps.eng.cpe.ds.project.services;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import th.ac.ku.kps.eng.cpe.ds.project.repository.ImgHotelRepository;
 
 @Service
 public class ImgHotelService {
+	
+	private static String uploadDir = "C:/yourvacation";
+	
 	@Autowired
 	private ImgHotelRepository imgHotelRepository;
 	
@@ -18,6 +22,11 @@ public class ImgHotelService {
 	}
 	
 	public void deleteById(int id) {
+		File f = new File(uploadDir + File.separator+"Hotel"+File.separator + imgHotelRepository.findById(id).get().getFilePath());
+		if (f.exists())
+			f.delete();
+		
+		
 		imgHotelRepository.deleteById(id);
 	}
 	
@@ -27,5 +36,9 @@ public class ImgHotelService {
 	
 	public Imghotel save(Imghotel imghotel) {
 		return imgHotelRepository.save(imghotel);
+	}
+	
+	public Imghotel findByHotelId(int hotelId) {
+		return imgHotelRepository.findByHotelId(hotelId);
 	}
 }

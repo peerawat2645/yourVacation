@@ -82,7 +82,7 @@ export default {
   },
   getHotel(id) {
 
-    const hotelURL = `${baseURL}/hotel//${id}`;
+    const hotelURL = `${baseURL}/hotel/${id}`;
     console.log(hotelURL)
     const config = {
       method: 'get',
@@ -93,6 +93,29 @@ export default {
     };
 
     return axios(config);
+  },
+  getImagePath(id) {
+
+    const hotelURL = `${baseURL}/editImage/${id}`;
+    console.log(hotelURL)
+    const config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: hotelURL,
+    };
+
+    return axios(config);
+  },
+  uploadImage(formData,id) {
+    const uploadURL = `${baseURL}/hotel/uploadImage/${id}`;
+
+    return axios.post(uploadURL, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
   },
   near(id) {
     const placeURL = `${baseURL}/hotel/random/${id}`;
@@ -239,4 +262,30 @@ export default {
 
     return axios(config);
   },
+  roomDelete(id) {
+    const placeURL = `${baseURL}/room/delete/${id}`;
+    console.log(placeURL)
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: placeURL,
+    };
+
+    return axios(config);
+  },
+  getImage(id){
+    const placeURL = `${baseURL}/hotel/image/${id}`;
+    console.log(placeURL)
+    const config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: placeURL,
+    };
+
+    return axios(config);
+  }
 };

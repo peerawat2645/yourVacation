@@ -1,6 +1,6 @@
 <template>
   <div class="uebody">
-    <a href="/home" class="ueblack-button">Back</a>
+    <a :href="'/home/'+this.$route.params.id" class="ueblack-button">Back</a>
     <div class="ueContact">
       <a style="color: rgb(83, 176, 177);">Edit User</a>
       <div class="ueContactNameRow">

@@ -187,8 +187,8 @@ public class AuthRestController {
 	public ResponseEntity<?> logoutUser() {
 		Response<String> res = new Response<>();
 		try {
-			ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-			res.setMessage(cookie.toString());
+			//ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+			//res.setMessage(cookie.toString());
 			res.setBody("Logout success");
 
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());

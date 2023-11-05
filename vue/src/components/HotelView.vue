@@ -8,7 +8,7 @@
           style="font-size: 18px; color:white; margin-right:0%;">แก้ไขข้อมูลโรงแรม</a>
         <a :href="'/hotel/' + this.$route.params.id + '/add'" class="hvblack-button"
           style="font-size: 18px; color:white">add</a>
-        <a href="/" class="hvblack-button" style="font-size: 18px; color:white; margin-left:0%;">Signout</a>
+        <a href="/" class="hvblack-button" style="font-size: 18px; color:white; margin-left:0%;" @click="signout">Logout</a>
       </div>
     </div>
     <div class="hvContent">
@@ -30,6 +30,16 @@
                 <a :href="'/hotel/' + this.$route.params.id + '/roomtype/edit/' + item.roomId"><button
                     class="hvCardReserveBtn">แก้ไข</button></a>
 
+                    <a @click="deleteItem"><button
+                      class="hvCardReserveBtn">ลบ</button></a>
+
+              </div>
+              <div v-if="showConfirmation" class="confirmation-dialog">
+                <div class="confirmation-content">
+                  <p>Are you sure you want to delete this item?</p>
+                  <button @click="confirmDelete(item.roomId)">Yes</button>
+                  <button @click="cancelDelete">No</button>
+                </div>
               </div>
             </div>
           </div>
@@ -45,6 +55,8 @@
 import PaginationVue from './Pagination.vue';
 import HotelService from '@/services/HotelService';
 import hotelRecommendService from '@/services/HotelService';
+import apiService from '@/services/apiService.js'
+import router from '@/router';
 export default {
   name: 'HotelView',
   components: {
@@ -69,7 +81,8 @@ export default {
       currentPage: 1,
       itemsPerPage: 5,
       status: '',
-      room: []
+      room: [],
+      showConfirmation: false,
     };
   },
   computed: {
@@ -141,8 +154,52 @@ export default {
             }
           }
         });
-    }
-  },
+    },signout(){
+      apiService.signout()
+                .then(() => {
+                    {
+                        router.push('/');
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+    },
+
+    deleteItem() {
+      // Show the confirmation dialog
+      this.showConfirmation = true;
+    },
+    confirmDelete(id) {
+      // Perform the delete action here
+      // For example, call an API or update your data
+      // After deletion, hide the confirmation dialog
+      this.showConfirmation = false;
+      HotelService.roomDelete(id)
+                .then(() => {
+                    {
+                        this.rooms();
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+    },
+    cancelDelete() {
+      // Hide the confirmation dialog without performing the delete action
+      this.showConfirmation = false;
+    },
+  }
 }
 </script>
 <style>
@@ -358,4 +415,23 @@ export default {
   justify-content: center;
   flex-direction: row;
 }
+.confirmation-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
 </style>

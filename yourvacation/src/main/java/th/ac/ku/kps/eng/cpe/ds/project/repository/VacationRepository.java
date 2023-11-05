@@ -14,6 +14,9 @@ public interface VacationRepository extends CrudRepository<Vacation, Integer>{
 	@Query("from Vacation v inner join v.subdistrict s inner join s.district d where d.districtId =:districtId")
 	public List<Vacation> findByDistrictId(int districtId);
 	
+	@Query(value="SELECT * FROM vacation ORDER BY RAND() LIMIT 5;",nativeQuery = true)
+	public List<Vacation> findByRandom();
+	
 	@Query("From Vacation v inner join v.subdistrict s inner join v.tags t inner join t.tagname tn where tn.tagNameId in :tagId and s.subdistrictId =:subId")
 	public List<Vacation> findBySubdistrictIdAndTagId(int subId,List<Integer> tagId);
 	

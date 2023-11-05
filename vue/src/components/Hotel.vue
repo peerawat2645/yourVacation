@@ -1,30 +1,37 @@
 <template>
-  <div class="hpBody">
-    <div class="hpText"><a>โรงแรมใกล้กับ ชื่อสถานที่</a></div>
-    <div class="hpContent">
+  <div class="hBody">
+    <a :href="'/home/'+this.$route.params.userId" class="pdblack-button">Back</a>
+    <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
+    <div class="hContent">
       <div style="width: 100%;">
-        <div class="hpContents">
-          <div class="hpCard" v-for="item in displayedData" :key="item.id">
-            <div class="hpimg">
-              <div class="hpimg1">
+        <div class="hContents">
+          <div class="hCard" v-for="item in hotel" :key="item.id">
+            <div class="himg">
+              <div class="himg1">
                 <img
-                  src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/463156637.jpg?k=5d913fb55963d82c13fe5960117723b5d57007e15e813be871395bf090418f2f&o=&hp=1">
+                :src="'data:image/png;base64,' + getImage(item.hotel.hotelId)">
               </div>
             </div>
-            <div class="hpCardContent">
-              <div class="hpCardContentBox">
-                <p>โรงแรม {{ item.id }}</p>
+            <div class="hCardContent">
+              <div class="hCardContentBox">
+                <p>โรงแรม {{ item.hotel.name }}</p>
               </div>
-              <div class="hpCardContentBox"><a>ใกล้กับอุทยาน {{ item.name }}</a></div>
-              <div class="hpCardContentBoxDetail"><a>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></div>
-              <div class="hpCardReserve">
-                <a>ราคาเริ่มต้น xxx บาท</a>
-                <a href="/hotel/detail"><button class="hpCardReserveBtn">จองห้องพัก</button></a>
+              <div class="hCardContentBox"><a>ที่ตั้ง {{ item.hotel.address }}</a></div>
+              <div class="hCardContentBoxDetail">
+                <ul>
+                  <li>เวลาเปิด {{ convertTime(item.hotel.openTime) }}</li>
+                  <li>เวลาปิด {{ convertTime(item.hotel.closeTime) }}</li>
+                  <li>เวลาเช็คอิน {{ convertTime(item.hotel.checkinTime) }}</li>
+                </ul>
+              </div>
+              <div class="hCardReserve">
+                <a>ราคาเริ่มต้น {{ item.minPrice }} บาท</a>
+                <a :href="'/hotel/' + item.hotel.hotelId+'/user/'+this.$route.params.id"><button class="hCardReserveBtn">จองห้องพัก</button></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="hpPaginate">
+        <div class="hPaginate">
           <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
         </div>
       </div>
@@ -58,7 +65,8 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 5,
-      hotel:[]
+      imagePath:'',
+      hotel: []
     };
   },
   computed: {
@@ -71,7 +79,7 @@ export default {
       return this.hotel.slice(start, end);
     },
   },
-  created(){
+  created() {
     this.HotelAll();
   },
   methods: {
@@ -89,22 +97,40 @@ export default {
     },
     HotelAll() {
       console.log(this.message.provinceId)
-            HotelService.HotelServiceAll(this.message.districtId,this.message.provinceId,this.message.subdistrictId,this.message.amountRoom,this.message.guest,this.message.priceMax,this.message.priceMin)
-                .then((response) => {
-                    {
-                        this.hotel = response.data.body
-                        console.log(this.hotel[0].hotel)
-                    }
-                })
-                .catch(error => {
-                    if (error.response) {
-                        if (error.response.status === 400) {
-                            this.error = true;
-                            this.errorMessage = error.response.data.body;
-                        }
-                    }
-                });
-        },
+      HotelService.HotelServiceAll(this.message.districtId, this.message.provinceId, this.message.subdistrictId, this.message.amountRoom, this.message.guest, this.message.priceMax, this.message.priceMin)
+        .then((response) => {
+          {
+            this.hotel = response.data.body
+            console.log(this.hotel[0].hotel)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },
+    getImage(id){
+      HotelService.getImage(id)
+        .then((response) => {
+          {
+            console.log(response.data.body)
+            this.imagePath = response.data.body
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+        return this.imagePath;
+    }
   },
 }
 </script>
@@ -303,4 +329,5 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: row;
-}</style>
+}
+</style>

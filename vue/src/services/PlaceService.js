@@ -29,4 +29,28 @@ export default {
 
     return axios(config);
   },
+  getRandom() {
+    const placeURL = `${baseURL}/vacation/random`;
+    const config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: placeURL,
+    };
+
+    return axios(config);
+  },
+  getAll() {
+    const placeURL = `${baseURL}/vacation/all`;
+    const config = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      url: placeURL,
+    };
+
+    return axios(config);
+  },
 };

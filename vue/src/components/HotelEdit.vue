@@ -1,6 +1,6 @@
 <template>
   <div class="ahbody">
-    <a href="/hotel/home" class="ahblack-button">Back</a>
+    <a :href="'/hotel/home/'+this.$route.params.id" class="ahblack-button">Back</a>
     <div class="ahContact">
       <a style="color: rgb(83, 176, 177);">Edit Hotel</a>
       <div class="ahContactName">
@@ -59,7 +59,6 @@
       <div class="ahUpload">
         <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
         <span v-if="selectedFilePath" class="file-path">{{ selectedFilePath }}</span>
-        <button @click="uploadFile">Upload</button>
         <div v-if="imageUrl">
           <img :src="imageUrl" alt="Uploaded Image" />
         </div>
@@ -91,6 +90,7 @@ export default {
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
       selectedFilePath: '',
+      selectedFile:'',
       subdistrict: [],
       district: [],
       province: [],
@@ -105,7 +105,8 @@ export default {
         address: '',
         openTime: '',
         closeTime: '',
-        checkinTime: ''
+        checkinTime: '',
+        status:'open',
       },
     };
   },
@@ -271,7 +272,7 @@ export default {
       HotelService.hotelUpdate(this.formData, this.formData2.subdistrictId)
         .then(() => {
           {
-            router.push('/hotel/home/' + this.$route.params.id);
+            this.uploadImage();
           }
         })
         .catch(error => {
@@ -294,7 +295,7 @@ export default {
             this.formData.openTime = this.convertedTime(this.formData.openTime);
             this.formData.checkinTime = this.convertedTime(this.formData.checkinTime);
             this.getSubdistrict();
-            this.selectedFilePath = "abc.jpg"
+            this.getImage();
           }
         })
         .catch(error => {
@@ -324,6 +325,44 @@ export default {
             }
           }
         });
+    },
+    getImage() {
+      HotelService.getImagePath(this.formData.hotelId)
+        .then((response) => {
+          {
+            this.selectedFile = response.data.body;
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    },uploadImage() {
+      console.log(this.selectedFile)
+      if(this.selectedFile == ''){
+        router.push('/hotel/home/' + this.$route.params.id);
+      }
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      console.log("sentfile");
+      HotelService.uploadImage(formData,this.formData.hotelId)
+        .then(response => {
+          console.log('Image uploaded successfully', response);
+          
+          router.push('/hotel/home/' + this.$route.params.id);
+        })
+        .catch(error => {
+          console.error('Error uploading image:', error);
+        });
+    },
+    handleFileChange(event) {
+      this.selectedFile = event.target.files[0];
+      this.selectedFilePath = event.target.files[0].name;
+      console.log(this.selectedFilePath);
     },
   },
 }

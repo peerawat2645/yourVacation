@@ -3,18 +3,19 @@
     <div class="navbar rown">
       <p>YourVacation</p>
       <div class="rown navbarselect">
-        <button class="navbtn"  @click="toggleUnderline(1)" :class="{ 'underlined': isUnderlined1 }"><a href="/home#home">Home</a></button>
-        <button class="navbtn" @click="toggleUnderline(2)" :class="{ 'underlined': isUnderlined2 }"><a href="/home#foryou">For you</a></button>
-        <button class="navbtn" @click="toggleUnderline(3)" :class="{ 'underlined': isUnderlined3 }"><a href="/home#filter">Picture Filter</a></button>
-        <button class="navbtn" @click="toggleUnderline(4)" :class="{ 'underlined': isUnderlined4 }"><a href="/home#aboutus">About us</a></button>
+        <button class="navbtn"  @click="toggleUnderline(1)" :class="{ 'underlined': isUnderlined1 }"><a :href="'/home/'+message+'#home'">Home</a></button>
+        <button class="navbtn" @click="toggleUnderline(2)" :class="{ 'underlined': isUnderlined2 }"><a :href="'/home/'+message+'#foryou'">For you</a></button>
+        <button class="navbtn" @click="toggleUnderline(3)" :class="{ 'underlined': isUnderlined3 }"><a :href="'/home/'+message+'#filter'">Picture Filter</a></button>
+        <button class="navbtn" @click="toggleUnderline(4)" :class="{ 'underlined': isUnderlined4 }"><a :href="'/home/'+message+'#aboutus'">About us</a></button>
         <button class="navbtn" @click="toggleUnderline(5)" :class="{ 'underlined': isUnderlined5 }"><a :href="'/user/' + message">Profile</a></button>
-        <button class="nblack-button"><a href="/" style="color: white;">Sign out</a></button>
+        <button class="nblack-button"><a href="/" style="color: white;" @click="signout">Logout</a></button>
       </div>
     </div>
   </div>
 </template>
 <script>
-
+import apiService from '@/services/apiService.js'
+import router from '@/router';
 export default {
   name: 'NavBar',
   props: ['message'],
@@ -65,7 +66,23 @@ export default {
         this.isUnderlined4 = false;
         this.isUnderlined5 = true;
       }
-    }
+    },
+    signout(){
+      apiService.signout()
+                .then(() => {
+                    {
+                        router.push('/');
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+    },
   }
 }
 </script>

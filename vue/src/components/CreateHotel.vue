@@ -1,8 +1,7 @@
 <template>
   <div class="ahbody">
-    <a href="/hotel/home" class="ahblack-button">Back</a>
     <div class="ahContact">
-      <a style="color: rgb(83, 176, 177);">Edit Hotel</a>
+      <a style="color: rgb(83, 176, 177);">Create Hotel</a>
       <div class="ahContactName">
         <a>Name</a>
         <input type="text" class="ahcustom-input" placeholder="Your Input" v-model="formData.name">
@@ -59,7 +58,6 @@
       <div class="ahUpload">
         <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
         <span v-if="selectedFilePath" class="file-path">{{ selectedFilePath }}</span>
-        <button @click="uploadFile">Upload</button>
         <div v-if="imageUrl">
           <img :src="imageUrl" alt="Uploaded Image" />
         </div>
@@ -91,6 +89,7 @@ export default {
       imageWidth: 300, // You can set these values dynamically
       imageHeight: 300,
       selectedFilePath: '',
+      selectedFile:'',
       subdistrict: [],
       district: [],
       province: [],
@@ -268,9 +267,9 @@ export default {
       this.formData.checkinTime = this.convertTime(this.formData.checkinTime);
       
       HotelService.hotelAdd(this.formData, this.formData2.subdistrictId)
-        .then(() => {
+        .then((response) => {
           {
-            router.push('/');
+            this.uploadImage(response.data.body.hotelId);
           }
         })
         .catch(error => {
@@ -301,6 +300,28 @@ export default {
             }
           }
         });
+    },uploadImage(id) {
+      console.log(this.selectedFile)
+      if(this.selectedFile == ''){
+        router.push('/');
+      }
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      console.log("sentfile");
+      HotelService.uploadImage(formData,id)
+        .then(response => {
+          console.log('Image uploaded successfully', response);
+          
+          router.push('/');
+        })
+        .catch(error => {
+          console.error('Error uploading image:', error);
+        });
+    },
+    handleFileChange(event) {
+      this.selectedFile = event.target.files[0];
+      this.selectedFilePath = event.target.files[0].name;
+      console.log(this.selectedFilePath);
     },
   },
 }

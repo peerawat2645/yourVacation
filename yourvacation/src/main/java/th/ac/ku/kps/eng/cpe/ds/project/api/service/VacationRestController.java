@@ -170,6 +170,38 @@ public class VacationRestController {
 
 	}
 	
+	@GetMapping("/random")
+	public ResponseEntity<Response<List<Vacation>>> random() {
+		Response<List<Vacation>> res = new Response<>();
+		try {
+			List<Vacation> vacations = vacationService.findByRandom();
+			res.setBody(vacations);
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+		}
+
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<Response<List<Vacation>>> getAll() {
+		Response<List<Vacation>> res = new Response<>();
+		try {
+			List<Vacation> vacations = vacationService.findAll();
+			res.setBody(vacations);
+			res.setHttpStatus(HttpStatus.OK);
+			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+		} catch (Exception ex) {
+			res.setBody(null);
+			res.setHttpStatus(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Response<List<Vacation>>>(res, res.getHttpStatus());
+		}
+
+	}
+	
 	@PostMapping("/uploadImage")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,@Param("vacationId") int id) {
         try {

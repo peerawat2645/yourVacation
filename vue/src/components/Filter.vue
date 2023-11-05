@@ -6,7 +6,7 @@
         <p>Please upload a photo of your desired location.</p>
         <div class="FUpload">
           <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
-          <button @click="uploadFile">Upload</button>
+          <button @click="random">Upload</button>
           <div v-if="imageUrl">
             <img :src="imageUrl" alt="Uploaded Image" />
           </div>
@@ -17,7 +17,7 @@
     <div class="fContent">
       <div style="width: 100%;">
         <div class="fContents">
-          <div class="fCard" v-for="item in displayedData" :key="item.id">
+          <div class="fCard" v-for="item in place" :key="item.id">
             <div class="fimg">
               <div class="fimg1">
                 <img
@@ -26,11 +26,14 @@
             </div>
             <div class="fCardContent">
               <div class="fCardContentBox">
-                <p>อุทยาน {{ item.id }}</p>
+                <p>อุทยาน {{ item.name }}</p>
               </div>
-              <div class="fCardContentBoxDetail"><a>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></div>
+              <div class="fCardContentBoxDetail"><a>{{ item.description }}</a></div>
               <div class="fCardReserve">
-                <a href="#"><button class="fCardReserveBtn">ดูสถานที่</button></a>
+                <a
+                :href="'/place/' + item.vacationId + '/user/' + this.$route.params.id"
+                style="width: auto;height:auto; cursor:default;">
+                <div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div></a>
               </div>
             </div>
           </div>
@@ -46,6 +49,7 @@
 </template>
 <script>
 import PaginationVue from './Pagination.vue';
+import PlaceService from '@/services/PlaceService';
 export default {
   name: 'FilterPic',
   components: {
@@ -69,11 +73,12 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 3,
+      place:[],
     };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.sampleData.length / this.itemsPerPage);
+      return Math.ceil(this.place.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
@@ -81,9 +86,48 @@ export default {
       return this.sampleData.slice(start, end);
     },
   },
+  created(){
+    this.getDataAll();
+  }
+  ,
   methods: {
     onPageChange(page) {
       this.currentPage = page;
+    },
+    getDataAll(){
+      PlaceService.getAll()
+        .then((response) => {
+          {
+            this.place = response.data.body
+            console.log(this.place)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
+    }
+    ,
+    random(){
+      PlaceService.getRandom()
+        .then((response) => {
+          {
+            this.place = response.data.body
+            console.log(this.place)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.error = true;
+              this.errorMessage = error.response.data.body;
+            }
+          }
+        });
     },
   },
 }
