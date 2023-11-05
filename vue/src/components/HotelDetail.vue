@@ -26,7 +26,12 @@
         </div>
         <div class="hdroomtype">
           <div class="hdroomtypedetail" v-for="item in room" :key="item.id">
-            <img :src="images[0]" />
+            <div class="aa" v-if="item.type === 'suite'" style="width: auto; height:auto;">
+            <img v-if="randomImage" :src="randomImage" alt="Random Image" /></div>
+            <div class="aa" v-if="item.type === 'deluxe'" style="width: auto; height:auto;">
+              <img v-if="randomImage2" :src="randomImage2" alt="Random Image" /></div>
+              <div class="aa" v-if="item.type === 'studio'" style="width: auto; height:auto;">
+                <img v-if="randomImage3" :src="randomImage3" alt="Random Image" /></div>
             <div class="hdroomtypedetailbox"><a>{{item.type}}</a>
               <p>{{item.price}} บาท</p><a :href="'/hotel/reservation/'+item.roomId+'/user/'+this.$route.params.userId" class="hdwhite-button">จอง</a>
             </div>
@@ -38,7 +43,7 @@
       <div class="hddetail">
         <div class="hddetailbox">
           <a>สถานที่ใกล้เคียง : </a>
-          <div class="hddetailcontent" v-for="item in place" :key="item.id">
+          <div class="hddetailcontentt" v-for="item in place" :key="item.id">
             <p>{{ item.name }} <a :href="'/place/'+item.vacationId+'/user/'+this.$route.params.userId" class="hdblack-button"
                 style="align-self: flex-end; color:white; margin:0%; padding:2px 5px; font-size:15px">เพิ่มเติม</a></p>
           </div>
@@ -56,8 +61,8 @@
           </div>
         </div>-->
         <div class="hddetailbox">
-          <a>สิ่งอำนวยความสะดวก : </a>
-          <div class="hddetailcontent" style="width: 70%;" v-for="item in facilities" :key="item.id">
+          <a style="margin: 0%;">สิ่งอำนวยความสะดวก : </a>
+          <div class="hddetailcontent" v-for="item in facilities" :key="item.id">
             <label style="margin-left: 10px; margin-right:10px;">
               <input type="checkbox" :checked="item.status">
               <a style="font-size: 16px; font-weight: 600; color: black">
@@ -66,6 +71,7 @@
 
 
             </label>
+            <br>
           </div>
         </div>
       </div>
@@ -79,8 +85,18 @@ export default {
   name: 'HotelDetail',
   data() {
     return {
-      images: [
-
+      images:[],
+      imagess: [
+      'https://assets-global.website-files.com/5c6d6c45eaa55f57c6367749/65045f093c166fdddb4a94a5_x-65045f0266217.webp',
+      'https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Hotel-room-renaissance-columbus-ohio.jpg/1024px-Hotel-room-renaissance-columbus-ohio.jpg',
+      'https://cdn.loewshotels.com/loewshotels.com-2466770763/cms/cache/v2/5f5a6e0d12749.jpg/1920x1080/fit/80/86e685af18659ee9ecca35c465603812.jpg',
+      'https://www.cvent.com/sites/default/files/image/2021-10/hotel%20room%20with%20beachfront%20view.jpg',
+      'https://media.istockphoto.com/id/627892060/photo/hotel-room-suite-with-view.jpg?s=612x612&w=0&k=20&c=YBwxnGH3MkOLLpBKCvWAD8F__T-ypznRUJ_N13Zb1cU=',
+      'https://rhotelgeelong.com.au/wp-content/uploads/2021/03/R-Hotel-Geelong-Hotel-Room-11.jpg',
+      'https://www.hotelcontractbeds.co.uk/media/3183/hotel-room.jpg',
+      'https://cqh.imgix.net/2020/09/R2Pbt3vb-1603_DELUXE-1BDRM-KITCHEN_CQ_HOUSTON_5714.jpg?auto=compress%2Cformat&fit=scale&h=1280&ixlib=php-3.3.1&q=70&w=1920&wpsize=img_1920',
+      'https://scdn.aro.ie/Sites/50/imperialhotels2022/uploads/images/PanelImages/panelimagessmall19/160579861_Royal_National_Room_Standard_Single_2640x1760.jpg'
         // Add more image URLs here
       ],
       currentIndex: 0,
@@ -103,9 +119,30 @@ export default {
     this.facility();
     this.rooms();
     this.getImage();
+    this.showRandomImage();
+    this.showRandomImage2();
+    this.showRandomImage3();
   }
   ,
   methods: {
+    showRandomImage() {
+      if (this.imagess.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.imagess.length);
+        this.randomImage = this.imagess[randomIndex];
+      }
+    },
+    showRandomImage2() {
+      if (this.imagess.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.imagess.length);
+        this.randomImage2 = this.imagess[randomIndex];
+      }
+    },
+    showRandomImage3() {
+      if (this.imagess.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.imagess.length);
+        this.randomImage3 = this.imagess[randomIndex];
+      }
+    },
     changeSlide(index) {
       this.currentIndex = index;
     },
@@ -282,12 +319,13 @@ export default {
   padding: 15px;
   display: flex;
   align-items: start;
-  justify-content: space-between;
+  justify-content: start;
   flex-direction: row;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   margin: 10px;
+  flex-wrap: wrap;
 }
 
 .hddetailbox a {
@@ -305,10 +343,17 @@ export default {
   display: flex;
   align-items: start;
   justify-content: start;
-  flex-direction: column;
+  flex-direction: row;
   text-align: start;
 }
-
+.hddetailcontentt {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+}
 .hdname {
   width: 100%;
   display: flex;
@@ -438,5 +483,8 @@ export default {
   cursor: default;
   color: rgb(0, 0, 0);
   font-size: 18px;
+}
+.aa img{
+  margin-bottom: 60px;
 }
 </style>

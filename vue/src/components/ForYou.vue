@@ -352,7 +352,6 @@ export default {
 
 .not-clicked {
     z-index: 190;
-    border-radius: 10px;
     background-color: #ffffff;
     color: #000;
     padding: 10px 20px;

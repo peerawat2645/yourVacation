@@ -15,11 +15,11 @@
         </div>
         <div class="AContactName">
           <a>Phone</a>
-          <p>DataSecurityCPEGroup3@gmail.com</p>
+          <p>(+66) 99-1234568</p>
         </div>
         <div class="AContactName">
           <a>Location</a>
-          <p>DataSecurityCPEGroup3@gmail.com</p>
+          <p>หมู่ที่ 1 ถนนมาลัยแมน ตำบลทุ่งกระพังโหม อำเภอกำแพงแสน จังหวัดนครปฐม 73140.</p>
         </div>
       </div>
     </div>
@@ -132,6 +132,7 @@
       align-items: start;
       justify-content: space-between;
       flex-direction: column;
+      text-align: start;
     }
     .AContactName a{
       font-family: Arial, Helvetica, sans-serif;

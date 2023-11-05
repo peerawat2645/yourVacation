@@ -1,6 +1,6 @@
 <template>
   <div class="hBody">
-    <a :href="'/home/' + this.$route.params.userId" class="pdblack-button">Back</a>
+    <a :href="'/home/' + this.$route.params.userId" class="pdblack-button" style="align-self: flex-start;">Back</a>
     <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a><a style="font-size: 10px;">{{ message }}</a></div>
     <div class="hContent">
       <div style="width: 100%;">
@@ -25,7 +25,7 @@
               </div>
               <div class="hCardReserve">
                 <a>ราคาเริ่มต้น {{ item.minPrice }} บาท</a>
-                <a :href="'/hotel/' + item.hotel.hotelId"><button class="hCardReserveBtn">จองห้องพัก</button></a>
+                <a :href="'/hotel/' + item.hotel.hotelId+'/user/'+ this.$route.params.userId"><button class="hCardReserveBtn">จองห้องพัก</button></a>
               </div>
             </div>
           </div>

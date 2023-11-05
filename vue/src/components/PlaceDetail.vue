@@ -23,7 +23,7 @@
               <img :src="image" @click="changeSlide(index)" alt="Preview Image" />
             </div>
           </div>
-        </div>
+          </div>
       </div>
       <div class="pddetail">
         <a :href="'/hotel/place/'+place.vacationId+'/user/'+this.$route.params.userId" class="pdblack-button" style="align-self: flex-end;">ที่พักใกล้เคียง</a>
@@ -62,13 +62,13 @@ export default {
       images: [
         'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
         'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
-        'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
-        'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
-        'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
-        'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
-        'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
-        'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
-        // Add more image URLs here
+        'https://bk.asia-city.com/sites/default/files/doi_chiang_dao_chiang_mai._credit_hatoriz_kwansiripat._creative_commons.jpg',
+        'https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F456cc62a-db43-11ec-8de3-573a6521e09e.jpg?crop=5312%2C3541%2C0%2C0',
+        'https://media.istockphoto.com/id/1131616912/photo/beautiful-swiss-mountains-in-springtime.jpg?s=612x612&w=0&k=20&c=2VQUp2NnjERnxIndrAyt1e5JJxsGPbKqHtxudM5fbm4=',
+        'https://cdn.britannica.com/32/93932-050-B213E0FB/ocean-water-beach-The-Bahamas-Grand-Bahama.jpg',
+        'https://www.seaeagletour.com/wp-content/uploads/revslider/BYT-TourOperator/sea-eagle-olly-5-scaled.jpg',
+        'https://www.collinsdictionary.com/images/full/river_377603497_1000.jpg',
+        'https://www.americanrivers.org/wp-content/uploads/2023/09/CA_Smith-River_Clinton-Steeds-1-1-1024x682.jpg'
       ],
       currentIndex: 0,
       place:[],
@@ -84,8 +84,15 @@ export default {
   },
   created() {
     this.getPlace();
+    this.showRandomImage();
   },
   methods: {
+    showRandomImage() {
+      if (this.images.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.images.length);
+        this.randomImage = this.images[randomIndex];
+      }
+    },
     changeSlide(index) {
       this.currentIndex = index;
     },
@@ -224,7 +231,7 @@ export default {
 }
 
 .slider-container {
-  width: 90%;
+  width: 80%;
   overflow: hidden;
   border-radius: 5px;
 }

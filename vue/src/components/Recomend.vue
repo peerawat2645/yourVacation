@@ -12,7 +12,7 @@
                 :src="'data:image/png;base64,'+item.imgPath">
               </div>
               <div class="Reimg2">
-                <img src="https://media.bom.gov.au/social/upload/images/iStock-blue-sea-resize.jpg">
+                <img v-if="randomImage" :src="randomImage" alt="Random Image" />
               </div>
             </div>
             <div class="ReCardContent">
@@ -50,7 +50,18 @@ export default {
       itemsPerPage: 4,
       subdistrict: 0,
       placerecomend:[],
-      imagePath:''
+      imagePath:'',
+      images: [
+        'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
+        'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
+        'https://bk.asia-city.com/sites/default/files/doi_chiang_dao_chiang_mai._credit_hatoriz_kwansiripat._creative_commons.jpg',
+        'https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F456cc62a-db43-11ec-8de3-573a6521e09e.jpg?crop=5312%2C3541%2C0%2C0',
+        'https://media.istockphoto.com/id/1131616912/photo/beautiful-swiss-mountains-in-springtime.jpg?s=612x612&w=0&k=20&c=2VQUp2NnjERnxIndrAyt1e5JJxsGPbKqHtxudM5fbm4=',
+        'https://cdn.britannica.com/32/93932-050-B213E0FB/ocean-water-beach-The-Bahamas-Grand-Bahama.jpg',
+        'https://www.seaeagletour.com/wp-content/uploads/revslider/BYT-TourOperator/sea-eagle-olly-5-scaled.jpg',
+        'https://www.collinsdictionary.com/images/full/river_377603497_1000.jpg',
+        'https://www.americanrivers.org/wp-content/uploads/2023/09/CA_Smith-River_Clinton-Steeds-1-1-1024x682.jpg'
+      ],
     };
   },
   computed: {
@@ -65,8 +76,15 @@ export default {
   },
   created() {
     this.recommendAll();
+    this.showRandomImage();
   },
   methods: {
+    showRandomImage() {
+      if (this.images.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.images.length);
+        this.randomImage = this.images[randomIndex];
+      }
+    },
     onPageChange(page) {
       this.currentPage = page;
     },
@@ -159,7 +177,8 @@ export default {
 
 .ReContents {
   width: 100%;
-  height: 72vh;
+  min-height: 72vh;
+  height: auto;
   display: flex;
   align-items: start;
   justify-content: space-between;

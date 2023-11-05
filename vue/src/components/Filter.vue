@@ -5,7 +5,7 @@
         <a>Picture Filter</a>
         <p>Please upload a photo of your desired location.</p>
         <div class="FUpload">
-          <input type="file" ref="fileInput" @change="handleFileChange" accept="image/*">
+          <div style="width: 100%; padding-left:35%; margin-bottom:20px"><input type="file" ref="fileInput" @change="handleFileChange" accept="image/*"></div>
           <button @click="random">Upload</button>
           <div v-if="imageUrl">
             <img :src="imageUrl" alt="Uploaded Image" />
@@ -136,7 +136,8 @@ export default {
 .FilterBody {
   padding-top: 10vh;
   width: 100%;
-  height: 90vh;
+  min-height: 90vh;
+  height: auto;
   background-color: rgb(255, 255, 255);
   top: 0%;
   left: 0%;
@@ -149,7 +150,8 @@ export default {
 
 .Fbox {
   width: 90%;
-  height: 90%;
+  min-height: 90%;
+  height: auto;
   border-radius: 10px;
   border: 2px solid;
   border-color: #000;
@@ -161,7 +163,7 @@ export default {
 
 .FPicUploadBox {
   margin: 15px;
-  padding: 30px;
+  padding: 150px 30px;
   width: 30%;
   height: 95%;
   border-radius: 20px;
@@ -231,7 +233,8 @@ export default {
 
 .fContents {
   width: 100%;
-  height: 85%;
+  min-height: 85%;
+  height: auto;
   display: flex;
   align-items: start;
   justify-content: start;

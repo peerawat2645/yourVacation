@@ -118,6 +118,8 @@ export default {
   background-color: transparent;
       border: none;
       color: inherit;
+      width: auto;
+      padding: 0px 15px;
 }
 
 .a {
@@ -161,7 +163,7 @@ export default {
 }
 
 .navbarselect {
-  width: 40%;
+  width: fit-content;
   height: auto;
   margin-top: -10px;
 }</style>

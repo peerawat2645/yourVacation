@@ -166,7 +166,9 @@ public class HotelRestController {
 		Response<String> res = new Response<>();
 		try {
 			Imghotel imghotel = imgHotelService.findByHotelId(hotelId);
-			String path = uploadDir + File.separator + "Hotel" + File.separator + imghotel.getFilePath();
+			String path = uploadDir + File.separator + "no-image.png";
+			if(imghotel!=null)
+				path = uploadDir + File.separator + "Hotel" + File.separator + imghotel.getFilePath();
 			res.setBody(ImageBase64Helper.toImageBase64(path));
 			res.setHttpStatus(HttpStatus.OK);
 			return new ResponseEntity<Response<String>>(res, res.getHttpStatus());

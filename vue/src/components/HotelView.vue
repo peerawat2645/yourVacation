@@ -29,7 +29,7 @@
               <div class="hvCardReserve">
                 <a :href="'/hotel/' + this.$route.params.id + '/roomtype/edit/' + item.roomId"><button
                     class="hvCardReserveBtn">แก้ไข</button></a>
-
+                    <div style="width: 20px;"></div>
                     <a @click="deleteItem"><button
                       class="hvCardReserveBtn">ลบ</button></a>
 
@@ -87,12 +87,12 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.sampleData.length / this.itemsPerPage);
+      return Math.ceil(this.room.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.sampleData.slice(start, end);
+      return this.room.slice(start, end);
     },
   },
   created() {

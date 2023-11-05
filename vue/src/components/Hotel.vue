@@ -176,7 +176,8 @@ export default {
 
 .hContents {
   width: 100%;
-  height: 72vh;
+  min-height: 72vh;
+  height: auto;
   display: flex;
   align-items: start;
   justify-content: start;
