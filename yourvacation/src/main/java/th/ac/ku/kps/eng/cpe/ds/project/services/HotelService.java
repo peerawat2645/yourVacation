@@ -65,7 +65,8 @@ public class HotelService {
 	}
 
 	public static List<Hotel> decryptData(List<Hotel> hotels) throws Exception {
-
+		System.out.println(hotels.size());
+		List<Hotel> hotelss = new ArrayList<Hotel>();
 		for (Hotel hotel : hotels) {
 			String privateKey = hotel.getPrivateKey();
 
@@ -78,8 +79,9 @@ public class HotelService {
 			System.out.println(decrypt(hotel.getName(), reconstructedPrivateKey));
 			hotel.setAddress(decrypt(hotel.getAddress(), reconstructedPrivateKey));
 			hotel.setName(decrypt(hotel.getName(), reconstructedPrivateKey));
+			hotelss.add(hotel);
 		}
-		return hotels;
+		return hotelss;
 	}
 
 	public Hotel save(Hotel hotel) throws Exception {

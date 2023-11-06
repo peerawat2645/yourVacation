@@ -40,6 +40,7 @@ public interface HotelRepository extends CrudRepository<Hotel, Integer>{
 	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.amountRoom >=:amountRoom and ( r.price >:priceMin and r.price<=:priceMax) and r.roomId not in :roomId")
 	public List<Hotel> findByAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(@Param("amountRoom")int amountRoom,@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 	
-	@Query("from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest <=:guest and r.amountRoom >=:amountRoom and ( r.price >:priceMin and r.price<=:priceMax) and r.roomId not in :roomId")
+	//@Query("select distinct h from Hotel h inner join h.rooms r inner join h.subdistrict s where s.subdistrictId =:subdistrictId and r.guest <=:guest and r.amountRoom >=:amountRoom and ( r.price >:priceMin and r.price<=:priceMax) and r.roomId not in :roomId")
+	@Query(value="SELECT DISTINCT h.* FROM `hotel` AS h INNER JOIN `room` AS r ON h.hotelId = r.hotelId INNER JOIN `subdistrict` AS s ON h.subdistrictId = s.subdistrictId WHERE s.subdistrictId = :subdistrictId AND r.guest <= :guest AND r.amountRoom >= :amountRoom AND r.price > :priceMin AND r.price <= :priceMax AND r.roomId NOT IN :roomId",nativeQuery = true)
 	public List<Hotel> findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(@Param("guest")int guest,@Param("amountRoom")int amountRoom,@Param("priceMin")int priceMin,@Param("priceMax")int priceMax,@Param("roomId")List<Integer> roomId,@Param("subdistrictId")int subdistrictId);
 }

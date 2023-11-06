@@ -5,7 +5,8 @@
         <a>Picture Filter</a>
         <p>Please upload a photo of your desired location.</p>
         <div class="FUpload">
-          <div style="width: 100%; padding-left:35%; margin-bottom:20px"><input type="file" ref="fileInput" @change="handleFileChange" accept="image/*"></div>
+          <div style="width: 100%; padding-left:35%; margin-bottom:20px"><input type="file" ref="fileInput"
+              @change="handleFileChange" accept="image/*"></div>
           <button @click="random">Upload</button>
           <div v-if="imageUrl">
             <img :src="imageUrl" alt="Uploaded Image" />
@@ -14,35 +15,34 @@
       </div>
       <div class="FContentt">
         <div class="fText"><a>สถานที่แนะนำสำหรับคุณ</a></div>
-    <div class="fContent">
-      <div style="width: 100%;">
-        <div class="fContents">
-          <div class="fCard" v-for="item in displayedData" :key="item.id">
-            <div class="fimg">
-              <div class="fimg1">
-                <img
-                  src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/463156637.jpg?k=5d913fb55963d82c13fe5960117723b5d57007e15e813be871395bf090418f2f&o=&hp=1">
+        <div class="fContent">
+          <div style="width: 100%;">
+            <div class="fContents">
+              <div class="fCard" v-for="(item,index) in displayedData" :key="item.id">
+                <div class="fimg">
+                  <div class="fimg1">
+                    <img v-if="randomImage" :src="imagess[index]" alt="Random Image" />
+                  </div>
+                </div>
+                <div class="fCardContent">
+                  <div class="fCardContentBox">
+                    <p>อุทยาน {{ item.name }}</p>
+                  </div>
+                  <div class="fCardContentBoxDetail"><a>{{ item.description }}</a></div>
+                  <div class="fCardReserve">
+                    <a :href="'/place/' + item.vacationId + '/user/' + this.$route.params.id"
+                      style="width: auto;height:auto; cursor:default;">
+                      <div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="fCardContent">
-              <div class="fCardContentBox">
-                <p>อุทยาน {{ item.name }}</p>
-              </div>
-              <div class="fCardContentBoxDetail"><a>{{ item.description }}</a></div>
-              <div class="fCardReserve">
-                <a
-                :href="'/place/' + item.vacationId + '/user/' + this.$route.params.id"
-                style="width: auto;height:auto; cursor:default;">
-                <div class="pclicked" style="padding: 10px 20px;">เพิ่มเติม</div></a>
-              </div>
+            <div class="fPaginate">
+              <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
             </div>
           </div>
         </div>
-        <div class="fPaginate">
-          <paginationVue :current-page="currentPage" :total-pages="totalPages" @page-change="onPageChange" />
-        </div>
-      </div>
-    </div>
       </div>
     </div>
   </div>
@@ -73,7 +73,19 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 3,
-      place:[],
+      place: [],
+      imagess: [],
+      images: [
+        'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYANuEZlRY89MbBZGbB03TL7pGDPeb11CkdQJhamTfLVYfEGR0DP.jpg',
+        'https://thumbs.dreamstime.com/b/beach-sea-18378306.jpg',
+        'https://bk.asia-city.com/sites/default/files/doi_chiang_dao_chiang_mai._credit_hatoriz_kwansiripat._creative_commons.jpg',
+        'https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F456cc62a-db43-11ec-8de3-573a6521e09e.jpg?crop=5312%2C3541%2C0%2C0',
+        'https://media.istockphoto.com/id/1131616912/photo/beautiful-swiss-mountains-in-springtime.jpg?s=612x612&w=0&k=20&c=2VQUp2NnjERnxIndrAyt1e5JJxsGPbKqHtxudM5fbm4=',
+        'https://cdn.britannica.com/32/93932-050-B213E0FB/ocean-water-beach-The-Bahamas-Grand-Bahama.jpg',
+        'https://www.seaeagletour.com/wp-content/uploads/revslider/BYT-TourOperator/sea-eagle-olly-5-scaled.jpg',
+        'https://www.collinsdictionary.com/images/full/river_377603497_1000.jpg',
+        'https://www.americanrivers.org/wp-content/uploads/2023/09/CA_Smith-River_Clinton-Steeds-1-1-1024x682.jpg'
+      ],
     };
   },
   computed: {
@@ -86,15 +98,27 @@ export default {
       return this.place.slice(start, end);
     },
   },
-  created(){
+  created() {
     this.getDataAll();
+    this.showRandomImage();
   }
   ,
   methods: {
+    showRandomImage() {
+      console.log(0)
+      let x = 20
+      for (let i = 0; i < x; i++) {
+        if (this.images.length > 0) {
+          let randomIndex = Math.floor(Math.random() * this.images.length);
+          this.randomImage = this.images[randomIndex];
+          this.imagess.push(this.images[randomIndex]);
+        }
+      }
+    },
     onPageChange(page) {
       this.currentPage = page;
     },
-    getDataAll(){
+    getDataAll() {
       PlaceService.getAll()
         .then((response) => {
           {
@@ -112,7 +136,7 @@ export default {
         });
     }
     ,
-    random(){
+    random() {
       PlaceService.getRandom()
         .then((response) => {
           {
@@ -198,11 +222,13 @@ export default {
   justify-content: space-between;
   flex-direction: column;
 }
-.FContentt{
+
+.FContentt {
   margin: 15px;
   width: 70%;
   height: 95%;
 }
+
 .fText {
   margin-top: 4vh;
   width: 99%;
@@ -245,7 +271,7 @@ export default {
 
 .fCard {
   width: 280px;
-  height: 100%;
+  height: 480px;
   background-color: rgb(244, 244, 244);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -349,7 +375,7 @@ export default {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   cursor: default;
   color: rgb(0, 0, 0);
@@ -386,5 +412,4 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: row;
-}
-</style>
+}</style>

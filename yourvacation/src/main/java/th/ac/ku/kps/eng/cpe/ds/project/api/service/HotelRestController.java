@@ -301,31 +301,21 @@ public class HotelRestController {
 		Response<List<HotelFacilitiesDTO>> res = new Response<>();
 		try {
 			List<HotelFacilitiesDTO> dtos = new ArrayList<HotelFacilitiesDTO>();
-			List<Hotel> hotels = new ArrayList<Hotel>();
 			List<Integer> roomIds = reservationService.findAllRoomId();
 			if (priceMin <= 0) {
 				priceMin = 0;
 			}
 
 			if (priceMax <= 0) {
-				priceMax = 9999999;
+				priceMax = 99999;
 			}
 
 			if (guest <= 0) {
 				guest = 9999;
 			}
-
-			if (guest == 0 && amountRoom == 0) {
-				hotels = hotelService.findByPriceAndNotInReservationIdAndSubdistrictId(priceMin, priceMax, roomIds,
-						subdistrictId);
-			} else if (guest != 0 && amountRoom == 0) {
-				hotels = hotelService.findByGuestAndPriceAndNotInReservationIdAndSubdistrictId(guest, priceMin,
-						priceMax, roomIds, subdistrictId);
-			} else if (guest != 0 && amountRoom != 0) {
-				hotels = hotelService.findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(guest,
+			List<Hotel> hotels = hotelService.findByGuestAndAmountRoomAndPriceAndNotInReservationIdAndSubdistrictId(guest,
 						amountRoom, priceMin, priceMax, roomIds, subdistrictId);
-			}
-
+			System.out.println(hotels.size());
 			for (Hotel h : hotels) {
 				HotelFacilitiesDTO dto = new HotelFacilitiesDTO();
 				dto.setHotel(h);

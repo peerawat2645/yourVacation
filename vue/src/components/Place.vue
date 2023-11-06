@@ -1,7 +1,8 @@
 <template>
   <div class="pBody">
     <div class="pText"><a>สถานที่ท่องเที่ยวแนะนำสำหรับคุณ</a></div>
-    <div class="pContent">
+    <div v-if="displayedData.length===0" class="pContentnull"><a style="font-size: 20px;">ไม่มีข้อมูล</a></div>
+    <div class="pContent" v-else>
       <div>
         <div class="pContents">
           <div class="pCard" v-for="item in displayedData" :key="item.vacation.name">
@@ -77,16 +78,15 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.place.length / this.itemsPerPage);
+      return Math.ceil(this.checkedItems.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.place.slice(start, end);
+      return this.checkedItems.slice(start, end);
     },
   },
   created() {
-    this.PlaceAll();
   
     this.showRandomImage();
   },
@@ -172,7 +172,15 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-
+.pContentnull {
+  width: 98%;
+  padding-left: 1%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .pContents {
   width: 100%;
   min-height: 72vh;

@@ -1,14 +1,15 @@
 <template>
   <div class="hBody">
     <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
-    <div class="hContent">
+    <div v-if="displayedData.length===0" class="hContentnull"><a style="font-size: 20px;">ไม่มีข้อมูล</a></div>
+    <div class="hContent" v-else>
       <div style="width: 100%;">
         <div class="hContents">
-          <div class="hCard" v-for="item in displayedData" :key="item.id">
+          <div class="hCard" v-for="(item,index) in displayedData" :key="item.id">
             <div class="himg">
               <div class="himg1">
                 <img
-                :src="'data:image/png;base64,' + getImage(item.hotel.hotelId)">
+                :src="'data:image/png;base64,' + getImage(item.hotel.hotelId, index)">
               </div>
             </div>
             <div class="hCardContent">
@@ -64,22 +65,19 @@ export default {
       ],
       currentPage: 1,
       itemsPerPage: 5,
-      imagePath:'',
+      imagePath:[],
       hotel: []
     };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.hotel.length / this.itemsPerPage);
+      return Math.ceil(this.message.length / this.itemsPerPage);
     },
     displayedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.hotel.slice(start, end);
+      return this.message.slice(start, end);
     },
-  },
-  created() {
-    this.HotelAll();
   },
   methods: {
     onPageChange(page) {
@@ -112,12 +110,12 @@ export default {
           }
         });
     },
-    getImage(id){
+    getImage(id, index) {
       HotelService.getImage(id)
         .then((response) => {
           {
+            this.imagePath.push(response.data.body)
             console.log(response.data.body)
-            this.imagePath = response.data.body
           }
         })
         .catch(error => {
@@ -128,7 +126,7 @@ export default {
             }
           }
         });
-        return this.imagePath;
+      return this.imagePath[index];
     }
   },
 }
@@ -173,7 +171,15 @@ export default {
   justify-content: start;
   flex-direction: column;
 }
-
+.hContentnull {
+  width: 98%;
+  padding-left: 1%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .hContents {
   width: 100%;
   min-height: 72vh;
@@ -292,7 +298,7 @@ export default {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   cursor: default;
   color: rgb(0, 0, 0);

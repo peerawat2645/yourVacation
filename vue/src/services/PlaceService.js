@@ -4,8 +4,8 @@ const baseURL = 'http://localhost:8080/api/v1';
 
 export default {
   PlaceServiceAll(districtId,provinceId,subdistrivtId,tagnameIds) {
-    console.log(tagnameIds.length)
-    const hotelURL = `${baseURL}/vacation/?districtId=${districtId}&provinceId=${provinceId}&subdistrictId=${subdistrivtId}&tagnameId=${tagnameIds}`;
+    let hotelURL = `${baseURL}/vacation/?districtId=${districtId}&provinceId=${provinceId}&subdistrictId=${subdistrivtId}&tagnameIds=${tagnameIds}`;
+    console.log(hotelURL)
     const config = {
       method: 'post',
       headers: {

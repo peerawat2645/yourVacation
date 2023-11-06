@@ -8,7 +8,9 @@
       </div>
       <div class="AContact">
         <a style="color: rgb(83, 176, 177);">Contact Us</a>
-        <p>If you have any questions or would like to contact us, please contact us through the channels below.</p>
+        <p style="margin: 0%;">If you have any questions or would like to contact us, please contact us through the channels below.</p>
+        <p style="margin: 0%;">or</p>
+        <p style="margin: 0%;">contact advertising</p>
         <div class="AContactName">
           <a>Email</a>
           <p>DataSecurityCPEGroup3@gmail.com</p>

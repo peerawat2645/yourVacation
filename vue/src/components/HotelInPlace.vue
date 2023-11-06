@@ -1,7 +1,7 @@
 <template>
   <div class="hBody">
     <a :href="'/home/' + this.$route.params.userId" class="pdblack-button" style="align-self: flex-start;">Back</a>
-    <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a><a style="font-size: 10px;">{{ message }}</a></div>
+    <div class="hText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
     <div class="hContent">
       <div style="width: 100%;">
         <div class="hContents">
@@ -128,7 +128,7 @@ export default {
             }
           }
         });
-      return this.imagePath[index];
+      return this.imagePath[index+1];
     }
   },
 }
@@ -291,7 +291,7 @@ export default {
   display: block;
   word-wrap: break-word;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   cursor: default;
   color: rgb(0, 0, 0);

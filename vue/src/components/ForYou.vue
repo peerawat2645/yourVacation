@@ -65,6 +65,7 @@
                         <input type="checkbox" @change="toggleItem(6)"> <a style="font-size: 16px;
                         font-weight: 600; color:black">กางเต้นท์</a>
                     </label>
+                    <button @click="PlaceAll">ค้นหา</button>
                 </div>
             </div>
             <div class="Hotelbox" v-if="activeComponent === 'HotelVue'">
@@ -125,19 +126,22 @@
                     font-weight: 600; color:black">จำนวนห้องนอน</a>
                         <input type="text" class="hcustom-input" placeholder="Your Input" v-model="hotelData.amountRoom">
                     </div>
+                    <button @click="HotelAll">ค้นหา</button>
                 </div>
             </div>
         </div>
         <RecomendPlace v-if="activeComponent === 'RecomendPlace'" />
-        <PlaceVue :checkedItems=formData v-if="activeComponent === 'PlaceVue'" />
-        <HotelVue :message=hotelData v-if="activeComponent === 'HotelVue'" />
+        <PlaceVue :checkedItems=place v-if="activeComponent === 'PlaceVue'" />
+        <HotelVue :message=hotel v-if="activeComponent === 'HotelVue'" />
     </div>
 </template>
 <script>
 import RecomendPlace from './Recomend.vue';
 import HotelVue from './Hotel.vue';
 import PlaceVue from './Place.vue';
+import HotelService from '@/services/HotelService';
 import SubdistrictService from '@/services/SubdistrictService';
+import PlaceService from '@/services/PlaceService';
 
 export default {
     name: 'ForYou',
@@ -162,6 +166,8 @@ export default {
             district: [],
             province: [],
             checkedItems: [],
+            hotel: [],
+            place:[],
             formData: {
                 subdistrictId: 1,
                 districtId: 1,
@@ -173,7 +179,7 @@ export default {
                 districtId: 1,
                 provinceId: 1,
                 priceMin: 0,
-                priceMax: 0,
+                priceMax: 9999,
                 guest: 0,
                 amountRoom: 0,
             },
@@ -183,6 +189,8 @@ export default {
         this.provinceAll();
         this.districtAll();
         this.subdistrictAll();
+        this.HotelAll();
+        this.PlaceAll();
     },
     methods: {
         changeColor(a) {
@@ -321,6 +329,41 @@ export default {
             console.log('Form data submitted:', this.formData);
 
             // You can also send the form data to a server or perform other actions here
+        },
+        HotelAll() {
+            console.log(this.hotelData)
+            HotelService.HotelServiceAll(this.hotelData.districtId, this.hotelData.provinceId, this.hotelData.subdistrictId, this.hotelData.amountRoom, this.hotelData.guest, this.hotelData.priceMax, this.hotelData.priceMin)
+                .then((response) => {
+                    {
+                        this.hotel = response.data.body
+                        console.log(this.hotel[0].hotel)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
+        },
+        PlaceAll() {
+            PlaceService.PlaceServiceAll(this.formData.districtId, this.formData.provinceId, this.formData.subdistrictId, this.formData.tagnameIds)
+                .then((response) => {
+                    {
+                        this.place = response.data.body
+                        console.log(this.place)
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            this.error = true;
+                            this.errorMessage = error.response.data.body;
+                        }
+                    }
+                });
         },
     }
 }
@@ -490,4 +533,5 @@ export default {
     justify-content: center;
     flex-direction: column;
     line-height: 40px;
-}</style>
+}
+</style>

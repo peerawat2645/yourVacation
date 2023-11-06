@@ -1,7 +1,7 @@
 <template>
   <div class="ReBody">
     <div class="ReText"><a>โรงแรมแนะนำสำหรับคุณ</a></div>
-    <div v-if="recommend === null" class="ReContentnull"><a style="font-size: 20px;">ไม่มีข้อมูล</a></div>
+    <div v-if="displayedData.length===0" class="ReContentnull"><a style="font-size: 20px;">ไม่มีข้อมูล</a></div>
     <div class="ReContent" v-else>
       <div>
         <div class="ReContents">
